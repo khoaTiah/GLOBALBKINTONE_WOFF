@@ -114,5 +114,42 @@ $(document).ready(function() {
             alert(error);
         }
     });
-
+    createData();
 });
+const createData = async() => {
+    $("#btn-create").click(async function() {
+        $("#loading-web").removeClass("display-none");
+        $("#message-error>span").text("");
+        let body = {
+            // "日付": { 'value': $("#date-now").text() },
+            "フォークリフト番号": { 'value': $("#forklift-number").val() },
+            "緯度": { 'value': $("#latitude").val() },
+            "経度": { 'value': $("#longitude").val() },
+            "トークルームID": { 'value': 0 },
+            "経度チャンネルID": { 'value': 0 },
+            // "日時": { 'value': siteName },
+        };
+        await axios.post(lambdaUrl + "?id=5957", body)
+            .then((res) => {
+                if (res.status == 200) {
+                    let url = `https://gbalb-demo.cybozu.com/k/5957/show#record=${res.data.id}`;
+                    let msg = "登録しました。\nフォークリフト番号 : " + $("#forklift-number").val() + "\n緯度 : " + $("#latitude").val() + "\n経度 :" + $("#longitude").val() + "\n詳細 : " + url;
+                    if (woff.isInClient()) {
+                        woff.sendMessage({ 'content': msg });
+                    }
+                    $("#loading-web").addClass("display-none");
+                    $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動更新します。");
+                    $('#toast').toast('show');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+                }
+            })
+            .catch((err) => {
+                $("#loading-web").addClass("display-none");
+                var data = err.response.data
+                console.error(data);
+            });
+    });
+
+};

@@ -44,6 +44,7 @@
         </div>
     </section> -->
     <div class="container mt-2 " id="frm-create">
+        <div id="loading-web" class="display-none"><span class="loader"></span></div>
         <form class="form-group" id="form-home">
             <div class="text-center " id="title-app">
                 <h3>フォークリフト貸出管理</h3>
@@ -93,6 +94,16 @@
             </div>
         </form>
     </div>
+    <div id="toast" class="toast success" style="position: fixed; top: 7px; right: 7px;">
+        <div class="toast-header">
+            <strong class="mr-auto">Notification</strong>
+            <button type="button" class="btn-close pe-3" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <span></span>
+        </div>
+    </div>
+    <!-- end notification -->
 </body>
 
 <!-- <script src="https://static.worksmobile.net/static/wm/woff/edge/3.6/sdk.js"></script> -->

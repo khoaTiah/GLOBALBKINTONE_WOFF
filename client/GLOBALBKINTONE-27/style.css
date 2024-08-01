@@ -83,6 +83,25 @@ button {
     }
 }
 
+#frm-create {
+    position: relative !important;
+}
+
+#loading-web {
+    position: absolute;
+    width: 95%;
+    height: 100%;
+    background-color: #66666699;
+    z-index: 1;
+}
+
+div#loading-web {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
 #title-app {
     font-weight: bold;
     font-size: 120%;
@@ -102,6 +121,7 @@ button {
 .downstairs>input {
     width: 97%;
     margin: 0.2rem 0 0.2rem 0.2rem;
+    height: 3rem;
 }
 
 #form-home,
@@ -164,10 +184,12 @@ div#location {
 
 input#forklift-number {
     width: 87%;
+    height: 3rem;
 }
 
 button#get-qr {
-    width: 3rem;
+    width: 4rem;
+    height: 3rem;
 }
 
 div.box-location {
@@ -178,6 +200,7 @@ button.btn-location {
     width: 90%;
     background: #1AB53C;
     color: white;
+    height: 3rem;
 }
 
 button.btn-location:hover {
@@ -269,6 +292,25 @@ svg.icon {
     opacity: 0.5;
 }
 
+.toast-body {
+    color: #0d71df;
+}
+
+div#toast.success {
+    background: #d4edda;
+    color: #c3e6cb;
+}
+
+.toast-header {
+    justify-content: space-between;
+}
+
+button#btn-create,
+button#reset-tag {
+    height: 3rem;
+    min-width: 4rem;
+}
+
 @keyframes animloader {
     0% {
         transform: scale(0);
@@ -284,17 +326,56 @@ svg.icon {
     #message-error {
         width: 60%;
     }
+    input#forklift-number {
+        width: 82%;
+    }
 }
 
 @media (min-width: 380px) {
     #message-error {
         width: 60%;
     }
+    input#forklift-number {
+        width: 84%;
+    }
+}
+
+@media (min-width: 400px) {
+    input#forklift-number {
+        width: 84%;
+    }
+}
+
+@media (min-width: 460px) {
+    input#forklift-number {
+        width: 84%;
+    }
+}
+
+@media (min-width: 500px) {
+    input#forklift-number {
+        width: 80%;
+    }
 }
 
 @media (min-width: 600px) {
     #message-error {
         width: 60%;
+    }
+    input#forklift-number {
+        width: 82%;
+    }
+}
+
+@media (min-width: 700px) {
+    input#forklift-number {
+        width: 82%;
+    }
+}
+
+@media (min-width: 770px) {
+    input#forklift-number {
+        width: 87%;
     }
 }
 
@@ -326,7 +407,7 @@ svg.icon {
         background: #1AB53C;
         color: white;
     }
-    .input-box.mt-3.forklift-number {
+    .input-box.forklift-number {
         padding: 0 2rem;
     }
     div#location {
