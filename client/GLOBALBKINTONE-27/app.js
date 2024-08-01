@@ -79,6 +79,9 @@ $(document).ready(function() {
                 alert(err);
             });
     });
+    $("#reset-tag").click(function() {
+        $("#demo-address").text("")
+    });
     $("#get-location").click(function() {
         try {
             $("#latitude").val("");
@@ -93,6 +96,7 @@ $(document).ready(function() {
                 $("#longitude").val(longitude)
                 $("#load-location").addClass("display-none");
                 $("#get-location").removeClass("disable-btn");
+                getAddress(latitude, longitude);
             };
 
             const errorCallback = (error) => {
@@ -138,7 +142,7 @@ const createData = async() => {
                         woff.sendMessage({ 'content': msg });
                     }
                     $("#loading-web").addClass("display-none");
-                    $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動更新します。");
+                    $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動リロードします。");
                     $('#toast').toast('show');
                     setTimeout(function() {
                         location.reload();
@@ -152,4 +156,18 @@ const createData = async() => {
             });
     });
 
+};
+const getAddress = async(lat, lot) => {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lot}`
+    await axios.get(url)
+        .then((res) => {
+            if (res.status == 200) {
+                let address = res.data.display_name;
+                console.log(address);
+                $("#demo-address").text(address);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 };
