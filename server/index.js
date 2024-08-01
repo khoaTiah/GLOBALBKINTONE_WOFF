@@ -88,8 +88,9 @@ export async function handler(event) {
                         return await postApp_5232(event);
                     } else if (paramsID == 5231) {
                         return await postApp_5231(event);
+                    } else {
+                        return await postApp(event, paramsID);
                     }
-                    break;
                 case 'GET':
                     if (paramsID == 5232) {
                         return await getApp_5232();
@@ -133,7 +134,7 @@ export async function handler(event) {
     }
 
 }
-const getComments = async (id, key, recordID) => {
+const getComments = async(id, key, recordID) => {
     const apiKey = key;
     const appId = id;
     const baseUrl = KINTONE_BASE_URL;
@@ -174,7 +175,7 @@ const getComments = async (id, key, recordID) => {
         };
     }
 }
-const addComment = async (id, event) => {
+const addComment = async(id, event) => {
     const appId = id;
     const baseUrl = KINTONE_BASE_URL;
     const url = baseUrl + "k/v1/record/comment.json";
@@ -189,7 +190,7 @@ const addComment = async (id, event) => {
         'comment': jsonCV.comment
     };
     try {
-        const response =  await axios.post(url, body, { headers });
+        const response = await axios.post(url, body, { headers });
         return {
             statusCode: 200,
             body: JSON.stringify(response.data)
@@ -203,7 +204,7 @@ const addComment = async (id, event) => {
 
 
 };
-const deleteComment = async (id, recordId, commentId) => {
+const deleteComment = async(id, recordId, commentId) => {
     const appId = id;
     const baseUrl = KINTONE_BASE_URL;
     const url = baseUrl + "k/v1/record/comment.json";
@@ -229,7 +230,7 @@ const deleteComment = async (id, recordId, commentId) => {
         };
     }
 };
-const getApp_5232 = async () => {
+const getApp_5232 = async() => {
     const apiKey = '0zkn5wGorNDH63R0p8akzQBkctJbsJq6B9uHFskf';
     const appId = 5232;
     const baseUrl = KINTONE_BASE_URL;
@@ -255,7 +256,7 @@ const getApp_5232 = async () => {
         };
     }
 };
-const getApp_5936 = async () => {
+const getApp_5936 = async() => {
     const apiKey = "hdUXP46uYrX00VHL5KGwJJeGTOiY7U1FvjlThSXW";
     const appId = 5936;
     const baseUrl = KINTONE_BASE_URL;
@@ -281,7 +282,7 @@ const getApp_5936 = async () => {
         };
     }
 };
-const getApp_5231 = async () => {
+const getApp_5231 = async() => {
     const apiKey = "4VYH9seMr23oOl8kHKVhyEgUGI287d0ngtRg0ZN8";
     const appId = 5231;
     const baseUrl = KINTONE_BASE_URL;
@@ -328,7 +329,7 @@ const getApp_5231 = async () => {
         };
     }
 };
-const postApp_5231 = async (event) => {
+const postApp_5231 = async(event) => {
     try {
 
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
@@ -362,7 +363,7 @@ const postApp_5231 = async (event) => {
         };
     }
 };
-const postApp_5232 = async (event) => {
+const postApp_5232 = async(event) => {
     try {
 
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
@@ -396,7 +397,41 @@ const postApp_5232 = async (event) => {
         };
     }
 };
-const removeApp_5231 = async (id, recordId) => {
+const postApp = async(event, id) => {
+    try {
+
+        const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
+        const appId = id;
+        const baseUrl = KINTONE_BASE_URL;
+        const url = baseUrl + "k/v1/record.json?app=" + appId;
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Cybozu-Authorization': base64DecodePass
+        };
+        const body = {
+            "app": appId,
+            "record": JSON.parse(event.body)
+        };
+        try {
+            const response = await axios.post(url, body, { headers });
+            return {
+                statusCode: 200,
+                body: JSON.stringify(response.data)
+            };
+        } catch (error) {
+            return {
+                statusCode: error.response.status,
+                body: JSON.stringify(error.response.data)
+            };
+        }
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: error })
+        };
+    }
+};
+const removeApp_5231 = async(id, recordId) => {
     try {
 
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
@@ -430,7 +465,7 @@ const removeApp_5231 = async (id, recordId) => {
         };
     }
 }
-const removeApp_5232 = async (id, recordId) => {
+const removeApp_5232 = async(id, recordId) => {
     try {
 
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
@@ -464,7 +499,7 @@ const removeApp_5232 = async (id, recordId) => {
         };
     }
 }
-const updateApp_5231 = async (event) => {
+const updateApp_5231 = async(event) => {
     try {
 
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
@@ -500,7 +535,7 @@ const updateApp_5231 = async (event) => {
         };
     }
 }
-const updateApp_5232 = async (event) => {
+const updateApp_5232 = async(event) => {
     try {
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
         const appId = 5232;
@@ -535,7 +570,7 @@ const updateApp_5232 = async (event) => {
         };
     }
 }
-const uploadFIle = async (event) => {
+const uploadFIle = async(event) => {
     const data = JSON.parse(event.body)
     const pathS3 = data.path;
     const fileName = data.fileName;
@@ -568,7 +603,7 @@ const uploadFIle = async (event) => {
         };
     }
 };
-const getUsers = async () => {
+const getUsers = async() => {
     const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
     const baseUrl = KINTONE_BASE_URL;
     const url = baseUrl + "v1/users.json";
