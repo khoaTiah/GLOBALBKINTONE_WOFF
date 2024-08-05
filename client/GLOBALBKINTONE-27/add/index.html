@@ -1,0 +1,94 @@
+<section id="add">
+    <button class="icon"><img src="../public/icon/icon-back.svg"></button>
+    <div class="container mt-2 " id="frm-create">
+        <div id="loading-web" class="display-none"><span class="loader"></span></div>
+        <form class="form-group" id="form-home">
+            <div class="text-center " id="title-app">
+                <h3>フォークリフト貸出管理</h3>
+            </div>
+            <div class="date">
+                <p id="lineworks-id">
+                    <strong>line works :</strong>
+                    <span></span>
+                </p>
+                <p>
+                    <strong>日付</strong>
+                    <span id="date-now"></span>
+                </p>
+            </div>
+            <div class="input-box mt-1 forklift-number">
+                <div>
+                    <label for="forklift-number" class="lb-av">フォークリフト番号</label>
+                    <div class="downstairs qr">
+                        <input class="mt-2 form-control" type="text" name="forklift-number" id="forklift-number" autocomplete="off" readonly>
+                        <button id="get-qr" class="btn mt-1" type="button">QR</button>
+                    </div>
+                </div>
+            </div>
+            <div id="location" class="mt-3">
+                <div class="input-box">
+                    <div class="me-1">
+                        <label for="latitude" class="lb-av">緯度</label>
+                        <div class="downstairs">
+                            <input class="mt-2 form-control" type="text" name="latitude" id="latitude" autocomplete="off" readonly>
+                        </div>
+                    </div>
+                    <div class="ms-1">
+                        <label for="longitude" class="lb-av">経度</label>
+                        <div class="downstairs">
+                            <input class="mt-2 form-control" type="text" name="longitude" id="longitude" autocomplete="off" readonly>
+                        </div>
+                    </div>
+                </div>
+                <p><strong>テストAPI : </strong><span id="demo-address"></span></p>
+                <div class="box-location mt-2">
+                    <span id="load-location" class="loader display-none"></span>
+                    <button id="get-location" class="btn btn-location" type="button">座標</button>
+                </div>
+            </div>
+            <div id="start-time" class="mt-3">
+                <div class="box-time">
+                    <label for="latitude" class="lb-av">貸出日時</label>
+                    <div class="input-box">
+                        <input class="mt-2 me-2 form-control day" type=" text " autocomplete="off" readonly>
+                        <input class="mt-2 form-control time" type=" text " autocomplete="off" readonly>
+                    </div>
+                    <!-- <div class=" ">
+                        <div class="downstairs ">
+                            <input class="mt-2 form-control " type="text " name="latitude " id="box-start-time " autocomplete="off " readonly>
+                        </div>
+                    </div>
+                    <div class=" ">
+                        <label for="latitude " class="lb-av ">貸出日時</label>
+                        <div class="downstairs ">
+                            <input class="mt-2 form-control " type="text " name="latitude " id="box-start-time " autocomplete="off " readonly>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="btns ">
+                    <div>
+                        <button id="reset-start-time " class="btn btn-clear me-2 " type="reset ">クリア</button>
+                        <button id="reset-start-time " class="btn btn-borrow me-2 " type="reset ">貸出</button>
+                        <button class="btn btn-submit " id="btn-create " type="button ">登録</button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="btns ">
+                <div class="text-start " id="message-error "><span class="error "></span></div>
+                <div>
+                    <button id="reset-tag " class="btn btn-clear me-2 " type="reset ">クリア</button>
+                    <button class="btn btn-submit " id="btn-create " type="button ">登録</button>
+                </div>
+            </div> -->
+        </form>
+    </div>
+    <div id="toast " class="toast success " style="position: fixed; top: 7px; right: 7px; ">
+        <div class="toast-header ">
+            <strong class="mr-auto ">Notification</strong>
+            <button type="button " class="btn-close pe-3 " data-bs-dismiss="toast " aria-label="Close "></button>
+        </div>
+        <div class="toast-body ">
+            <span></span>
+        </div>
+    </div>
+</section>

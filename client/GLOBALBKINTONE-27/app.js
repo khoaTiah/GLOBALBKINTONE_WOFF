@@ -1,6 +1,7 @@
 import { woffId, lambdaUrl } from './params.js'
 window.addEventListener('load', () => {
     woffInit();
+
 });
 
 const woffInit = () => {
