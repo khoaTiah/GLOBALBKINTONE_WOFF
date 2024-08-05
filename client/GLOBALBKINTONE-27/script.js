@@ -4,35 +4,27 @@ const PATH_EDIT = './edit/index.html';
 const JS_HELPER = './app.js';
 
 window.addEventListener('load', async() => {
-    buildDate();
     actionSwitch('add');
 });
 
-const buildDate = () => {
-    let today = new Date();
-    let day = ("0" + today.getDate()).slice(-2);
-    let month = ("0" + (today.getMonth() + 1)).slice(-2);
-    let year = today.getFullYear();
-    $("#date-now").text(month + '/' + day + '/' + year)
-}
 
 function actionSwitch(action) {
-    let path;
-    switch (action) {
-        case 'add':
-            path = PATH_ADD;
-            break;
-        case 'edit':
-            path = PATH_EDIT;
-            break;
-        case 'menu':
-        default:
-            path = PATH_MENU;
-            break;
-    }
+    $("#load-main").removeClass("display-none");
+    const paths = {
+        add: PATH_ADD,
+        edit: PATH_EDIT,
+        menu: PATH_MENU
+    };
+
+    const path = paths[action] || PATH_MENU;
+
     $("#main").load(path, function(response, status, xhr) {
         if (status == "success") {
+            $("#load-main").addClass("display-none");
             loadScript(JS_HELPER);
+        }
+        if (action === 'add') {
+            loadCreate();
         }
     });
 }
@@ -47,4 +39,28 @@ function loadScript(scriptPath) {
     newScript.type = "module";
     newScript.id = "dynamicScript";
     document.body.appendChild(newScript);
+}
+const loadCreate = () => {
+    $("#end-time").hide()
+}
+const getDate = (type) => {
+    const now = new Date();
+    // day
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    // time
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    // format
+    const formattedDate = `${day}/${month}/${year}`;
+    const formattedTime = `${hours}:${minutes}`;
+    if (type == "start") {
+        $("div#start-time input.day").val(formattedDate);
+        $("div#start-time input.time").val(formattedTime);
+    }
+    if (type == "end") {
+        $("div#start-end input.day").val(formattedDate);
+        $("div#start-end input.time").val(formattedTime);
+    }
 }

@@ -175,7 +175,8 @@ button:hover {
 }
 
 div#location,
-div#start-time {
+div#start-time,
+div#end-time {
     border: 1px solid #D9D9D9;
     padding: 0.5rem;
 }
@@ -234,11 +235,13 @@ div.box-location {
     box-shadow: none;
 }
 
-#message-error {
-    width: 70%;
-}
 
-#message-error>span.error {
+/* #message-error {
+    width: 70%;
+} */
+
+#message-error>span.error,
+.message-error {
     color: red;
 }
 
@@ -319,12 +322,18 @@ div#toast.success {
     justify-content: space-between;
 }
 
-button#btn-create,
+button#btn-create-start-time,
 button#reset-start-time,
 button#reset-end-time,
-button#btn-borrow {
+button.btn-borrow,
+button#btn-create-end-time,
+button.btn-returns {
     height: 3rem;
     min-width: 4rem;
+}
+
+button.btn-returns {
+    background-color: #ff9900;
 }
 
 button.icon {
@@ -335,7 +344,7 @@ button.icon {
     justify-content: center;
     padding: 14px;
     border-radius: 5px;
-    margin: 0.5rem 0.8rem;
+    margin: 0.9rem 0.8rem;
     border: 2px solid #dee2e6 !important;
 }
 
@@ -353,6 +362,12 @@ input.mt-2.form-control.time {
     height: 3rem;
 }
 
+input.day,
+input.time {
+    text-align: end;
+    font-size: 120%;
+}
+
 
 /* home */
 
@@ -360,6 +375,7 @@ input.mt-2.form-control.time {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 9rem 0;
 }
 
 #menu .ls-btn-home button {
@@ -374,14 +390,16 @@ input.mt-2.form-control.time {
 
 #menu .ls-btn-home button:first-child {
     background-color: #4285f4;
+    height: 5rem;
 }
 
 #menu .ls-btn-home button:last-child {
     background-color: #ff9900;
+    height: 5rem;
 }
 
-#menuform#form-home {
-    height: 10rem;
+#menu #form-home {
+    min-height: 5rem;
     padding: 3rem;
 }
 
@@ -400,18 +418,18 @@ input.mt-2.form-control.time {
 }
 
 @media (min-width: 330px) {
-    #message-error {
+    /* #message-error {
         width: 60%;
-    }
+    } */
     input#forklift-number {
         width: 82%;
     }
 }
 
 @media (min-width: 380px) {
-    #message-error {
+    /* #message-error {
         width: 60%;
-    }
+    } */
     input#forklift-number {
         width: 84%;
     }
@@ -436,9 +454,9 @@ input.mt-2.form-control.time {
 }
 
 @media (min-width: 600px) {
-    #message-error {
+    /* #message-error {
         width: 60%;
-    }
+    } */
     input#forklift-number {
         width: 82%;
     }
@@ -460,9 +478,9 @@ input.mt-2.form-control.time {
     button#get-qr {
         width: 4rem;
     }
-    #message-error {
+    /* #message-error {
         width: 70%;
-    }
+    } */
 }
 
 @media (min-width: 1000px) {
@@ -498,5 +516,50 @@ input.mt-2.form-control.time {
 @media (min-width: 1200px) {
     input#forklift-number {
         width: 90%;
+    }
+}
+
+
+/* loadding */
+
+section#load-main {
+    position: absolute;
+    background: #ced4da78;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #0000;
+    border-right-color: #1AB53C;
+    position: relative;
+    animation: l24 1s infinite linear;
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: inherit;
+    animation: inherit;
+    animation-duration: 2s;
+}
+
+.loader:after {
+    animation-duration: 4s;
+}
+
+@keyframes l24 {
+    100% {
+        transform: rotate(1turn)
     }
 }
