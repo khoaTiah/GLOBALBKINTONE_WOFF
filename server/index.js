@@ -99,10 +99,7 @@ export async function handler(event) {
                     } else if (paramsID == 5231) {
                         return await getApp_5231();
                     } else {
-                        return {
-                            statusCode: 403,
-                            body: JSON.stringify({ message: 'not found' })
-                        };
+                        return await getDataApp(paramsID);
                     }
                 case 'PUT':
                     return await uploadFIle(event);
@@ -329,6 +326,53 @@ const getApp_5231 = async() => {
         };
     }
 };
+const getDataApp = async(id) => {
+    const appId = id;
+    const baseUrl = KINTONE_BASE_URL;
+    const client = new KintoneRestAPIClient({
+        baseUrl: baseUrl,
+        auth: {
+            username: username,
+            password: password,
+        },
+    });
+    const limit = 50;
+    let offset = 0;
+    let allRecords = [];
+
+    try {
+        let totalCountResponse = await client.record.getRecords({
+            app: appId,
+            totalCount: true
+        });
+
+        const totalCount = totalCountResponse.totalCount;
+
+        while (offset < totalCount) {
+            const response = await client.record.getRecords({
+                app: appId,
+                query: `日時_0 != "" and フォークリフト番号 != "" limit ${limit} offset ${offset}`
+            });
+
+            allRecords = allRecords.concat(response.records);
+            offset += limit;
+        }
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(allRecords)
+        };
+    } catch (error) {
+        console.error(error);
+
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Internal Server Error 2' })
+        };
+    }
+
+};
+
 const postApp_5231 = async(event) => {
     try {
 
