@@ -1,5 +1,11 @@
-<div class="container" style="padding: 1rem 1.2rem;" id="page-home">
-    <p id="info-user" class="text-end"><strong>line_works : </strong><span id="name-line-works"></span></p>
+<div class="container" style="padding: 1rem 0;" id="page-home">
+    <div class="top-list">
+        <button class="icon" onclick="actionSwitch('menu')"><img src="../public/icon/icon-back.svg"></button>
+        <p id="info-user" class="text-end">
+            <strong>line_works : </strong>
+            <span id="name-line-works"></span>
+        </p>
+    </div>
     <div id="search" class="mb-2"><input id="input-search" type="text" class="form-control" placeholder="現場名">
         <span>
         <svg width="33" height="39 " viewBox="0 0 38 43" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,18 +22,12 @@
             <rect width="38" height="42.0677" fill="white"/>
             </clipPath>
             </defs>
-            </svg>
+        </svg>
         </span>
     </div>
     <div class="box-create mb-2">
         <button id="btn-detail" onclick="switchDisplayData('card')">詳細表示</button>
         <button id="btn-list" class="active" onclick="switchDisplayData('table')">一覧表示</button>
-        <button id="btn-create">
-            <svg width="35" height="35" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="19.5" cy="19.5" r="19.5" fill="#1AB53C"/>
-            <path d="M19.546 10V29.0919M29.0919 19.5459H10" stroke="white"/>
-            </svg>
-        </button>
     </div>
     <div id="ls">
         <table class="table" id="table-list">
@@ -35,10 +35,11 @@
                 <tr>
                     <th scope="col"></th>
                     <th scope="col"></th>
-                    <th scope="col" style="min-width: 12rem;">現場名</th>
-                    <th scope="col" style="min-width: 11rem;">ユーザーID</th>
-                    <th scope="col">住所</th>
-                    <th scope="col" style="min-width: 7rem;">ファイル数</th>
+                    <th scope="col" style="min-width: 10rem;">フォークリフト番号</th>
+                    <th scope="col" style="min-width: 8rem;">緯度</th>
+                    <th scope="col" style="min-width: 8rem;">経度</th>
+                    <th scope="col" style="min-width: 8rem;">LINE WORKS名</th>
+                    <th scope="col" style="min-width: 7rem;">貸出日時</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
@@ -56,4 +57,3 @@
     <div id="pagination-container" class="nav"></div>
     <div class="mt-4"></div>
 </div>
-<script type="module" src="app.js"></script>

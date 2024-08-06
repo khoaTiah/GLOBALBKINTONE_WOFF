@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Noto-Sans-JP-Regular";
-    src: url("./public/font/static/NotoSansJP-Regular.ttf") format("woff"), url("./public/font/static/NotoSansJP-Regular.ttf") format("opentype"), url("./public/font/static/NotoSansJP-Regular.ttf") format("truetype");
+    src: url("../public/font/static/NotoSansJP-Regular.ttf") format("woff"), url("../public/font/static/NotoSansJP-Regular.ttf") format("opentype"), url("../public/font/static/NotoSansJP-Regular.ttf") format("truetype");
 }
 
 * {
@@ -57,7 +57,7 @@ input {
     width: 100%;
 }
 
-button.icon {
+button.icon-list {
     width: 2.0rem;
     height: 1.0rem;
     border: none !important;
@@ -67,11 +67,6 @@ button.icon {
 button.edit {
     color: blue;
     margin-bottom: 2rem;
-}
-
-button:hover {
-    scale: 1.3;
-    transition: ease 0.3s;
 }
 
 .nav {
@@ -284,6 +279,12 @@ table#table-list tr>td:nth-child(2) {
     max-width: 11rem;
     word-wrap: break-word;
     font-weight: bold;
+}
+
+table#table-list tr th,
+table#table-list tr td {
+    border-right: none !important;
+    border-left: none !important;
 }
 
 #modal-notification .modal-content {
@@ -514,7 +515,7 @@ div#ls-mobile {
 #btn-list {
     border: 1px solid #999999;
     border-radius: 50px;
-    padding: 0 1rem;
+    padding: 1rem 1.3rem;
     background-color: #FAFAFB;
     color: #858585;
 }
@@ -808,9 +809,6 @@ a.link_detail {
 
 @media only screen and (max-width: 1024px) {
     /* Các quy tắc CSS cho tablet lớn hoặc desktop nhỏ */
-    .container {
-        width: 70%;
-    }
     .menu {
         display: block;
         /* Hiển thị menu trên tablet và desktop nhỏ */
@@ -848,4 +846,14 @@ td {
 button.remove {
     height: 100%;
     width: 100%;
+}
+
+.top-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button.icon {
+    margin: 0.9rem 0.8rem 0.9rem 0;
 }
