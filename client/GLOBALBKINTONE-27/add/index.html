@@ -72,11 +72,12 @@
                         <input class="mt-2 me-2 form-control day" type="text" autocomplete="off" readonly>
                         <input class="mt-2 form-control time" type="text" autocomplete="off" readonly>
                     </div>
+                    <span id="error-end-time" class="message-error"></span>
                 </div>
                 <div class="btns ">
                     <div>
-                        <button id="reset-end-time" class="btn btn-clear me-2" type="reset">クリア</button>
-                        <button id="" class="btn btn-returns me-2" type="button" onclick="getDate('start')">返却</button>
+                        <button id="reset-end-time" class="btn btn-clear me-2" type="button">クリア</button>
+                        <button id="" class="btn btn-returns me-2" type="button" onclick="getDate('end')">返却</button>
                         <button class="btn btn-submit " id="btn-create-end-time" type="button">登録</button>
                     </div>
                 </div>

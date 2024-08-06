@@ -98,6 +98,8 @@ export async function handler(event) {
                         return await getApp_5936();
                     } else if (paramsID == 5231) {
                         return await getApp_5231();
+                    } else if (paramsID && recordID) {
+                        return await getRecordByID(paramsID, recordID);
                     } else {
                         return await getDataApp(paramsID);
                     }
@@ -114,6 +116,8 @@ export async function handler(event) {
                         return await updateApp_5232(event);
                     } else if (paramsID == 5231) {
                         return await updateApp_5231(event);
+                    } else {
+                        return await updateApp(event, paramsID);
                     }
                 default:
                     return {
@@ -372,7 +376,34 @@ const getDataApp = async(id) => {
     }
 
 };
+const getRecordByID = async(appId, recordId) => {
+    const baseUrl = KINTONE_BASE_URL;
+    const client = new KintoneRestAPIClient({
+        baseUrl: baseUrl,
+        auth: {
+            username: username,
+            password: password,
+        },
+    });
+    try {
+        const response = await client.record.getRecord({
+            app: appId,
+            id: recordId,
+        });
+        return {
+            statusCode: 200,
+            body: JSON.stringify(response)
+        };
+    } catch (error) {
+        console.error(error);
 
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Internal Server Error 2' })
+        };
+    }
+
+};
 const postApp_5231 = async(event) => {
     try {
 
@@ -583,6 +614,41 @@ const updateApp_5232 = async(event) => {
     try {
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
         const appId = 5232;
+        const baseUrl = KINTONE_BASE_URL;
+        const url = baseUrl + "k/v1/record.json?app=" + appId;
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Cybozu-Authorization': base64DecodePass
+        };
+        const data = JSON.parse(event.body);
+        const body = {
+            "app": appId,
+            "id": data.id,
+            "record": data.body
+        };
+        try {
+            const response = await axios.put(url, body, { headers });
+            return {
+                statusCode: 200,
+                body: JSON.stringify(response.data)
+            };
+        } catch (error) {
+            return {
+                statusCode: error.response.status,
+                body: JSON.stringify(error.response.data)
+            };
+        }
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: error })
+        };
+    }
+}
+const updateApp = async(event, idApp) => {
+    try {
+        const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
+        const appId = idApp;
         const baseUrl = KINTONE_BASE_URL;
         const url = baseUrl + "k/v1/record.json?app=" + appId;
         const headers = {

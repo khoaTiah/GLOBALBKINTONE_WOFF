@@ -8,11 +8,11 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('list');
+    actionSwitch('add');
 });
 
 
-function actionSwitch(action) {
+function actionSwitch(action, id = "") {
     $("#load-main").removeClass("display-none");
     const paths = {
         add: PATH_ADD,
@@ -26,7 +26,7 @@ function actionSwitch(action) {
     $("#main").load(path, function(response, status, xhr) {
         if (status == "success") {
             $("#load-main").addClass("display-none");
-            loadScript(JS_HELPER, action);
+            loadScript(JS_HELPER, action, id);
             loadCss([CSS_MAIN]);
         }
         if (action === 'add') {
@@ -34,16 +34,19 @@ function actionSwitch(action) {
         }
         if (action === 'edit') {
             // loadCreate();
+            $("#end-time").show()
+            $("#start-time").show()
+
         }
         if (action == "list") {
-            loadScript(JS_LIST, action);
+            loadScript(JS_LIST, action, id);
             loadCss([CSS_LIST, CSS_PAGINATION]);
             loadCss([CSS_LIST, CSS_PAGINATION]);
         }
     });
 }
 
-async function loadScript(scriptPath, action) {
+async function loadScript(scriptPath, action, id = "") {
     // var oldScript = document.getElementById("dynamicScript");
     // if (oldScript) {
     //     oldScript.parentNode.removeChild(oldScript);
@@ -62,7 +65,12 @@ async function loadScript(scriptPath, action) {
     }
     if (action == "edit") {
         if (module.runEdit) {
-            module.runEdit();
+            module.runEdit(id);
+        }
+    }
+    if (action == "add") {
+        if (module.runCreate) {
+            module.runCreate();
         }
     }
 }
@@ -91,15 +99,15 @@ const getDate = (type) => {
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     // format
-    const formattedDate = `${day}/${month}/${year}`;
+    const formattedDate = `${year}-${month}-${day}`;
     const formattedTime = `${hours}:${minutes}`;
     if (type == "start") {
         $("div#start-time input.day").val(formattedDate);
         $("div#start-time input.time").val(formattedTime);
     }
     if (type == "end") {
-        $("div#start-end input.day").val(formattedDate);
-        $("div#start-end input.time").val(formattedTime);
+        $("div#end-time  input.day").val(formattedDate);
+        $("div#end-time  input.time").val(formattedTime);
     }
 }
 
@@ -134,7 +142,10 @@ const convertTime = (timeString) => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 const showModelEdit = (id) => {
-        $("#id-edit").val(id);
-        actionSwitch('edit');
+        // if ($("#id-edit").val(id)) {
+        //     $("#id-edit").val("");
+        // }
+        // $("#id-edit").val(id);
+        actionSwitch('edit', id);
     }
     //

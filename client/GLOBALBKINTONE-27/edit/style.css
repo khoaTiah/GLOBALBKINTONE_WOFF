@@ -256,7 +256,7 @@ input[type="checkbox"] {
     width: 100%;
     /* max-height: 38rem; */
     border: 2px solid #E4E4E4;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 #ls::-webkit-scrollbar {
@@ -538,7 +538,7 @@ div#ls-mobile {
 .box-create {
     display: flex;
     justify-content: flex-end;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .ls-actions button {
