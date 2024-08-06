@@ -140,10 +140,10 @@ const createData = async() => {
             $("#error-start-time").text("貸出日時を空にすることはできません。");
             flag = true;
         }
-        if (!qr) {
-            $("#error-qr").text("必須。");
-            flag = true;
-        }
+        // if (!qr) {
+        //     $("#error-qr").text("必須。");
+        //     flag = true;
+        // }
         if (flag) return;
         $("#loading-web").removeClass("display-none");
         let profile = await woff.getProfile().then((profile) => {
@@ -159,19 +159,24 @@ const createData = async() => {
             "経度": { 'value': $("#longitude").val() },
             "トークルームID": { 'value': profile.userId },
             "LINE_WORKS名": { 'value': profile.displayName },
-            "日時": { 'value': startDay + "T" + startTime + ":00Z" },
+            "日時": { 'value': convertUTC(startDay, startTime) },
             // "返却日時": { 'value': siteName },
         };
         await axios.post(lambdaUrl + "?id=5957", body)
             .then((res) => {
                 if (res.status == 200) {
                     let url = `https://gbalb-demo.cybozu.com/k/5957/show#record=${res.data.id}`;
-                    let msg = "登録しました。\nフォークリフト番号 : " + $("#forklift-number").val() + "\n緯度 : " + $("#latitude").val() + "\n経度 :" + $("#longitude").val() + "\n詳細 : " + url;
+                    let msg = "登録しました。\n" +
+                        "フォークリフト番号 : " + $("#forklift-number").val() + "\n" +
+                        "緯度 : " + $("#latitude").val() + "\n" +
+                        "経度 : " + $("#longitude").val() + "\n" +
+                        "貸出日時 : " + startDay + " " + startTime;
+
                     if (woff.isInClient()) {
                         woff.sendMessage({ 'content': msg });
                     }
                     $("#loading-web").addClass("display-none");
-                    showMessage(msg);
+                    showMessage("データ作成成功。");
                     // $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動リロードします。");
                     // $('#toast').toast('show');
                     setTimeout(function() {
@@ -190,16 +195,16 @@ const createData = async() => {
 const update = () => {
     {
         $("#btn-create-end-time").click(async function() {
-            let startDay = $("div#end-time input.day").val();
-            let startTime = $("div#end-time input.time").val();
+            let endDay = $("div#end-time input.day").val();
+            let endTime = $("div#end-time input.time").val();
             $("#error-end-time").text("");
             $("#message-error>span").text("");
-            if (!startDay || !startTime) {
+            if (!endDay || !endTime) {
                 return $("#error-end-time").text("貸出日時を空にすることはできません。");
             }
             $("#loading-web").removeClass("display-none");
             let body = {
-                "日時_0": { 'value': startDay + "T" + startTime + ":00Z" },
+                "日時_0": { 'value': convertUTC(endDay, endTime) },
             };
             let res = {
                 id: $("#id-edit").val(),
@@ -208,13 +213,18 @@ const update = () => {
             await axios.patch(lambdaUrl + "?id=5957", res)
                 .then((res) => {
                     if (res.status == 200) {
-                        console.log(res.body);
-                        let msg = `更新完了: フォークリフト番号 ${$("#forklift-number").val()}`;
+                        let startDay = $("div#start-time input.day").val();
+                        let startTime = $("div#start-time input.time").val();
+                        let msg = "返却日時の更新に成功しました。" +
+                            "\nフォークリフト番号 :" + $("#forklift-number").val() +
+                            "\n貸出日時 :" + startDay + " " + startTime +
+                            "\n返却日時  :" + endDay + " " + endTime;
+
                         if (woff.isInClient()) {
                             woff.sendMessage({ 'content': msg });
                         }
                         $("#loading-web").addClass("display-none");
-                        showMessage('登録しました。 ページを3秒ごとに自動リロードします')
+                        showMessage('登録しました。 ページを3秒ごとに自動リロードします。')
                         setTimeout(function() {
                             location.reload();
                         }, 3000);
@@ -286,6 +296,17 @@ const disableButton = (isTrue) => {
         $("#start-time .btns").show();
     }
 }
+const convertUTC = (date, time) => {
+    // get GTM
+    let now = new Date();
+    let localTimeString = now.toString();
+    let gmtOffsetMatch = localTimeString.match(/GMT[+-]\d{4}/);
+    let gtm = gmtOffsetMatch ? gmtOffsetMatch[0] : '';
+
+    let dateTimeLocal = `${date} ${time} ${gtm}`;
+    let localTime = new Date(dateTimeLocal);
+    return localTime.toISOString().slice(0, 19) + 'Z';
+}
 export function runEdit(id) {
     $("#id-edit").val(id);
     getRecordByID(id);
@@ -299,6 +320,7 @@ export function runEdit(id) {
 export function runCreate() {
     // checkPermission();
     // nút xóa
+    woffInit();
     $("#get-qr").click(function() {
         $("#forklift-number").val("")
         woff.scanQR()
