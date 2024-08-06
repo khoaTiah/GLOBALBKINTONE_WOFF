@@ -1,10 +1,12 @@
 import { woffId, lambdaUrl } from '../params.js'
+var DATA_APP;
 const getData = () => {
     let appID = '5957';
     axios.get(lambdaUrl + `?id=${appID}`)
         .then((res) => {
             console.log(res);
             const records = res.data;
+            DATA_APP = records;
             $('#pagination-container').pagination({
                 dataSource: records,
                 pageSize: 10,
@@ -47,7 +49,7 @@ function simpleTemplating(data) {
 
     data.forEach(function(record, index) {
         let buttonEdit =
-            `<div><button class="edit icon-list" onclick="showModelEdit('${encodeURIComponent(JSON.stringify(record))}')">
+            `<div><button class="edit icon-list" onclick="showModelEdit('${record.$id.value}')">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#0b9d37" d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/></svg>
     </button>`;
         let buttonRemove =
@@ -62,7 +64,7 @@ function simpleTemplating(data) {
                     <th></th>
                     <th scope="row"><div>${Number(index) + 1}</div></th>
                     <td>
-                    <a class="link_detail" href="#" onclick="showModelEdit('${encodeURIComponent(JSON.stringify(record))}')">
+                    <a class="link_detail" href="#" onclick="showModelEdit('${record.$id.value}')">
                         <div class="me-2">
                             <svg width="30" height="30" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="26.5" cy="26.5" r="26" fill="#8BCB99" stroke="#7EB68A"/>
@@ -90,7 +92,7 @@ const templateMobile = (data) => {
     let html = "";
     data.forEach(function(record, index) {
         let btnEdit = `
-        <button class="me-2" onclick="showModelEdit('${encodeURIComponent(JSON.stringify(record))}')">
+        <button class="me-2" onclick="showModelEdit('${record.$id.value}')">
             <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1.98971 19.4615L0.0604248 27L7.59891 25.0707L26.2844 6.38529L20.6394 0.740356L1.98971 19.4615ZM5.49099 20.712L4.20481 19.4258L20.4965 3.16982L21.7827 4.45601L5.49099 20.712Z" fill="#8BCB99"/>
             </svg>
@@ -170,6 +172,29 @@ const templateMobile = (data) => {
     });
     return html;
 }
+var debounceTimer;
+$('#input-search').on('input', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() {
+        const keyword = $('#input-search').val().toLowerCase();
+        let filteredData = DATA_APP.filter(item => item.フォークリフト番号.value.includes(keyword));
+        $('#pagination-container').pagination({
+            dataSource: filteredData,
+            pageSize: 10,
+            pageRange: 1,
+            showPrevious: true,
+            showNext: true,
+            callback: function(data, pagination) {
+                var html = simpleTemplating(data);
+                $("#table-list>tbody").html(html);
+                var htmlMobile = templateMobile(data);
+                $("#ls-mobile").html(htmlMobile);
+
+            },
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+        });
+    }, 500); // Trì hoãn 1,5 giây
+});
 export function run() {
     getData();
     getProfile();

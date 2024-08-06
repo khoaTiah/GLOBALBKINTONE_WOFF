@@ -16,7 +16,7 @@ function actionSwitch(action) {
     $("#load-main").removeClass("display-none");
     const paths = {
         add: PATH_ADD,
-        edit: PATH_EDIT,
+        edit: PATH_ADD,
         menu: PATH_MENU,
         list: PATH_EDIT,
     };
@@ -31,6 +31,9 @@ function actionSwitch(action) {
         }
         if (action === 'add') {
             loadCreate();
+        }
+        if (action === 'edit') {
+            // loadCreate();
         }
         if (action == "list") {
             loadScript(JS_LIST, action);
@@ -55,6 +58,11 @@ async function loadScript(scriptPath, action) {
     if (action == "list") {
         if (module.run) {
             module.run();
+        }
+    }
+    if (action == "edit") {
+        if (module.runEdit) {
+            module.runEdit();
         }
     }
 }
@@ -115,14 +123,18 @@ function switchDisplayData(key) {
     }
 }
 const convertTime = (timeString) => {
-        const date = new Date(timeString);
+    const date = new Date(timeString);
 
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
 
-        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+};
+const showModelEdit = (id) => {
+        $("#id-edit").val(id);
+        actionSwitch('edit');
     }
     //

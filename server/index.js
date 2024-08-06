@@ -351,7 +351,7 @@ const getDataApp = async(id) => {
         while (offset < totalCount) {
             const response = await client.record.getRecords({
                 app: appId,
-                query: `日時_0 != "" and フォークリフト番号 != "" limit ${limit} offset ${offset}`
+                query: `日時_0 = "" limit ${limit} offset ${offset}`
             });
 
             allRecords = allRecords.concat(response.records);

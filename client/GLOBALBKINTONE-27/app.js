@@ -250,3 +250,10 @@ const getAddress = async(lat, lot) => {
             console.log(err);
         });
 };
+const getRecordByID = async() => {
+
+}
+export function runEdit() {
+
+
+};
