@@ -8,7 +8,7 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('add');
+    actionSwitch('menu');
 });
 
 
@@ -36,7 +36,7 @@ function actionSwitch(action, id = "") {
             // loadCreate();
             $("#end-time").show()
             $("#start-time").show()
-
+            backList();
         }
         if (action == "list") {
             loadScript(JS_LIST, action, id);
@@ -47,15 +47,7 @@ function actionSwitch(action, id = "") {
 }
 
 async function loadScript(scriptPath, action, id = "") {
-    // var oldScript = document.getElementById("dynamicScript");
-    // if (oldScript) {
-    //     oldScript.parentNode.removeChild(oldScript);
-    // }
-    // var newScript = document.createElement("script");
-    // newScript.src = scriptPath + "?t=" + new Date().getTime(); //  caching
-    // newScript.type = "module";
-    // newScript.id = "dynamicScript";
-    // document.body.appendChild(newScript);
+
     const module = await
     import (scriptPath);
     if (action == "list") {
@@ -153,6 +145,15 @@ var showModalDelete = (string, id) => {
     $(".id-value-remove").val(string);
     $(".id-remove-app").val(id);
     $("#remove-id").text(string);
+}
+const showMessage = (mess) => {
+    $("#toast").removeClass('display-none');
+    $("#toast .toast-body span").text(mess);
+    $('#toast').toast('show');
+}
+const backList = () => {
+    $("button#btn-menu").addClass("display-none");
+    $("button#btn-list").removeClass("display-none");
 }
 
 //

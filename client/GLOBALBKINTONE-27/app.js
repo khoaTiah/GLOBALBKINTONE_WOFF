@@ -132,11 +132,19 @@ const createData = async() => {
     $("#btn-create-start-time").click(async function() {
         let startDay = $("div#start-time input.day").val();
         let startTime = $("div#start-time input.time").val();
-        $("#error-start-time").text("");
+        let qr = $("#forklift-number").val();
+        $(".message-error").text("");
         $("#message-error>span").text("");
+        let flag = false;
         if (!startDay || !startTime) {
-            return $("#error-start-time").text("貸出日時を空にすることはできません。");
+            $("#error-start-time").text("貸出日時を空にすることはできません。");
+            flag = true;
         }
+        if (!qr) {
+            $("#error-qr").text("必須。");
+            flag = true;
+        }
+        if (flag) return;
         $("#loading-web").removeClass("display-none");
         let profile = await woff.getProfile().then((profile) => {
             return profile;
@@ -163,8 +171,9 @@ const createData = async() => {
                         woff.sendMessage({ 'content': msg });
                     }
                     $("#loading-web").addClass("display-none");
-                    $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動リロードします。");
-                    $('#toast').toast('show');
+                    showMessage(msg);
+                    // $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動リロードします。");
+                    // $('#toast').toast('show');
                     setTimeout(function() {
                         location.reload();
                     }, 3000);
@@ -205,8 +214,7 @@ const update = () => {
                             woff.sendMessage({ 'content': msg });
                         }
                         $("#loading-web").addClass("display-none");
-                        $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動リロードします。");
-                        $('#toast').toast('show');
+                        showMessage('登録しました。 ページを3秒ごとに自動リロードします')
                         setTimeout(function() {
                             location.reload();
                         }, 3000);
@@ -304,7 +312,7 @@ export function runCreate() {
     });
     $("#reset-start-time").click(function() {
         $("#start-time input.day").val("");
-        $("#error-start-time>span").text("");
+        $(".message-error").text("");
     });
     $("#get-location").click(function() {
         try {

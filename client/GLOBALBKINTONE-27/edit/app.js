@@ -197,28 +197,25 @@ $('#input-search').on('input', function() {
 });
 const remove = () => {
     document.getElementById('delete-record').addEventListener('click', async function() {
+        $("#load-main").removeClass("display-none");
         let id = $("#modal-notification input.id-remove-app").val();
+        $('#modal-notification').modal().hide();
         axios.delete(lambdaUrl + "?id=5957&recordId=" + id)
             .then((res) => {
                 if (res.status == 200) {
-                    console.log(res.body);
-                    // $("#data-container").removeClass("display-none");
-                    // let msg = " IDが" + id + "のレコードの削除に成功しました。";
-                    // if (woff.isInClient()) {
-                    //     woff.sendMessage({ 'content': msg }).then(() => {
-                    //         console.debug(msg);
-                    //     }).catch((err) => {
-                    //         $("#data-container").removeClass("display-none");
-                    //         $('#modal-notification').modal().hide();
-                    //         return window.alert(err);
-                    //     });
-                    // }
-                    // $('#modal-notification').modal().hide();
-                    // $("#toast .toast-body span").text(msg);
-                    // $('#toast').toast('show');
-                    // setTimeout(function () {
-                    //     location.reload();
-                    // }, 1500);
+                    $("#load-main").addClass("display-none");
+                    let msg = " IDが" + id + "のレコードの削除に成功しました。";
+                    if (woff.isInClient()) {
+                        woff.sendMessage({ 'content': msg }).then(() => {
+                            console.debug(msg);
+                        }).catch((err) => {
+                            return window.alert(err);
+                        });
+                    }
+                    showMessage(msg)
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
                 }
             })
             .catch((err) => {
