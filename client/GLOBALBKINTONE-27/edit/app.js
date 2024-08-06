@@ -53,7 +53,7 @@ function simpleTemplating(data) {
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#0b9d37" d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/></svg>
     </button>`;
         let buttonRemove =
-            `<button class="remove icon-list" onclick="showModalDelete(${record.$id.value})">
+            `<button class="remove icon-list" onclick="showModalDelete('${record.フォークリフト番号.value}',${record.$id.value})">
             <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="11.4229" cy="11.5772" r="10.9056" transform="rotate(45 11.4229 11.5772)" fill="#1AB53C"/>
             <path d="M14.8457 8L7.8457 15M14.8457 15L7.8457 8" stroke="white"/>
@@ -99,7 +99,7 @@ const templateMobile = (data) => {
         </button>`;
 
         let btnRemove = `
-        <button class="" onclick="showModalDelete(${record.$id.value})">
+        <button class="" onclick="showModalDelete('${record.フォークリフト番号.value}','${record.$id.value}')">
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="17" cy="17" r="16.2635" transform="rotate(45 17 17)" fill="#1AB53C"/>
                 <path d="M22 12L13 21M22 21L13 12" stroke="white"/>
@@ -195,8 +195,44 @@ $('#input-search').on('input', function() {
         });
     }, 500); // Trì hoãn 1,5 giây
 });
+const remove = () => {
+    document.getElementById('delete-record').addEventListener('click', async function() {
+        let id = $("#modal-notification input.id-remove-app").val();
+        axios.delete(lambdaUrl + "?id=5957&recordId=" + id)
+            .then((res) => {
+                if (res.status == 200) {
+                    console.log(res.body);
+                    // $("#data-container").removeClass("display-none");
+                    // let msg = " IDが" + id + "のレコードの削除に成功しました。";
+                    // if (woff.isInClient()) {
+                    //     woff.sendMessage({ 'content': msg }).then(() => {
+                    //         console.debug(msg);
+                    //     }).catch((err) => {
+                    //         $("#data-container").removeClass("display-none");
+                    //         $('#modal-notification').modal().hide();
+                    //         return window.alert(err);
+                    //     });
+                    // }
+                    // $('#modal-notification').modal().hide();
+                    // $("#toast .toast-body span").text(msg);
+                    // $('#toast').toast('show');
+                    // setTimeout(function () {
+                    //     location.reload();
+                    // }, 1500);
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    });
+
+}
 export function run() {
     getData();
     getProfile();
     switchDisplayData('table');
+    remove();
+    $(".close-modal-notification").click(function() {
+        $('#modal-notification').modal().hide();
+    });
 };

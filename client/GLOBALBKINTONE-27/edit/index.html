@@ -58,3 +58,23 @@
     <div id="pagination-container" class="nav"></div>
     <div class="mt-4"></div>
 </div>
+<div class="modal" tabindex="-1" id="modal-notification">
+    <input type="text" class="id-value-remove" hidden>
+    <input type="text" class="id-remove-app" hidden>
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">warning</h5>
+                <button type="button" class="btn-close close-modal-notification" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>削除完了: フォークリフト番号<span id="remove-id"></span>。</span>
+                <p>本当に削除しますか？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="delete-record">はい</button>
+                <button type="button" class="btn btn-secondary close-modal-notification" data-bs-dismiss="modal-notification">いいえ</button>
+            </div>
+        </div>
+    </div>
+</div>

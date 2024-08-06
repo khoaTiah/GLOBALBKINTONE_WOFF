@@ -110,6 +110,8 @@ export async function handler(event) {
                         return await removeApp_5232(paramsID, recordID);
                     } else if (paramsID == 5231) {
                         return await removeApp_5231(paramsID, recordID);
+                    } else {
+                        return await removeApp(paramsID, recordID);
                     }
                 case 'PATCH':
                     if (paramsID == 5232) {
@@ -543,6 +545,39 @@ const removeApp_5231 = async(id, recordId) => {
 const removeApp_5232 = async(id, recordId) => {
     try {
 
+        const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
+        const appId = id;
+        const baseUrl = KINTONE_BASE_URL;
+        const url = baseUrl + "k/v1/records.json";
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Cybozu-Authorization': base64DecodePass
+        };
+        const body = {
+            "app": appId,
+            'ids': [recordId]
+        };
+        try {
+            const response = await axios.delete(url, { headers, data: body });
+            return {
+                statusCode: 200,
+                body: JSON.stringify(response.data)
+            };
+        } catch (error) {
+            return {
+                statusCode: error.response.status,
+                body: JSON.stringify(error.response.data)
+            };
+        }
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: error })
+        };
+    }
+}
+const removeApp = async(id, recordId) => {
+    try {
         const base64DecodePass = "c2F0bzpHYmFsQjE3MjVQYXNz";
         const appId = id;
         const baseUrl = KINTONE_BASE_URL;

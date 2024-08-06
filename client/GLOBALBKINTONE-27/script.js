@@ -142,10 +142,17 @@ const convertTime = (timeString) => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 const showModelEdit = (id) => {
-        // if ($("#id-edit").val(id)) {
-        //     $("#id-edit").val("");
-        // }
-        // $("#id-edit").val(id);
-        actionSwitch('edit', id);
-    }
-    //
+    // if ($("#id-edit").val(id)) {
+    //     $("#id-edit").val("");
+    // }
+    // $("#id-edit").val(id);
+    actionSwitch('edit', id);
+}
+var showModalDelete = (string, id) => {
+    $("#modal-notification").show();
+    $(".id-value-remove").val(string);
+    $(".id-remove-app").val(id);
+    $("#remove-id").text(string);
+}
+
+//
