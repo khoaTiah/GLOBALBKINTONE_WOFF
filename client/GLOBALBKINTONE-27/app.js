@@ -1,7 +1,6 @@
 import { woffId, lambdaUrl } from './params.js'
 window.addEventListener('load', () => {
     woffInit();
-    getData();
 });
 const buildDate = () => {
     let today = new Date();
