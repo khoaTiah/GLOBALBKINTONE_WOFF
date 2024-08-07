@@ -56,11 +56,14 @@
             </div>
             <div class="input-box handwritten-sign mt-3">
                 <div style="position: relative;">
-                    div#lo
+                    <div id="loading-file" class="display-none">
+                        <div class="loader-file"></div>
+                    </div>
                     <label for="handwritten-sign" class="lb-av">添付ファイル<span class="ms-1">(最大1 GB)</span></label>
                     <input type="file" name="file" id="file" autocomplete="off" hidden>
+                    <!-- <input type="text" name="file-name-s3" id="file-name-s3" autocomplete="off" hidden> -->
                     <div class="downstairs file-input">
-                        <div class="files-name">
+                        <div class="files-name" id="files-name">
                             <span></span>
                         </div>
                         <div class="btns-file">

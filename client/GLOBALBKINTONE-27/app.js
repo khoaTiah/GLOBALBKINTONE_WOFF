@@ -161,7 +161,14 @@ const createData = async() => {
             "日時": { 'value': convertUTC(startDay, startTime) },
             // "返却日時": { 'value': siteName },
         };
-
+        var fileKey = $("#files-name span").data("file-key");
+        if (fileKey != undefined) {
+            body["手書きサイン"] = {
+                'value': [{
+                    "fileKey": fileKey
+                }]
+            };
+        }
         await axios.post(lambdaUrl + "?id=5957", body)
             .then((res) => {
                 if (res.status == 200) {
@@ -311,37 +318,86 @@ const convertUTC = (date, time) => {
 const file = () => {
     $('#file').change(async function() {
         console.log('file');
-        // $("#spinner-file").removeClass("none-spinner");
-        // const urlS3 = await addFile();
-        // console.log(urlS3);
-        // const formData = {
-        //     "path": urlS3.path,
-        //     "fileName": urlS3.fileName
-        // }
-        // await axios.put(lambdaUrl, formData, {
-        //         headers: {}
-        //     })
-        //     .then(response => {
-        //         $("#spinner-file").addClass("none-spinner");
-        //         $("#list-item-file").append(`
-        //         <div class="item"><span class="file-items ms-2" data-file-key="${response.data}">
-        //                 ${$(this).val().split('\\').pop()}
-        //                 </span>
-        //                 <button type="button" onclick="removeFile('${response.data}')">
-        //                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-        //                     <circle cx="11.4229" cy="11.4229" r="10.9056" transform="rotate(45 11.4229 11.4229)" fill="#1AB53C"/>
-        //                     <path d="M14.8457 7.84569L7.8457 14.8457M14.8457 14.8457L7.8457 7.84569" stroke="white"/>
-        //                     </svg>
-        //                 </button>
-        //         </div>
-        //         <hr>
-        //         `);
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
+        $("#loading-file").removeClass("display-none");
+        const urlS3 = await addFile();
+        const formData = {
+            "path": urlS3.path,
+            "fileName": urlS3.fileName
+        }
+        await axios.put(lambdaUrl, formData, {
+                headers: {}
+            })
+            .then(response => {
+                deletePhoto(urlS3.fileName);
+                $("#loading-file").addClass("display-none");
+                // $("#files-name>span").text(`${$(this).val().split('\\').pop()}`);
+                $("#files-name").html(`<span data-file-key="${response.data}">${$(this).val().split('\\').pop()}</span>`);
+                $("#btn-upload-file").addClass("disable-btn");
+            })
+            .catch(error => {
+                console.error(error);
+            });
     });
 }
+async function addFile() {
+    var folderName = "developer/public";
+    var files = document.getElementById("file").files;
+    if (!files.length) {
+        return alert("Please choose a file to upload first.");
+    }
+    var file = files[0];
+    var fileName = Date.now() + "_" + file.name;
+    var albumPhotosKey = folderName + "/";
+    var photoKey = albumPhotosKey + fileName;
+    var upload = new AWS.S3.ManagedUpload({
+        params: {
+            Bucket: s3Name,
+            Key: photoKey,
+            Body: file,
+        },
+    });
+    var promise = upload.promise();
+
+    try {
+        var data = await promise;
+        return {
+            "path": `https://${s3Name}.s3.amazonaws.com/${folderName}/${fileName}`,
+            "fileName": fileName
+        }
+    } catch (err) {
+        alert("There was an error uploading your photo: ", err.message);
+    }
+}
+const removeFile = () => {
+    console.log("Removing");
+    $("#file").val("");
+    $("#files-name>span").text("");
+    $("#btn-upload-file").removeClass("disable-btn");
+
+}
+
+function deletePhoto(fileName) {
+    var params = {
+        Bucket: s3Name,
+        Key: "developer/public/" + fileName
+    };
+
+    s3.deleteObject(params, function(err, data) {
+        if (err) {
+            console.error("There was an error deleting the photo: ", err.message);
+        } else {
+            console.log("Photo deleted successfully");
+        }
+    });
+}
+// S3
+
+AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.Credentials(accessKeyID, secretAccessKey)
+});
+var s3 = new AWS.S3();
+
 export function runEdit(id) {
     $("#id-edit").val(id);
     getRecordByID(id);
@@ -409,6 +465,9 @@ export function runCreate() {
     });
     $("#btn-upload-file").click(function() {
         document.getElementById('file').click();
+    });
+    $("#remove-file").click(function() {
+        removeFile();
     });
     file();
     createData();
