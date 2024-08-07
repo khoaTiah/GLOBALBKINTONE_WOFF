@@ -9,7 +9,7 @@
     <div class="container mt-2 " id="frm-create">
         <div id="loading-web" class="display-none"><span class="loader"></span></div>
         <form class="form-group" id="form-home">
-            <div class="text-center " id="title-app">
+            <div class="text-center mb-2" id="title-app">
                 <h3>フォークリフト貸出管理</h3>
             </div>
             <div class="date">
@@ -52,6 +52,23 @@
                 <div class="box-location mt-2">
                     <span id="load-location" class="loader display-none"></span>
                     <button id="get-location" class="btn btn-location" type="button">座標</button>
+                </div>
+            </div>
+            <div class="input-box handwritten-sign mt-3">
+                <div style="position: relative;">
+                    div#lo
+                    <label for="handwritten-sign" class="lb-av">添付ファイル<span class="ms-1">(最大1 GB)</span></label>
+                    <input type="file" name="file" id="file" autocomplete="off" hidden>
+                    <div class="downstairs file-input">
+                        <div class="files-name">
+                            <span></span>
+                        </div>
+                        <div class="btns-file">
+                            <button id="btn-upload-file" class="btn mt-1" type="button">参照</button>
+                            <button id="remove-file" class="btn mt-1" type="button">X</button>
+                        </div>
+                    </div>
+                    <span id="error-qr" class="message-error"></span>
                 </div>
             </div>
             <div id="start-time" class="mt-3">

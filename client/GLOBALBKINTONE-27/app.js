@@ -151,7 +151,6 @@ const createData = async() => {
         }).catch((err) => {
             return err;
         });
-
         let body = {
             // "日付": { 'value': $("#date-now").text() },
             "フォークリフト番号": { 'value': $("#forklift-number").val() },
@@ -162,6 +161,7 @@ const createData = async() => {
             "日時": { 'value': convertUTC(startDay, startTime) },
             // "返却日時": { 'value': siteName },
         };
+
         await axios.post(lambdaUrl + "?id=5957", body)
             .then((res) => {
                 if (res.status == 200) {
@@ -304,8 +304,43 @@ const convertUTC = (date, time) => {
     let gtm = gmtOffsetMatch ? gmtOffsetMatch[0] : '';
 
     let dateTimeLocal = `${date} ${time} ${gtm}`;
+    dateTimeLocal = `${date}T${time}${gtm.replace('GMT', '')}`;
     let localTime = new Date(dateTimeLocal);
     return localTime.toISOString().slice(0, 19) + 'Z';
+}
+const file = () => {
+    $('#file').change(async function() {
+        console.log('file');
+        // $("#spinner-file").removeClass("none-spinner");
+        // const urlS3 = await addFile();
+        // console.log(urlS3);
+        // const formData = {
+        //     "path": urlS3.path,
+        //     "fileName": urlS3.fileName
+        // }
+        // await axios.put(lambdaUrl, formData, {
+        //         headers: {}
+        //     })
+        //     .then(response => {
+        //         $("#spinner-file").addClass("none-spinner");
+        //         $("#list-item-file").append(`
+        //         <div class="item"><span class="file-items ms-2" data-file-key="${response.data}">
+        //                 ${$(this).val().split('\\').pop()}
+        //                 </span>
+        //                 <button type="button" onclick="removeFile('${response.data}')">
+        //                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        //                     <circle cx="11.4229" cy="11.4229" r="10.9056" transform="rotate(45 11.4229 11.4229)" fill="#1AB53C"/>
+        //                     <path d="M14.8457 7.84569L7.8457 14.8457M14.8457 14.8457L7.8457 7.84569" stroke="white"/>
+        //                     </svg>
+        //                 </button>
+        //         </div>
+        //         <hr>
+        //         `);
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
+    });
 }
 export function runEdit(id) {
     $("#id-edit").val(id);
@@ -372,5 +407,9 @@ export function runCreate() {
             alert(error);
         }
     });
+    $("#btn-upload-file").click(function() {
+        document.getElementById('file').click();
+    });
+    file();
     createData();
 };

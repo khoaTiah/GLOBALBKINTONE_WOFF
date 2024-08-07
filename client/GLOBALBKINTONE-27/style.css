@@ -142,11 +142,13 @@ label.lb-av {
 }
 
 button#get-qr,
-.btn-submit {
+.btn-submit,
+#btn-upload-file {
     background-color: #1AB53C !important;
     margin-right: 0.2rem;
     border-radius: 5px !important;
     padding: 5px 8px!important;
+    color: white;
 }
 
 .btn-clear {
@@ -198,7 +200,8 @@ input#forklift-number {
     height: 3rem;
 }
 
-button#get-qr {
+button#get-qr,
+#btn-upload-file {
     width: 4rem;
     height: 3rem;
 }
@@ -401,6 +404,42 @@ input.time {
 #menu #form-home {
     min-height: 5rem;
     padding: 3rem;
+}
+
+.title-box {
+    font-weight: bold !important;
+}
+
+.downstairs.file-input {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+}
+
+div.files-name {
+    width: 70%;
+    border-bottom: 1px solid #999999;
+    padding: 0.3rem 0;
+    text-align: end;
+}
+
+.btns-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+button#remove-file {
+    width: 2rem;
+    height: 2rem;
+    background: #999999;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    color: white;
 }
 
 
