@@ -270,6 +270,8 @@ const getRecordByID = async(id) => {
             $("#forklift-number").val(records.record.フォークリフト番号.value);
             $("#latitude").val(records.record.緯度.value);
             $("#longitude").val(records.record.経度.value);
+            if (records.record.手書きサイン.value.length > 0)
+                $("#files-name>span").text(records.record.手書きサイン.value[0].name);
             let startTime = convertTimeEdit(records.record.日時.value);
             $("div#start-time input.day").val(startTime.date);
             $("div#start-time input.time").val(startTime.time);
@@ -297,9 +299,13 @@ const disableButton = (isTrue) => {
         $("#get-qr").addClass("disable-btn");
         $("#get-location").addClass("disable-btn");
         $("#start-time .btns").hide();
+        $("#btn-upload-file").addClass("disable-btn");
+        $("#remove-file").addClass("disable-btn");
     } else {
         $("#get-qr").removeClass("disable-btn");
         $("#get-qr").removeClass("disable-btn");
+        $("#btn-upload-file").removeClass("disable-btn");
+        $("#remove-file").removeClass("disable-btn");
         $("#start-time .btns").show();
     }
 }
@@ -392,11 +398,6 @@ function deletePhoto(fileName) {
 }
 // S3
 
-AWS.config.update({
-    region: bucketRegion,
-    credentials: new AWS.Credentials(accessKeyID, secretAccessKey)
-});
-var s3 = new AWS.S3();
 
 export function runEdit(id) {
     $("#id-edit").val(id);

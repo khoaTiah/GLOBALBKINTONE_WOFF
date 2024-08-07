@@ -8,9 +8,8 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('add');
+    actionSwitch('menu');
 });
-
 
 function actionSwitch(action, id = "") {
     $("#load-main").removeClass("display-none");
