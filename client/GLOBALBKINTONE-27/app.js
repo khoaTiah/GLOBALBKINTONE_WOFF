@@ -1,7 +1,8 @@
 import { woffId, lambdaUrl } from './params.js'
 window.addEventListener('load', () => {
-    woffInit();
+    // woffInit();
 });
+var signaturePadHome;
 const buildDate = () => {
     let today = new Date();
     let day = ("0" + today.getDate()).slice(-2);
@@ -130,6 +131,10 @@ $(document).ready(function() {
 });
 const createData = async() => {
     $("#btn-create-start-time").click(async function() {
+
+        const data = signaturePadHome.toDataURL()
+        uploadBase64ToS3(data)
+        return;
         let startDay = $("div#start-time input.day").val();
         let startTime = $("div#start-time input.time").val();
         let qr = $("#forklift-number").val();
@@ -197,6 +202,8 @@ const createData = async() => {
                 console.error(data);
             });
     });
+
+
 
 };
 const update = () => {
@@ -321,30 +328,32 @@ const convertUTC = (date, time) => {
     let localTime = new Date(dateTimeLocal);
     return localTime.toISOString().slice(0, 19) + 'Z';
 }
-const file = () => {
-    $('#file').change(async function() {
-        console.log('file');
-        $("#loading-file").removeClass("display-none");
-        const urlS3 = await addFile();
-        const formData = {
-            "path": urlS3.path,
-            "fileName": urlS3.fileName
-        }
-        await axios.put(lambdaUrl, formData, {
-                headers: {}
-            })
-            .then(response => {
-                deletePhoto(urlS3.fileName);
-                $("#loading-file").addClass("display-none");
-                // $("#files-name>span").text(`${$(this).val().split('\\').pop()}`);
-                $("#files-name").html(`<span data-file-key="${response.data}">${$(this).val().split('\\').pop()}</span>`);
-                $("#btn-upload-file").addClass("disable-btn");
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    });
+
+const file = async() => {
+    // $('#file').change(async function() {
+    // console.log('file');
+    // $("#loading-file").removeClass("display-none");
+    const urlS3 = await addFile();
+    const formData = {
+        "path": urlS3.path,
+        "fileName": urlS3.fileName
+    }
+    await axios.put(lambdaUrl, formData, {
+            headers: {}
+        })
+        .then(response => {
+            deletePhoto(urlS3.fileName);
+            $("#loading-file").addClass("display-none");
+            // $("#files-name>span").text(`${$(this).val().split('\\').pop()}`);
+            $("#files-name").html(`<span data-file-key="${response.data}">${$(this).val().split('\\').pop()}</span>`);
+            $("#btn-upload-file").addClass("disable-btn");
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    // });
 }
+
 async function addFile() {
     var folderName = "developer/public";
     var files = document.getElementById("file").files;
@@ -374,6 +383,38 @@ async function addFile() {
         alert("There was an error uploading your photo: ", err.message);
     }
 }
+async function uploadBase64ToS3(base64Data, contentType = 'image/png') {
+    // try {
+    var folderName = "developer/public";
+    var fileName = Date.now() + "_" + "test.jpg";
+    var albumPhotosKey = folderName + "/";
+    var photoKey = albumPhotosKey + fileName;
+
+    // Loại bỏ phần metadata (data:image/png;base64,) nếu có
+    const base64String = base64Data.split(',')[1];
+    const blob = new Blob([Uint8Array.from(atob(base64String), c => c.charCodeAt(0))], { type: contentType });
+    // Tạo đối tượng upload
+    const upload = new AWS.S3.ManagedUpload({
+        params: {
+            Bucket: s3Name,
+            Key: photoKey,
+            Body: blob,
+            ContentEncoding: 'base64', // Đặt mã hóa nội dung là base64
+            ContentType: contentType
+        },
+    });
+
+    // Upload và lấy kết quả
+    const data = await upload.promise();
+    return {
+        "path": `https://${s3Name}.s3.amazonaws.com/${photoKey}`,
+        "fileName": fileName
+    };
+    // } catch (err) {
+    //     alert("There was an error uploading your photo: " + err.message);
+    // }
+}
+
 const removeFile = () => {
     console.log("Removing");
     $("#file").val("");
@@ -412,7 +453,7 @@ export function runEdit(id) {
 export function runCreate() {
     // checkPermission();
     // nút xóa
-    woffInit();
+    // woffInit();
     $("#get-qr").click(function() {
         $("#forklift-number").val("")
         woff.scanQR()
@@ -427,6 +468,12 @@ export function runCreate() {
     $("#reset-start-time").click(function() {
         $("#start-time input.day").val("");
         $(".message-error").text("");
+        const canvas = document.getElementById('signature-pad');
+        const signaturePad = new SignaturePad(canvas);
+        signaturePadHome = signaturePad;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#0000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     });
     $("#get-location").click(function() {
         try {
@@ -464,12 +511,30 @@ export function runCreate() {
             alert(error);
         }
     });
-    $("#btn-upload-file").click(function() {
-        document.getElementById('file').click();
-    });
     $("#remove-file").click(function() {
         removeFile();
     });
-    file();
+    // file();
     createData();
+    const canvas = document.getElementById('signature-pad');
+    const signaturePad = new SignaturePad(canvas);
+    signaturePadHome = signaturePad;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = "#0000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    $("#clear-signature_pad").click(function() {
+        signaturePad.clear();
+    });
+    // $("#ok-signature_pad").click(function() {
+    //     if (signaturePad.isEmpty()) {
+    //         alert("Vui lòng ký tên!");
+    //         return;
+    //     }
+    //     let img = signaturePad.toDataURL()
+    //     $("#image-signature").attr("src", img);
+    //     // $('yourimageselector').attr('src', 'newsrc').load(function() {
+    //     //     $(this).width(); // this is how you get new width of image
+    //     // });
+    //     $('#modal-signature_pad').modal().hide();
+    // });
 };
