@@ -131,31 +131,43 @@ $(document).ready(function() {
 });
 const createData = async() => {
     $("#btn-create-start-time").click(async function() {
+        $(".message-error").text("");
+        $("#message-error>span").text("");
 
-        const data = signaturePadHome.toDataURL()
-        uploadBase64ToS3(data)
-        return;
         let startDay = $("div#start-time input.day").val();
         let startTime = $("div#start-time input.time").val();
         let qr = $("#forklift-number").val();
-        $(".message-error").text("");
-        $("#message-error>span").text("");
         let flag = false;
         if (!startDay || !startTime) {
             $("#error-start-time").text("貸出日時を空にすることはできません。");
             flag = true;
         }
-        // if (!qr) {
-        //     $("#error-qr").text("必須。");
-        //     flag = true;
-        // }
         if (flag) return;
         $("#loading-web").removeClass("display-none");
+        if (signaturePadHome.isEmpty()) {
+            $("#err-signature").text("Vui lòng ký tên!");
+            return;
+        }
         let profile = await woff.getProfile().then((profile) => {
             return profile;
         }).catch((err) => {
             return err;
         });
+        const data = signaturePadHome.toDataURL()
+        let { path, fileName } = await uploadBase64ToS3(data);
+        const formData = {
+            "path": path,
+            "fileName": profile.displayName + "_" + Date.now() + ".jpg"
+        }
+        let idFile = await axios.put(lambdaUrl, formData, {
+                headers: {}
+            })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
         let body = {
             // "日付": { 'value': $("#date-now").text() },
             "フォークリフト番号": { 'value': $("#forklift-number").val() },
@@ -166,7 +178,7 @@ const createData = async() => {
             "日時": { 'value': convertUTC(startDay, startTime) },
             // "返却日時": { 'value': siteName },
         };
-        var fileKey = $("#files-name span").data("file-key");
+        var fileKey = idFile;
         if (fileKey != undefined) {
             body["手書きサイン"] = {
                 'value': [{
@@ -329,90 +341,40 @@ const convertUTC = (date, time) => {
     return localTime.toISOString().slice(0, 19) + 'Z';
 }
 
-const file = async() => {
-    // $('#file').change(async function() {
-    // console.log('file');
-    // $("#loading-file").removeClass("display-none");
-    const urlS3 = await addFile();
-    const formData = {
-        "path": urlS3.path,
-        "fileName": urlS3.fileName
-    }
-    await axios.put(lambdaUrl, formData, {
-            headers: {}
-        })
-        .then(response => {
-            deletePhoto(urlS3.fileName);
-            $("#loading-file").addClass("display-none");
-            // $("#files-name>span").text(`${$(this).val().split('\\').pop()}`);
-            $("#files-name").html(`<span data-file-key="${response.data}">${$(this).val().split('\\').pop()}</span>`);
-            $("#btn-upload-file").addClass("disable-btn");
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    // });
-}
 
-async function addFile() {
-    var folderName = "developer/public";
-    var files = document.getElementById("file").files;
-    if (!files.length) {
-        return alert("Please choose a file to upload first.");
-    }
-    var file = files[0];
-    var fileName = Date.now() + "_" + file.name;
-    var albumPhotosKey = folderName + "/";
-    var photoKey = albumPhotosKey + fileName;
-    var upload = new AWS.S3.ManagedUpload({
-        params: {
-            Bucket: s3Name,
-            Key: photoKey,
-            Body: file,
-        },
-    });
-    var promise = upload.promise();
 
-    try {
-        var data = await promise;
-        return {
-            "path": `https://${s3Name}.s3.amazonaws.com/${folderName}/${fileName}`,
-            "fileName": fileName
-        }
-    } catch (err) {
-        alert("There was an error uploading your photo: ", err.message);
-    }
-}
+
+var s3Name = "";
+var bucketRegion = "";
+var accessKeyID = "";
+var secretAccessKey = "";
+AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.Credentials(accessKeyID, secretAccessKey)
+});
+var s3 = new AWS.S3();
 async function uploadBase64ToS3(base64Data, contentType = 'image/png') {
-    // try {
     var folderName = "developer/public";
-    var fileName = Date.now() + "_" + "test.jpg";
+    var fileName = Date.now() + "_" + "mm.jpg";
     var albumPhotosKey = folderName + "/";
     var photoKey = albumPhotosKey + fileName;
-
-    // Loại bỏ phần metadata (data:image/png;base64,) nếu có
     const base64String = base64Data.split(',')[1];
     const blob = new Blob([Uint8Array.from(atob(base64String), c => c.charCodeAt(0))], { type: contentType });
-    // Tạo đối tượng upload
     const upload = new AWS.S3.ManagedUpload({
         params: {
             Bucket: s3Name,
             Key: photoKey,
             Body: blob,
-            ContentEncoding: 'base64', // Đặt mã hóa nội dung là base64
+            ContentEncoding: 'base64',
             ContentType: contentType
         },
     });
-
-    // Upload và lấy kết quả
     const data = await upload.promise();
     return {
         "path": `https://${s3Name}.s3.amazonaws.com/${photoKey}`,
         "fileName": fileName
     };
-    // } catch (err) {
-    //     alert("There was an error uploading your photo: " + err.message);
-    // }
+
 }
 
 const removeFile = () => {
@@ -472,7 +434,7 @@ export function runCreate() {
         const signaturePad = new SignaturePad(canvas);
         signaturePadHome = signaturePad;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = "#0000";
+        ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     });
     $("#get-location").click(function() {
@@ -514,27 +476,15 @@ export function runCreate() {
     $("#remove-file").click(function() {
         removeFile();
     });
-    // file();
     createData();
     const canvas = document.getElementById('signature-pad');
     const signaturePad = new SignaturePad(canvas);
     signaturePadHome = signaturePad;
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = "#0000";
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     $("#clear-signature_pad").click(function() {
         signaturePad.clear();
     });
-    // $("#ok-signature_pad").click(function() {
-    //     if (signaturePad.isEmpty()) {
-    //         alert("Vui lòng ký tên!");
-    //         return;
-    //     }
-    //     let img = signaturePad.toDataURL()
-    //     $("#image-signature").attr("src", img);
-    //     // $('yourimageselector').attr('src', 'newsrc').load(function() {
-    //     //     $(this).width(); // this is how you get new width of image
-    //     // });
-    //     $('#modal-signature_pad').modal().hide();
-    // });
+
 };

@@ -60,13 +60,10 @@
                         <div class="loader-file"></div>
                     </div>
                     <label for="handwritten-sign" class="lb-av">手書きサイン<span class="ms-1">(最大1 GB)</span></label>
-                    <input type="file" name="file" id="file" autocomplete="off" hidden>
                     <canvas id="signature-pad" width="400" height="200"></canvas>
                     <div class="downstairs file-input">
-                        <!-- <div class="files-name" id="files-name">
-                            <span></span>
-                        </div> -->
                         <div class="btns-file">
+                            <span id="err-signature" class="message-error"></span>
                             <button id="clear-signature_pad" class="btn btn-clear me-2" type="button">クリア</button>
                         </div>
                     </div>
