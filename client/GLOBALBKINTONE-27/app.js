@@ -1,6 +1,6 @@
 import { woffId, lambdaUrl } from './params.js'
 window.addEventListener('load', () => {
-    // woffInit();
+    woffInit();
 });
 var signaturePadHome;
 const buildDate = () => {
@@ -142,12 +142,12 @@ const createData = async() => {
             $("#error-start-time").text("貸出日時を空にすることはできません。");
             flag = true;
         }
+        if (signaturePadHome.isEmpty()) {
+            $("#err-signature").text("サインしてください。");
+            flag = true;
+        }
         if (flag) return;
         $("#loading-web").removeClass("display-none");
-        if (signaturePadHome.isEmpty()) {
-            $("#err-signature").text("Vui lòng ký tên!");
-            return;
-        }
         let profile = await woff.getProfile().then((profile) => {
             return profile;
         }).catch((err) => {
@@ -157,7 +157,7 @@ const createData = async() => {
         let { path, fileName } = await uploadBase64ToS3(data);
         const formData = {
             "path": path,
-            "fileName": profile.displayName + "_" + Date.now() + ".jpg"
+            "fileName": profile.displayName + "_.jpg"
         }
         let idFile = await axios.put(lambdaUrl, formData, {
                 headers: {}
@@ -289,8 +289,16 @@ const getRecordByID = async(id) => {
             $("#forklift-number").val(records.record.フォークリフト番号.value);
             $("#latitude").val(records.record.緯度.value);
             $("#longitude").val(records.record.経度.value);
-            if (records.record.手書きサイン.value.length > 0)
-                $("#files-name>span").text(records.record.手書きサイン.value[0].name);
+            if (records.record.手書きサイン.value.length > 0) {
+                $(".edit-signature .message-signature").text("署名済み");
+                $(".edit-signature .icon-check.true").show();
+                $(".edit-signature .icon-check.false").hide();
+            } else {
+                $(".edit-signature .message-signature").text("未署名");
+                $(".edit-signature .icon-check.true").hide();
+                $(".edit-signature .icon-check.false").show();
+            }
+
             let startTime = convertTimeEdit(records.record.日時.value);
             $("div#start-time input.day").val(startTime.date);
             $("div#start-time input.time").val(startTime.time);
@@ -341,13 +349,13 @@ const convertUTC = (date, time) => {
     return localTime.toISOString().slice(0, 19) + 'Z';
 }
 
-
-
+// 
 
 var s3Name = "";
 var bucketRegion = "";
 var accessKeyID = "";
 var secretAccessKey = "";
+
 AWS.config.update({
     region: bucketRegion,
     credentials: new AWS.Credentials(accessKeyID, secretAccessKey)
@@ -415,7 +423,7 @@ export function runEdit(id) {
 export function runCreate() {
     // checkPermission();
     // nút xóa
-    // woffInit();
+    woffInit();
     $("#get-qr").click(function() {
         $("#forklift-number").val("")
         woff.scanQR()
@@ -484,7 +492,12 @@ export function runCreate() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     $("#clear-signature_pad").click(function() {
-        signaturePad.clear();
+        const canvas = document.getElementById('signature-pad');
+        const signaturePadNew = new SignaturePad(canvas);
+        signaturePadHome = signaturePadNew;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     });
 
 };

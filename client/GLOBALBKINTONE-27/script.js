@@ -8,7 +8,7 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('add');
+    actionSwitch('menu');
 });
 
 function actionSwitch(action, id = "") {
@@ -35,6 +35,8 @@ function actionSwitch(action, id = "") {
             // loadCreate();
             $("#end-time").show()
             $("#start-time").show()
+            $(".edit-signature").show();
+            $(".signature-pad-created").hide();
             backList();
         }
         if (action == "list") {
@@ -78,7 +80,9 @@ function loadCss(cssArray) {
     });
 }
 const loadCreate = () => {
-    $("#end-time").hide()
+    $("#end-time").hide();
+    $(".edit-signature").hide();
+    $(".signature-pad-created").show();
 }
 const getDate = (type) => {
     const now = new Date();
