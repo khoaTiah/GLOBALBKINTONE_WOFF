@@ -351,6 +351,7 @@ const convertUTC = (date, time) => {
 
 // 
 
+
 var s3Name = "";
 var bucketRegion = "";
 var accessKeyID = "";
@@ -491,6 +492,9 @@ export function runCreate() {
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
     $("#clear-signature_pad").click(function() {
         const canvas = document.getElementById('signature-pad');
         const signaturePadNew = new SignaturePad(canvas);
@@ -500,4 +504,13 @@ export function runCreate() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     });
 
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext('2d').scale(ratio, ratio);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // signaturePadHome.clear(); // 
+    }
 };
