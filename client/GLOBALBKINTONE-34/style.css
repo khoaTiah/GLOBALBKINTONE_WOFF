@@ -1,0 +1,62 @@
+@font-face {
+    font-family: "Noto-Sans-JP-Regular";
+    src: url("./public/font/static/NotoSansJP-Regular.ttf") format("woff"), url("./public/font/static/NotoSansJP-Regular.ttf") format("opentype"), url("./public/font/static/NotoSansJP-Regular.ttf") format("truetype");
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0px;
+}
+
+body,
+html {
+    font-family: "Noto-Sans-JP-Regular", sans-serif !important;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(34, 41, 47, 0);
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    position: absolute;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a:focus {
+    outline: none !important;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #57b846;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+}
+
+button {
+    transition: all .3s !important;
+}
+
+@media (max-width: 500px) {
+    body,
+    html {
+        font-size: 12px !important;
+    }
+}
