@@ -8,34 +8,36 @@
             <h3>
                 消火器具点検票
             </h3>
-            <div class="input-box mt-1 number-of-floors">
-                <label for="number-of-floors" class="lb-av">設置階数など</label>
-                <div class="downstairs">
-                    <input class="mt-2 form-control" type="text" name="number-of-floors" id="number-of-floors" autocomplete="off">
-                </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="number-of-floors" placeholder="0,1,2..">
+                <label for="number-of-floors">設置階数など</label>
             </div>
         </section>
 
-        <section>
+        <section class="prevention-object">
             <div>
-                <div class="input-box mt-1 name-of-fire">
+                <div class="input-box mt-1 name-of-fire ">
                     <label for="name-of-fire" class="lb-av">防火対象物名称</label>
-                    <div class="downstairs">
-                        <input class="mt-2 form-control" type="text" name="name-of-fire" id="name-of-fire" autocomplete="off">
+                    <div class="downstairs ">
+                        <input class="form-control" type="text" name="name-of-fire" id="name-of-fire" autocomplete="off">
+                        <div class="actions">
+                            <button type="button" class="btn btn-select" id="btn-lookup_1">取得</button>
+                            <button class="btn btn-clear me-1" type="button" onclick="clearLookup_1()">クリア</button>
+                        </div>
                     </div>
                 </div>
-                <div class="input-box mt-1 location">
-                    <label for="location" class="lb-av">所在</label>
+                <div class="input-box mt-1 fire-manager">
+                    <label for="fire-manager" class="lb-av">防火管理者</label>
                     <div class="downstairs">
-                        <input class="mt-2 form-control" type="text" name="location" autocomplete="off">
+                        <input class="form-control" type="text" name="fire-manager" id="fire-manager" autocomplete="off" readonly>
                     </div>
                 </div>
             </div>
             <div>
-                <div class="input-box mt-1 fire-manager">
-                    <label for="fire-manager" class="lb-av">防火管理者</label>
+                <div class="input-box mt-1 location">
+                    <label for="location" class="lb-av">所在</label>
                     <div class="downstairs">
-                        <input class="mt-2 form-control" type="text" name="fire-manager" id="fire-manager" autocomplete="off">
+                        <input class="form-control" type="text" name="location" autocomplete="off" readonly>
                     </div>
                 </div>
                 <div class="input-box mt-1 witness">
@@ -48,65 +50,561 @@
         </section>
 
         <section>
-            <div class="input-box mt-1 inspection-type">
-                <label for="inspection-type" class="lb-av">点検種別</label>
-                <div class="downstairs">
-                    <input class="mt-2 form-control" type="text" name="inspection-type" id="inspection-type" autocomplete="off">
+            <div class="inspection">
+                <div class="input-box mt-1 me-1 inspection-type">
+                    <label for="inspection-type" class="lb-av">点検種別</label>
+                    <div class="downstairs">
+                        <input class="form-control" type="text" name="inspection-type" id="inspection-type" autocomplete="off">
+                    </div>
                 </div>
-            </div>
-            <div class="input-box mt-1 start-date">
-                <label for="start-date" class="lb-av">点検年月日（自）</label>
-                <div class="downstairs">
-                    <input class="mt-2 form-control" type="text" name="start-date" id="start-date" autocomplete="off">
-                </div>
-            </div>
-            <div class="input-box mt-1 date-arrival">
-                <label for="date-arrival" class="lb-av">点検年月日（至）</label>
-                <div class="downstairs">
-                    <input class="mt-2 form-control" type="text" name="date-arrival" id="date-arrival" autocomplete="off">
+                <div class="dataToDate">
+                    <div class="input-box mt-1 start-date">
+                        <label for="start-date" class="lb-av">点検年月日（自）</label>
+                        <div class="downstairs">
+                            <input class="form-control" type="date" name="start-date" id="start-date" autocomplete="off">
+                        </div>
+                    </div>
+                    <strong class="unShow-500">～</strong>
+                    <div class="input-box mt-1 date-arrival">
+                        <label for="date-arrival" class="lb-av">点検年月日（至）</label>
+                        <div class="downstairs">
+                            <input class="form-control" type="date" name="date-arrival" id="date-arrival" autocomplete="off">
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
         <!-- <span class="title-section">
             点検者
         </span> -->
-        <section>
+        <section class="reviewer">
             <div>
-                <span class="title-section">
-                点検者
-            </span>
+                <span class="title-section fw-bold">
+                    点検者
+                </span>
                 <div class="input-box mt-1 full-name">
                     <label for="full-name" class="lb-av">氏名</label>
                     <div class="downstairs">
-                        <input class="mt-2 form-control" type="text" name="full-name" id="full-name" autocomplete="off">
+                        <input class="form-control" type="text" name="full-name" id="full-name" autocomplete="off">
+                        <div class="actions">
+                            <button type="button" class="btn btn-select" id="btn-lookup_1">取得</button>
+                            <button class="btn btn-clear me-1" type="button" onclick="clearLookup_1()">クリア</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <span class="title-section">
+            <div class="sub-reviewer">
+                <!-- <span class="title-section ">
                     点検者所属会社
-                </span>
+                </span> -->
                 <div>
-                    <div class="input-box mt-1 company-name">
+                    <div class="input-box mt-1 me-1 company-name">
                         <label for="company-name" class="lb-av">社名</label>
                         <div class="downstairs">
-                            <input class="mt-2 form-control" type="text" name="company-name" id="company-name" autocomplete="off">
+                            <input class="form-control" type="text" name="company-name" id="company-name" autocomplete="off" readonly>
                         </div>
                     </div>
-                    <div class="input-box mt-1 telephone">
+                    <div class="input-box mt-1 me-1 telephone">
                         <label for="telephone" class="lb-av">TEL</label>
                         <div class="downstairs">
-                            <input class="mt-2 form-control" type="text" name="telephone" id="telephone" autocomplete="off">
+                            <input class="form-control" type="text" name="telephone" id="telephone" autocomplete="off" readonly>
                         </div>
                     </div>
-                    <div class="input-box mt-1 address">
+                    <div class="input-box mt-1 me-1 address">
                         <label for="address" class="lb-av">住所</label>
                         <div class="downstairs">
-                            <input class="mt-2 form-control" type="text" name="address" id="address" autocomplete="off">
+                            <input class="form-control" type="text" name="address" id="address" autocomplete="off" readonly>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section id="table">
+            <div class="text-center p-2">
+                <h3 class="title-section">
+                    機器点検
+                </h3>
+            </div>
+            <div id="show-table">
+                <table class="table">
+                    <tr>
+                        <th rowspan="3" colspan="2">点検項目</th>
+                        <th colspan="3">消火器の種別</th>
+                        <th rowspan="3">措置内容</th>
+                    </tr>
+                    <tr>
+                        <th colspan="1" class="extinguisher-a">消火器の種別</th>
+                        <th rowspan="2" class="judgement">判定</th>
+                        <th rowspan="2">不良内容</th>
+                    </tr>
+                    <tr>
+                        <th>A</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="4" class="title">設置状況</td>
+                        <td style="min-width: 10rem;">設置場所</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">設置間隔</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">適応性</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">耐震措置</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1">○</option>
+                            <option value="2" selected>/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            o
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan="1" class="title">表示・標識</td>
+                        <td style="min-width: 10rem;">表示標識</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="14" class="title">消火器の外形</td>
+                        <td style="min-width: 10rem;">表示標識</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ×
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">安全栓の封</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                        <option >-----</option>
+                        <option value="1" selected>○</option>
+                        <option value="2">/</option>
+                        <option value="3">1</option>
+                        <option value="3">2</option>
+                        <option value="3">3</option>
+                        <option value="3">4</option>
+                        <option value="3">5</option>
+                      </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">安全栓</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">使用済みの表示装置</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" >○</option>
+                            <option value="2" selected>/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">押し金具レバー等</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option selected>-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">キャップ</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option selected>-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="min-width: 10rem;">ホース</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option selected>-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">ノズルホーンノズル栓</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option selected>-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">指示圧力計</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option selected>-----</option>
+                            <option value="1" selected>○</option>
+                            <option value="2">/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">圧力調整器</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" >○</option>
+                            <option value="2" selected>/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">安全弁</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" >○</option>
+                            <option value="2" selected>/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">保持装置</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" >○</option>
+                            <option value="2" selected>/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">車輪（車載式）</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" >○</option>
+                            <option value="2" selected>/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="min-width: 10rem;">ｶﾞｽ導入管（車載式）</td>
+                        <td colspan="1">
+                            <select class="form-select">
+                            <option >-----</option>
+                            <option value="1" >○</option>
+                            <option value="2" selected>/</option>
+                            <option value="3">1</option>
+                            <option value="3">2</option>
+                            <option value="3">3</option>
+                            <option value="3">4</option>
+                            <option value="3">5</option>
+                          </select>
+                        </td>
+                        <td class="disabled-text">
+                            ○
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <div class="pb-5"></div>
     </form>
 </div>
