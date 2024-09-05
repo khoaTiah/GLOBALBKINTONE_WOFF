@@ -146,6 +146,18 @@ function elementTracking() {
         trElement.find('.disabled-text').text(selectedValue);
     });
 }
+const createData = async() => {
+    $("#btn-update-or-add").click(async function() {
+        let body = {
+
+        }
+    });
+}
+const convertUTC = (date) => {
+    let localDate = new Date(date);
+    let utcDate = new Date(Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate()));
+    return utcDate.toISOString().slice(0, 10);
+}
 export function runCreate() {
     buildPageCreate();
 };
