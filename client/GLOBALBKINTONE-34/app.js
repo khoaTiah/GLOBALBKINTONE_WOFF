@@ -54,6 +54,7 @@ const buildPageCreate = async() => {
     $("#btn-lookup_6004").click(function() {
         $("#modal-6004").modal('show');
     });
+    elementTracking();
 };
 const getRecord_6015 = async() => {
     // https://gbalb-demo.cybozu.com/k/6015/
@@ -107,7 +108,7 @@ const getRecord_6004 = async() => {
             </tr>`;
         arrValue.push({
             "name_erased": record.氏名_点検者名簿.value,
-            "inspector-company": record.会社名_点検者名簿.value,
+            "inspector_company": record.会社名_点検者名簿.value,
             "telephone": record.電話番号_点検者名簿.value,
             "address": record.住所_点検者名簿.value,
             "id": record.$id.value,
@@ -123,11 +124,19 @@ const getRecord_6004 = async() => {
     input.addEventListener("awesomplete-selectcomplete", function(event) {
         const selectedOption = arrValue.find(option => option.name_erased === event.text.value);
         if (selectedOption) {
-            selectName(selectedOption.id, selectedOption.name_erased, selectedOption.inspector - company, selectedOption.telephone, selectedOption.address);
+            selectInspector(selectedOption.id, selectedOption.name_erased, selectedOption.inspector_company, selectedOption.telephone, selectedOption.address);
         }
     })
     $("#modal-6004").modal('hide');
 };
+
+function elementTracking() {
+    $('.form-select').on('change', function() {
+        var selectedValue = $(this).val();
+        var trElement = $(this).closest('tr');
+        trElement.find('.disabled-text').text(selectedValue);
+    });
+}
 export function runCreate() {
     buildPageCreate();
 };

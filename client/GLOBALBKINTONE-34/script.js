@@ -90,6 +90,7 @@ function selectName(id, name, location, fire_manager) {
     $("#name-of-fire").val(name);
     $("#fire-manager").val(fire_manager);
     $("#location").val(location);
+    $("#exampleModal").modal('hide');
 };
 
 function selectInspector(id, name, company, telephone, address) {
@@ -97,10 +98,18 @@ function selectInspector(id, name, company, telephone, address) {
     $("#company-name").val(company);
     $("#telephone").val(telephone);
     $("#address").val(address);
+    $("#modal-6004").modal('hide');
 }
 
 function clearLookup_6015() {
     $("#name-of-fire").val("");
     $("#fire-manager").val("");
     $("#location").val("");
+}
+
+function clearLookup_6004() {
+    $("#full-name").val("");
+    $("#company-name").val("");
+    $("#telephone").val("");
+    $("#address").val("");
 }
