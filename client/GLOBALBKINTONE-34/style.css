@@ -239,7 +239,7 @@ label[for="number-of-floors"] {
     border-radius: 5px !important;
 }
 
-input#name-of-fire {
+.awesomplete {
     width: 80%;
 }
 
@@ -285,7 +285,7 @@ section.reviewer>div>span {
     padding: 0 0.5rem;
 }
 
-input#full-name {
+.reviewer .awesomplete {
     width: 87%;
 }
 
@@ -334,26 +334,63 @@ div.btn-save {
     justify-content: flex-end;
 }
 
+table#tb_6015>thead>tr>th,
+table#tb_6004>thead>tr>th {
+    text-align: center;
+    padding: 6px 0;
+    border: 1px solid #00000057;
+}
+
+table#tb_6015>thead,
+table#tb_6004>thead {
+    background-color: #e4e4e4;
+}
+
+table#tb_6015 th,
+table#tb_6004 th {
+    border: 1px solid #00000057;
+}
+
+table#tb_6015>tbody tr th:last-child,
+table#tb_6004>tbody tr th:last-child {
+    text-align: center;
+}
+
+table#tb_6015>tbody tr th button,
+table#tb_6004>tbody tr th button {
+    margin: 0.4rem 0;
+}
+
+table#tb_6015>tbody tr th p,
+table#tb_6004>tbody tr th p {
+    padding: 0;
+    margin: 0 0 0 0.3rem;
+}
+
+.awesomplete {
+    width: 100%;
+}
+
 @media (max-width: 1400px) {
     .dataToDate {
         width: 34%;
     }
-    input#name-of-fire {
+    .awesomplete {
         width: 80%;
     }
-    input#full-name {
+    .reviewer .awesomplete {
         width: 84%;
     }
 }
 
 @media (max-width: 1350px) {
-    input#name-of-fire {
+    .awesomplete {
         width: 75%;
     }
 }
 
 @media (max-width: 1300px) {
-    input#name-of-fire {
+    .awesomplete {
         width: 70%;
     }
 }
@@ -362,13 +399,13 @@ div.btn-save {
     .input-box.mt-1.me-1.inspection-type {
         width: 60%;
     }
-    input#full-name {
+    .reviewer .awesomplete {
         width: 80%;
     }
 }
 
 @media (max-width: 1000px) {
-    input#name-of-fire {
+    .awesomplete {
         width: 65%;
     }
 }
@@ -377,23 +414,23 @@ div.btn-save {
     .input-box.mt-1.me-1.inspection-type {
         width: 46%;
     }
-    input#full-name {
+    .reviewer .awesomplete {
         width: 75%;
     }
 }
 
 @media (max-width: 770px) {
-    input#name-of-fire {
+    .awesomplete {
         width: 50%;
     }
-    input#full-name {
+    .reviewer .awesomplete {
         width: 84%;
     }
 }
 
 @media (max-width: 750px) {
-    input#name-of-fire {
-        width: 50%;
+    .awesomplete {
+        width: 52%;
     }
     .input-box.start-date {
         width: 80%;
@@ -413,16 +450,28 @@ div.btn-save {
 }
 
 @media (max-width: 730px) {
-    input#full-name {
-        width: 71%;
+    .reviewer .awesomplete {
+        width: 68%;
+    }
+    .awesomplete {
+        width: 55%;
+    }
+}
+
+@media (max-width: 520px) {
+    .awesomplete {
+        width: 53%;
+    }
+    .reviewer .awesomplete {
+        width: 66%;
     }
 }
 
 @media (max-width: 500px) {
-    input#name-of-fire {
-        width: 57%;
+    .awesomplete {
+        width: 55%;
     }
-    button#btn-lookup_1 {
+    button.btn-select {
         padding: 3px 3px;
     }
     button.btn.btn-clear {
@@ -442,29 +491,29 @@ div.btn-save {
 }
 
 @media (max-width: 460px) {
-    input#name-of-fire {
-        width: 54%;
+    .awesomplete {
+        width: 56%;
     }
-    input#full-name {
-        width: 68%;
+    .reviewer .awesomplete {
+        width: 70%;
     }
 }
 
 @media (max-width: 420px) {
-    input#name-of-fire {
+    .awesomplete {
         width: 51%;
     }
-    input#full-name {
+    .reviewer .awesomplete {
         width: 65%;
     }
 }
 
 @media (max-width: 410px) {
-    input#name-of-fire {
-        width: 45%;
+    .awesomplete {
+        width: 53%;
     }
-    input#full-name {
-        width: 62%;
+    .reviewer .awesomplete {
+        width: 66%;
     }
 }
 
@@ -472,14 +521,23 @@ div.btn-save {
     /* .dataToDate {
         width: 80%;
     } */
+    .reviewer .awesomplete {
+        width: 64%;
+    }
+    .awesomplete {
+        width: 50%;
+    }
     .unShow-500 {
         display: none;
     }
 }
 
 @media (max-width: 360px) {
-    input#full-name {
+    .reviewer .awesomplete {
         width: 60%;
+    }
+    .awesomplete {
+        width: 45%;
     }
 }
 
@@ -516,10 +574,10 @@ div.btn-save {
     .input-box.date-arrival {
         width: 100%;
     }
-    input#full-name {
+    .reviewer .awesomplete {
         width: 57%;
     }
-    input#name-of-fire {
+    .awesomplete {
         width: 58%;
     }
 }

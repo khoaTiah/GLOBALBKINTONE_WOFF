@@ -10,6 +10,7 @@ const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
     actionSwitch('add');
+
 });
 
 function actionSwitch(action, id = "") {
@@ -79,4 +80,27 @@ function loadCss(cssArray) {
         link.id = `dynamicCss-${index}`;
         document.head.appendChild(link);
     });
+}
+// $(document).ready(function() {
+//     $("#btn-lookup_6015").click(function() {
+//         $("#exampleModal").modal('show');
+//     });
+// });
+function selectName(id, name, location, fire_manager) {
+    $("#name-of-fire").val(name);
+    $("#fire-manager").val(fire_manager);
+    $("#location").val(location);
+};
+
+function selectInspector(id, name, company, telephone, address) {
+    $("#full-name").val(name);
+    $("#company-name").val(company);
+    $("#telephone").val(telephone);
+    $("#address").val(address);
+}
+
+function clearLookup_6015() {
+    $("#name-of-fire").val("");
+    $("#fire-manager").val("");
+    $("#location").val("");
 }

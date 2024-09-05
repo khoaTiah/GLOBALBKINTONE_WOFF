@@ -30,8 +30,8 @@
                     <div class="downstairs ">
                         <input class="form-control" type="text" name="name-of-fire" id="name-of-fire" autocomplete="off">
                         <div class="actions">
-                            <button type="button" class="btn btn-select" id="btn-lookup_1">取得</button>
-                            <button class="btn btn-clear me-1" type="button" onclick="clearLookup_1()">クリア</button>
+                            <button type="button" class="btn btn-select" id="btn-lookup_6015">取得</button>
+                            <button class="btn btn-clear me-1" type="button" onclick="clearLookup_6015()">クリア</button>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="input-box mt-1 location">
                     <label for="location" class="lb-av">所在</label>
                     <div class="downstairs">
-                        <input class="form-control" type="text" name="location" autocomplete="off" readonly>
+                        <input class="form-control" type="text" name="location" id="location" autocomplete="off" readonly>
                     </div>
                 </div>
                 <div class="input-box mt-1 witness">
@@ -96,8 +96,8 @@
                     <div class="downstairs">
                         <input class="form-control" type="text" name="full-name" id="full-name" autocomplete="off">
                         <div class="actions">
-                            <button type="button" class="btn btn-select" id="btn-lookup_1">取得</button>
-                            <button class="btn btn-clear me-1" type="button" onclick="clearLookup_1()">クリア</button>
+                            <button type="button" class="btn btn-select" id="btn-lookup_6004">取得</button>
+                            <button class="btn btn-clear me-1" type="button" onclick="clearLookup_6004()">クリア</button>
                         </div>
                     </div>
                 </div>
@@ -619,6 +619,7 @@
                 <button type="button" class="btn  me-3 btn-submit" id="btn-update-or-add">登録</button>
             </div>
         </section>
+        <!-- lookup 6015 -->
         <section class="model-6015">
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -630,11 +631,48 @@
                         <div class="modal-body">
                             <!-- <div class="spinner-grow" role="status">
                         </div> -->
-                            <table id="tb_1">
-                                <tr>
-                                    <th>名称</th>
-                                    <th></th>
-                                </tr>
+                            <table id="tb_6015">
+                                <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th></th>
+                                    </tr>
+                                    <tbody>
+
+                                    </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-clear" data-bs-dismiss="modal">閉じる</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- lookup 6004 -->
+        <section class="model-6004">
+            <div class="modal fade" id="modal-6004" tabindex="-1" aria-labelledby="6004-ModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="6004-ModalLabel">防火対象物名称（浅野防災工業様）</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- <div class="spinner-grow" role="status">
+                        </div> -->
+                            <table id="tb_6004">
+                                <thead>
+                                    <tr>
+                                        <th>氏名</th>
+                                        <th>会社名</th>
+                                        <th>住所</th>
+                                        <th></th>
+                                    </tr>
+                                    <tbody>
+
+                                    </tbody>
                             </table>
                         </div>
                         <div class="modal-footer">
