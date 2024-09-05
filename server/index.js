@@ -12,6 +12,8 @@ export async function handler(event) {
         var recordID;
         var type;
         var commentId;
+        var query;
+        var isQuery;
         if (event.rawQueryString) {
             var params = event.rawQueryString;
             params = params.split('&');
@@ -23,6 +25,8 @@ export async function handler(event) {
             paramsID = queryParams.id;
             recordID = queryParams.recordId || "";
             type = queryParams.type || "";
+            query = queryParams.query || "";
+            isQuery = queryParams.isQuery || false;
             commentId = queryParams.commentId || "";
         } else {
             const params = "";
@@ -100,6 +104,8 @@ export async function handler(event) {
                         return await getApp_5231();
                     } else if (paramsID && recordID) {
                         return await getRecordByID(paramsID, recordID);
+                    } else if (paramsID && isQuery) {
+                        return await getDataAppByQuery(paramsID, query);
                     } else {
                         return await getDataApp(paramsID);
                     }
@@ -358,6 +364,52 @@ const getDataApp = async(id) => {
             const response = await client.record.getRecords({
                 app: appId,
                 query: `日時_0 = "" limit ${limit} offset ${offset}`
+            });
+
+            allRecords = allRecords.concat(response.records);
+            offset += limit;
+        }
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(allRecords)
+        };
+    } catch (error) {
+        console.error(error);
+
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Internal Server Error 2' })
+        };
+    }
+
+};
+const getDataAppByQuery = async(id, query) => {
+    const appId = id;
+    const baseUrl = KINTONE_BASE_URL;
+    const client = new KintoneRestAPIClient({
+        baseUrl: baseUrl,
+        auth: {
+            username: username,
+            password: password,
+        },
+    });
+    const limit = 50;
+    let offset = 0;
+    let allRecords = [];
+
+    try {
+        let totalCountResponse = await client.record.getRecords({
+            app: appId,
+            totalCount: true
+        });
+
+        const totalCount = totalCountResponse.totalCount;
+
+        while (offset < totalCount) {
+            const response = await client.record.getRecords({
+                app: appId,
+                query: `${query} limit ${limit} offset ${offset}`
             });
 
             allRecords = allRecords.concat(response.records);

@@ -196,6 +196,7 @@ label.lb-av {
 
 label[for="number-of-floors"] {
     font-size: 90%;
+    color: #bd1a1a94;
 }
 
 .prevention-object>div {
@@ -297,6 +298,40 @@ input#full-name {
 
 .sub-reviewer>div>div {
     width: 40%;
+}
+
+.top-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button.icon {
+    width: 4rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    border-radius: 5px;
+    margin: 0.9rem 0.8rem;
+    border: 2px solid #dee2e6 !important;
+    background: none;
+}
+
+button:hover {
+    scale: 1.05;
+    transform: scale(1.05);
+    /* transition: ease 0.3s; */
+}
+
+#info-user strong {
+    color: #0a58ca;
+}
+
+div.btn-save {
+    display: flex !important;
+    justify-content: flex-end;
 }
 
 @media (max-width: 1400px) {

@@ -1,8 +1,8 @@
 import { woffId, lambdaUrl } from './params.js';
 
-// window.addEventListener('load', () => {
-//     woffInit();
-// });
+window.addEventListener('load', () => {
+    woffInit();
+});
 
 const woffInit = () => {
 
@@ -17,8 +17,7 @@ const woffInit = () => {
             // Get and show user profile
                 getProfile()
                 .then((profile) => {
-                    $("#lineworks-id>span").text(profile.displayName);
-                    buildDate();
+                    $("#name-line-works").text(profile.displayName);
                 })
                 .catch((err) => {
                     window.alert(err);
@@ -47,4 +46,15 @@ const getProfile = () => {
 }
 $(document).ready(function() {});
 
-export function runCreate() {};
+const buildPageCreate = async() => {
+    await Promise.all([getRecord_6015()]);
+};
+const getRecord_6015 = async() => {
+    // https://gbalb-demo.cybozu.com/k/6015/
+    let res = await axios.get(lambdaUrl + "?id=6015&isQuery=true");
+    const records = res.data.records;
+    console.log(records);
+};
+export function runCreate() {
+    buildPageCreate();
+};
