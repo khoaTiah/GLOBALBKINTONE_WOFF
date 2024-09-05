@@ -134,6 +134,7 @@ function elementTracking() {
     $('.form-select').on('change', function() {
         var selectedValue = $(this).val();
         var trElement = $(this).closest('tr');
+        console.log(selectedValue);
         trElement.find('.disabled-text').text(selectedValue);
     });
 }
