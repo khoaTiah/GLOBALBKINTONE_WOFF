@@ -48,6 +48,7 @@ $(document).ready(function() {});
 
 const buildPageCreate = async() => {
     await Promise.all([getRecord_6015()]);
+    $("#exampleModal").modal('show');
 };
 const getRecord_6015 = async() => {
     // https://gbalb-demo.cybozu.com/k/6015/
