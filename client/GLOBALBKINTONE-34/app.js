@@ -286,6 +286,19 @@ const convertUTC = (date) => {
     let utcDate = new Date(Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate()));
     return utcDate.toISOString().slice(0, 10);
 }
+const getRecordByID = async(id) => {
+    let appId = 6003;
+    axios.get(lambdaUrl + `?id=${appId}&recordId=${id}`)
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+}
 export function runCreate() {
     buildPageCreate();
 };
+export function runEdit(id) {
+    getRecordByID(id);
+}

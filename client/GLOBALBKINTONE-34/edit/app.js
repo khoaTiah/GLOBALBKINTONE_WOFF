@@ -117,7 +117,7 @@ const templateMobile = (data) => {
         <div class="content-ls">
             <div class="item-a">
                 <span class="label-item">
-                現場名
+                レコード番号
                 </span>
                 <hr>
                 <span class="content-item logo">
@@ -132,7 +132,7 @@ const templateMobile = (data) => {
             </div>
             <div class="item-a">
                 <span class="label-item">
-                    ユーザーID
+                    防火対象物名称
                 </span>
                 <hr>
                 <span class="content-item">                              
@@ -141,7 +141,7 @@ const templateMobile = (data) => {
             </div>
             <div class="item-a">
                 <span class="label-item">
-                    住所
+                    会社名
                 </span>
                 <hr>
                 <span class="content-item">                              
@@ -150,7 +150,7 @@ const templateMobile = (data) => {
             </div>
             <div class="item-a mb-4">
                 <span class="label-item">
-                    ファイル数
+                    氏名_新点検者
                 </span>
                 <hr>
                 <span class="content-item">                              
@@ -159,7 +159,7 @@ const templateMobile = (data) => {
             </div>
                        <div class="item-a">
                 <span class="label-item">
-                    住所
+                    点検者社名_消1
                 </span>
                 <hr>
                 <span class="content-item">                              

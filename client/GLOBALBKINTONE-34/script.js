@@ -9,7 +9,7 @@ const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 
 window.addEventListener('load', async() => {
-    actionSwitch('list');
+    actionSwitch('add');
 
 });
 
@@ -33,14 +33,11 @@ function actionSwitch(action, id = "") {
         // if (action === 'add') {
         //     loadCreate();
         // }
-        // if (action === 'edit') {
-        //     // loadCreate();
-        //     $("#end-time").show()
-        //     $("#start-time").show()
-        //     $(".edit-signature").show();
-        //     $(".signature-pad-created").hide();
-        //     backList();
-        // }
+        if (action === 'edit') {
+            // loadCreate();
+
+            // backList();
+        }
         if (action == "list") {
             loadScript(JS_LIST, action, id);
             loadCss([CSS_LIST, CSS_PAGINATION]);
@@ -131,4 +128,7 @@ function switchDisplayData(key) {
         default:
             alert('error');
     }
+}
+const showModelEdit = (id) => {
+    actionSwitch('edit', id);
 }
