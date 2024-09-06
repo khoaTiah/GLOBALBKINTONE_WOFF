@@ -55,6 +55,7 @@ const buildPageCreate = async() => {
         $("#modal-6004").modal('show');
     });
     elementTracking();
+    createData();
 };
 const getRecord_6015 = async() => {
     // https://gbalb-demo.cybozu.com/k/6015/
@@ -148,9 +149,136 @@ function elementTracking() {
 }
 const createData = async() => {
     $("#btn-update-or-add").click(async function() {
+        const row1 = $("#row-1");
+        const row2 = $("#row-2");
+        const row3 = $("#row-3");
+        const row4 = $("#row-4");
+        const row5 = $("#row-5");
+        const row6 = $("#row-6");
+        const row7 = $("#row-7");
+        const row8 = $("#row-8");
+        const row9 = $("#row-9");
+        const row10 = $("#row-10");
+        const row11 = $("#row-11");
+        const row12 = $("#row-12");
+        const row13 = $("#row-13");
+        const row14 = $("#row-14");
+        const row15 = $("#row-15");
+        const row16 = $("#row-16");
+        const row17 = $("#row-17");
+        const row18 = $("#row-18");
+        const row19 = $("#row-19");
         let body = {
+            "設置階数など_手書き": { 'value': $("#number-of-floors").val() }, //設置階数など（手書き）
+            "名称_点検結果報告書": { 'value': $("#name-of-fire").val() }, //防火対象物名称
+            "立会者_点検結果報告書": { 'value': $("#witness").val() }, //立会者（手書き）
+            "点検種別_点検結果報告書": { 'value': $("#inspection-type").val() }, //点検種別
+            "点検年月日_自": { 'value': convertUTC($("#start-date").val()) }, //点検年月日（自）
+            "点検年月日_至": { 'value': convertUTC($("#date-arrival").val()) }, //点検年月日（至）
+            "氏名_消1": { 'value': $("#full-name-type").val() }, //氏名_消1
+            // table
+            "結果A_設場": { value: row1.find("select").val() }, //設置場所
+            "不良内容_設場": { value: row1.find("input").first().val() }, //不良内容_設場
+            "措置内容_設場": { value: row1.find("input").last().val() }, //措置内容_設場
+            // tb2
+            "結果A_設間": { value: row2.find("select").val() }, //設置間隔
+            "不良内容_設間": { value: row2.find("input").first().val() }, //不良内容_設間
+            "措置内容_設間": { value: row2.find("input").last().val() }, //措置内容_設間
+            // tb3
+            "結果A_適": { value: row3.find("select").val() }, //適応性
+            "不良内容_適": { value: row3.find("input").first().val() }, //不良内容_適
+            "措置内容_適": { value: row3.find("input").last().val() }, //措置内容_適
+            // tb4
+            "結果A_耐": { value: row4.find("select").val() }, //耐震措置
+            "不良内容_耐": { value: row4.find("input").first().val() }, //不良内容_耐
+            "措置内容_耐": { value: row4.find("input").last().val() }, //措置内容_耐
+            // tb5
+            "結果A_表標": { value: row5.find("select").val() }, //表示標識
+            "不良内容_表標": { value: row5.find("input").first().val() }, //不良内容_表標
+            "措置内容_表標": { value: row5.find("input").last().val() }, //措置内容_表標
+            // tb6
+            "結果A_本": { value: row6.find("select").val() }, //本体容器
+            "不良内容_本": { value: row6.find("input").first().val() }, //不良内容_本
+            "措置内容_本": { value: row6.find("input").last().val() }, //措置内容_本
+            // tb7
+            "結果A_安封": { value: row7.find("select").val() }, //安全栓の封
+            "不良内容_安封": { value: row7.find("input").first().val() }, //不良内容_安封
+            "措置内容_安封": { value: row7.find("input").last().val() }, //措置内容_安封
+            // tb8
+            "結果A_安栓": { value: row8.find("select").val() }, //安全栓
+            "不良内容_安栓": { value: row8.find("input").first().val() }, //不良内容_安栓
+            "措置内容_安栓": { value: row8.find("input").last().val() }, //措置内容_安栓
+            // tb9
+            "結果A_使済": { value: row9.find("select").val() }, //使用済みの表示装置
+            "不良内容_使済": { value: row9.find("input").first().val() }, //不良内容_使済
+            "措置内容_使済": { value: row9.find("input").last().val() }, //措置内容_使済
+            // tb10
+            "結果A_押レ": { value: row10.find("select").val() }, //押し金具レバー等
+            "不良内容_押レ": { value: row10.find("input").first().val() }, //不良内容_押レ
+            "措置内容_押レ": { value: row10.find("input").last().val() }, //措置内容_押レ
+            // tb11
+            "結果A_キャ": { value: row11.find("select").val() }, //キャップ
+            "不良内容_キャ": { value: row11.find("input").first().val() }, //不良内容_キャ
+            "措置内容_キャ": { value: row11.find("input").last().val() }, //措置内容_キャ
+            // tb12
+            "結果A_ホ": { value: row12.find("select").val() }, //ホース
+            "不良内容_ホ": { value: row12.find("input").first().val() }, //不良内容_ホ
+            "措置内容_ホ": { value: row12.find("input").last().val() }, //措置内容_ホ
+            // tb13
+            "結果A_ノ": { value: row13.find("select").val() }, //ノズルホーンノズル栓
+            "不良内容_ノ": { value: row13.find("input").first().val() }, //不良内容_ノ
+            "措置内容_ノ": { value: row13.find("input").last().val() }, //措置内容_ノ
+            // tb14
+            "結果A_指圧": { value: row14.find("select").val() }, //指示圧力計
+            "不良内容_指圧": { value: row14.find("input").first().val() }, //不良内容_指圧
+            "措置内容_指圧": { value: row14.find("input").last().val() }, //措置内容_指圧
+            // tb15
+            "結果A_圧調": { value: row15.find("select").val() }, //圧力調整器
+            "不良内容_圧調": { value: row15.find("input").first().val() }, //不良内容_圧調
+            "措置内容_圧調": { value: row15.find("input").last().val() }, //措置内容_圧調
+            // tb16
+            "結果A_安弁": { value: row16.find("select").val() }, //安全弁
+            "不良内容_安弁": { value: row16.find("input").first().val() }, //不良内容_安弁
+            "措置内容_安弁": { value: row16.find("input").last().val() }, //措置内容_安弁
+            // tb17
+            "結果A_保装": { value: row17.find("select").val() }, //保持装置
+            "不良内容_保装": { value: row17.find("input").first().val() }, //不良内容_保装
+            "措置内容_保装": { value: row17.find("input").last().val() }, //措置内容_保装
+            // tb18
+            "結果A_車車": { value: row18.find("select").val() }, //車輪（車載式）
+            "不良内容_車車": { value: row18.find("input").first().val() }, //不良内容_車車
+            "措置内容_車車": { value: row18.find("input").last().val() }, //措置内容_車車
+            // tb19
+            "結果A_ｶﾞ車": { value: row19.find("select").val() }, //ｶﾞｽ導入管（車載式）
+            "不良内容_ｶﾞ車": { value: row19.find("input").first().val() }, //不良内容_ｶﾞ車
+            "措置内容_ｶﾞ車": { value: row19.find("input").last().val() }, //措置内容_ｶﾞ車
+        };
+        await axios.post(lambdaUrl + "?id=6003", body)
+            .then((res) => {
+                if (res.status == 200) {
+                    let msg = "登録しました。\n" +
+                        "フォークリフト番号 : " + $("#forklift-number").val() + "\n" +
+                        "緯度 : " + $("#latitude").val() + "\n" +
+                        "経度 : " + $("#longitude").val() + "\n" +
+                        "貸出日時 : " + startDay + " " + startTime;
 
-        }
+                    if (woff.isInClient()) {
+                        woff.sendMessage({ 'content': msg });
+                    }
+                    // $("#loading-web").addClass("display-none");
+                    // showMessage("データ作成成功。");
+                    // // $("#toast .toast-body span").text("登録しました。 ページを3秒ごとに自動リロードします。");
+                    // // $('#toast').toast('show');
+                    // setTimeout(function() {
+                    //     location.reload();
+                    // }, 3000);
+                }
+            })
+            .catch((err) => {
+                $("#loading-web").addClass("display-none");
+                var data = err.response.data
+                console.error(data);
+            });
     });
 }
 const convertUTC = (date) => {

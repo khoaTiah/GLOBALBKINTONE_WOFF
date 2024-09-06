@@ -16,6 +16,7 @@ h4,
 h5,
 h6 {
     margin: 0px;
+    font-weight: bold;
 }
 
 body,
@@ -459,6 +460,10 @@ table#tb_6004>tbody tr th p {
 }
 
 @media (max-width: 520px) {
+    body,
+    html {
+        font-size: 12px;
+    }
     .awesomplete {
         width: 53%;
     }
