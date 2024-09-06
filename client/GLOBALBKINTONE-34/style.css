@@ -380,6 +380,7 @@ table#tb_6004>tbody tr th p {
 
 button#btn-update-or-add {
     min-width: 4rem;
+    padding: 1rem 2rem;
 }
 
 section#load-main {
@@ -580,10 +581,10 @@ div#toast.warning {
         width: 68%;
     }
     button.btn-select {
-        padding: 3px 3px;
+        padding: 6px 5px;
     }
     button.btn.btn-clear {
-        padding: 3px 3px;
+        padding: 6px 2px;
     }
     .inspection {
         display: flex;
@@ -628,12 +629,21 @@ div#toast.warning {
     }
 }
 
+@media (max-width: 409px) {
+    .reviewer .awesomplete {
+        width: 70%;
+    }
+    .awesomplete {
+        width: 61%;
+    }
+}
+
 @media (max-width: 390px) {
     /* .dataToDate {
         width: 80%;
     } */
     .reviewer .awesomplete {
-        width: 70%;
+        width: 73%;
     }
     .awesomplete {
         width: 59%;

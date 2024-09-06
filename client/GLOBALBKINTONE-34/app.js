@@ -403,15 +403,15 @@ const updateData = async() => {
         await axios.patch(lambdaUrl + "?id=6003", res)
             .then((res) => {
                 if (res.status == 200) {
-                    // $("#load-main").attr("hidden", true);
-                    // let msg = "新しいデータの作成が完了しました！";
-                    // if (woff.isInClient()) {
-                    //     woff.sendMessage({ 'content': msg });
-                    // }
-                    // showMessage(msg, 'success');
-                    // setTimeout(function() {
-                    //     location.reload();
-                    // }, 3000);
+                    $("#load-main").attr("hidden", true);
+                    let msg = "情報の更新に成功しました！";
+                    if (woff.isInClient()) {
+                        woff.sendMessage({ 'content': msg });
+                    }
+                    showMessage(msg, 'success');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
                 }
             })
             .catch((err) => {
@@ -571,6 +571,10 @@ const buildPageEdit = async() => {
         $("#modal-6004").modal('show');
     });
     updateData();
+    getProfile()
+        .then((profile) => {
+            $("#name-line-works").text(profile.displayName);
+        })
 }
 export function runCreate() {
     buildPageCreate();
