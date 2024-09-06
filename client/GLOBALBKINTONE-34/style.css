@@ -462,6 +462,19 @@ div#toast.warning {
     justify-content: space-between;
 }
 
+.filter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center
+}
+
+#filter {
+    width: 50%;
+    border: 2px solid #E4E4E4;
+    font-weight: bold;
+    color: #212529ad;
+}
+
 @keyframes animloader {
     0% {
         transform: scale(0);

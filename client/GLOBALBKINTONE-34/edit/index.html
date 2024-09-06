@@ -9,7 +9,7 @@
             <span id="name-line-works"></span>
         </p>
     </div>
-    <div id="search" class="mb-2"><input id="input-search" type="text" class="form-control" placeholder="フォークリフト番号">
+    <div id="search" class="mb-2"><input id="input-search" type="text" class="form-control" placeholder="">
         <span>
         <svg width="33" height="39 " viewBox="0 0 38 43" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_29_69)">
@@ -27,6 +27,17 @@
             </defs>
         </svg>
         </span>
+    </div>
+    <div class="filter">
+        <label for="filter" class="me-2">フィラー </label>
+        <select id="filter" class="form-select" aria-label="Default select example">
+            <option selected value="null"></option>
+            <option value="$id">レコード番号</option>
+            <option value="名称_点検結果報告書">防火対象物名称</option>
+            <option value="会社名_新点検者">会社名</option>
+            <option value="氏名_新点検者">氏名_新点検者</option>
+            <option value="社名_消1">点検者社名_消1</option>
+          </select>
     </div>
     <div class="box-create mb-2">
         <div>

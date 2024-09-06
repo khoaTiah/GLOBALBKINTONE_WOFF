@@ -176,8 +176,10 @@ var debounceTimer;
 $('#input-search').on('input', function() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(function() {
+        let code = $("#filter").val();
+        if (code == "null") return;
         const keyword = $('#input-search').val().toLowerCase();
-        let filteredData = DATA_APP.filter(item => item.フォークリフト番号.value.includes(keyword));
+        let filteredData = DATA_APP.filter(item => item[code].value.includes(keyword));
         $('#pagination-container').pagination({
             dataSource: filteredData,
             pageSize: 10,
@@ -194,6 +196,33 @@ $('#input-search').on('input', function() {
             formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
         });
     }, 500); // Trì hoãn 1,5 giây
+});
+$('#filter').on('change', function(e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    var textSelected = optionSelected.text();
+    $("#input-search").attr("placeholder", textSelected);
+    if (valueSelected != "null") {
+        debounceTimer = setTimeout(function() {
+            const keyword = $('#input-search').val().toLowerCase();
+            let filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
+            $('#pagination-container').pagination({
+                dataSource: filteredData,
+                pageSize: 10,
+                pageRange: 1,
+                showPrevious: true,
+                showNext: true,
+                callback: function(data, pagination) {
+                    var html = simpleTemplating(data);
+                    $("#table-list>tbody").html(html);
+                    var htmlMobile = templateMobile(data);
+                    $("#ls-mobile").html(htmlMobile);
+
+                },
+                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+            });
+        }, 500);
+    }
 });
 const remove = () => {
     document.getElementById('delete-record').addEventListener('click', async function() {
