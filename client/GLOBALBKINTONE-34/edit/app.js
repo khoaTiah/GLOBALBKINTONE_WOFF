@@ -202,27 +202,31 @@ $('#filter').on('change', function(e) {
     var valueSelected = this.value;
     var textSelected = optionSelected.text();
     $("#input-search").attr("placeholder", textSelected);
-    if (valueSelected != "null") {
-        debounceTimer = setTimeout(function() {
-            const keyword = $('#input-search').val().toLowerCase();
-            let filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
-            $('#pagination-container').pagination({
-                dataSource: filteredData,
-                pageSize: 10,
-                pageRange: 1,
-                showPrevious: true,
-                showNext: true,
-                callback: function(data, pagination) {
-                    var html = simpleTemplating(data);
-                    $("#table-list>tbody").html(html);
-                    var htmlMobile = templateMobile(data);
-                    $("#ls-mobile").html(htmlMobile);
 
-                },
-                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
-            });
-        }, 500);
-    }
+    debounceTimer = setTimeout(function() {
+        const keyword = $('#input-search').val().toLowerCase();
+        let filteredData;
+        if (valueSelected == "null") {
+            filteredData = DATA_APP;
+        } else
+            filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
+        $('#pagination-container').pagination({
+            dataSource: filteredData,
+            pageSize: 10,
+            pageRange: 1,
+            showPrevious: true,
+            showNext: true,
+            callback: function(data, pagination) {
+                var html = simpleTemplating(data);
+                $("#table-list>tbody").html(html);
+                var htmlMobile = templateMobile(data);
+                $("#ls-mobile").html(htmlMobile);
+
+            },
+            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+        });
+    }, 500);
+
 });
 const remove = () => {
     document.getElementById('delete-record').addEventListener('click', async function() {
