@@ -27,9 +27,9 @@ html {
     -webkit-tap-highlight-color: rgba(34, 41, 47, 0);
     position: relative;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     font-size: 16px;
-    position: absolute;
+    /* position: absolute; */
     flex-direction: column;
     min-height: 100vh;
 }
@@ -212,7 +212,7 @@ label[for="number-of-floors"] {
 }
 
 .prevention-object>div>div:first-child {
-    padding-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .prevention-object>div>div:last-child {
@@ -332,7 +332,8 @@ button:hover {
 
 div.btn-save {
     display: flex !important;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
 }
 
 table#tb_6015>thead>tr>th,
@@ -369,7 +370,106 @@ table#tb_6004>tbody tr th p {
 }
 
 .awesomplete {
+    width: 80%;
+}
+
+.message-error {
+    color: red;
+    line-height: 1.5;
+}
+
+button#btn-update-or-add {
+    min-width: 4rem;
+}
+
+section#load-main {
+    position: absolute;
+    background: #ced4da78;
     width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+}
+
+.loader::after,
+.loader::before {
+    content: '';
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #1AB53C !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animloader 2s linear infinite;
+}
+
+.loader::after {
+    animation-delay: 1s;
+}
+
+.display-none {
+    display: none !important;
+}
+
+.input-box.name-of-fire {
+    position: relative;
+}
+
+.coating {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ced4daab;
+    z-index: 2;
+}
+
+.input-box.full-name {
+    position: relative;
+}
+
+.toast-body {
+    color: #0d71df;
+}
+
+div#toast.success {
+    background: #d4edda;
+    color: #c3e6cb;
+}
+
+div#toast.error {
+    background: #edd4d9;
+    color: #fff;
+}
+
+div#toast.warning {
+    background: #ffd042;
+    color: #6c757d;
+}
+
+.toast-header {
+    justify-content: space-between;
+}
+
+@keyframes animloader {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
 }
 
 @media (max-width: 1400px) {
@@ -380,7 +480,7 @@ table#tb_6004>tbody tr th p {
         width: 80%;
     }
     .reviewer .awesomplete {
-        width: 84%;
+        width: 85%;
     }
 }
 
@@ -392,16 +492,19 @@ table#tb_6004>tbody tr th p {
 
 @media (max-width: 1300px) {
     .awesomplete {
-        width: 70%;
+        width: 78%;
     }
 }
 
 @media (max-width: 1170px) {
+    .awesomplete {
+        width: 74%;
+    }
     .input-box.mt-1.me-1.inspection-type {
         width: 60%;
     }
     .reviewer .awesomplete {
-        width: 80%;
+        width: 83%;
     }
 }
 
@@ -465,16 +568,16 @@ table#tb_6004>tbody tr th p {
         font-size: 12px;
     }
     .awesomplete {
-        width: 53%;
+        width: 63%;
     }
     .reviewer .awesomplete {
-        width: 66%;
+        width: 75%;
     }
 }
 
 @media (max-width: 500px) {
     .awesomplete {
-        width: 55%;
+        width: 68%;
     }
     button.btn-select {
         padding: 3px 3px;
@@ -493,23 +596,26 @@ table#tb_6004>tbody tr th p {
     .dataToDate {
         width: 100%;
     }
+    .reviewer .awesomplete {
+        width: 78%;
+    }
 }
 
 @media (max-width: 460px) {
     .awesomplete {
-        width: 56%;
+        width: 67%;
     }
     .reviewer .awesomplete {
-        width: 70%;
+        width: 76%;
     }
 }
 
 @media (max-width: 420px) {
     .awesomplete {
-        width: 51%;
+        width: 63%;
     }
     .reviewer .awesomplete {
-        width: 65%;
+        width: 74%;
     }
 }
 
@@ -527,10 +633,10 @@ table#tb_6004>tbody tr th p {
         width: 80%;
     } */
     .reviewer .awesomplete {
-        width: 64%;
+        width: 70%;
     }
     .awesomplete {
-        width: 50%;
+        width: 59%;
     }
     .unShow-500 {
         display: none;
@@ -539,10 +645,10 @@ table#tb_6004>tbody tr th p {
 
 @media (max-width: 360px) {
     .reviewer .awesomplete {
-        width: 60%;
+        width: 68%;
     }
     .awesomplete {
-        width: 45%;
+        width: 56%;
     }
 }
 
@@ -565,7 +671,7 @@ table#tb_6004>tbody tr th p {
         width: 100%;
     }
     .prevention-object>div>div:first-child {
-        padding-right: unset;
+        margin-right: unset;
     }
     .dataToDate {
         display: flex;
@@ -580,9 +686,9 @@ table#tb_6004>tbody tr th p {
         width: 100%;
     }
     .reviewer .awesomplete {
-        width: 57%;
+        width: 68%;
     }
     .awesomplete {
-        width: 58%;
+        width: 70%;
     }
 }

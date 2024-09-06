@@ -9,7 +9,7 @@ const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 
 window.addEventListener('load', async() => {
-    actionSwitch('add');
+    actionSwitch('list');
 
 });
 
@@ -131,4 +131,27 @@ function switchDisplayData(key) {
 }
 const showModelEdit = (id) => {
     actionSwitch('edit', id);
+}
+var showModalDelete = (id) => {
+    $("#modal-notification").show();
+    $(".id-remove-app").val(id);
+    $("#remove-id").text(id);
+}
+const showMessage = (mess, type) => {
+    if (type == "error") {
+        $("#toast").removeClass("success warning").addClass("error");
+        $("#toast .toast-header strong").text("エラー");
+    } else if (type == "success") {
+        $("#toast").removeClass("error warning").addClass("success");
+        $("#toast .toast-header strong").text("成功");
+    } else if (type == "warning") {
+        $("#toast").removeClass("error success").addClass("warning");
+        $("#toast .toast-header strong").text("警告");
+    } else {
+        return;
+    }
+    $("#toast .toast-body span").text(mess);
+    $("#toast").removeClass('display-none');
+    $("#toast .toast-body span").text(mess);
+    $('#toast').toast('show');
 }

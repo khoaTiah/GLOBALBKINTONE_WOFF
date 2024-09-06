@@ -1,8 +1,8 @@
 <div class="" style="padding: 1rem 0;" id="page-home">
     <input type="text" name="id-edit" id="id-edit" hidden>
     <div class="top-list">
-        <button class="icon" onclick="actionSwitch('menu')">
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        <button class="icon" onclick="actionSwitch('add')">
+            <i class="fa fa-plus" aria-hidden="true"></i>
         </button>
         <p id="info-user" class="text-end">
             <strong>line_works : </strong>
@@ -71,12 +71,11 @@
     <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">warning</h5>
+                <h5 class="modal-title">注意</h5>
                 <button type="button" class="btn-close close-modal-notification" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <span>削除完了: フォークリフト番号<span id="remove-id"></span>。</span>
-                <p>本当に削除しますか？</p>
+                <span>IDが<span id="remove-id"></span>のレコードを削除することを確認しますか？</span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="delete-record">はい</button>

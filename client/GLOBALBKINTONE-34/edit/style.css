@@ -699,19 +699,6 @@ div#edit-list-related-records {
     color: #0a58ca;
 }
 
-.toast-body {
-    color: #0d71df;
-}
-
-div#toast.success {
-    background: #d4edda;
-    color: #c3e6cb;
-}
-
-.toast-header {
-    justify-content: space-between;
-}
-
 a.link_detail {
     color: #444444;
     display: flex;

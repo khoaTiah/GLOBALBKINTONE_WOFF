@@ -149,7 +149,8 @@ var showModalDelete = (string, id) => {
     $(".id-remove-app").val(id);
     $("#remove-id").text(string);
 }
-const showMessage = (mess) => {
+const showMessage = (mess, type, title) => {
+    if (type == "error") {} else if (type == "success") {} else if (type == "warning") {}
     $("#toast").removeClass('display-none');
     $("#toast .toast-body span").text(mess);
     $('#toast').toast('show');
