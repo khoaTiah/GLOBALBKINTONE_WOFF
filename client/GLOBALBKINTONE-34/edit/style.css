@@ -1,0 +1,859 @@
+@font-face {
+    font-family: "Noto-Sans-JP-Regular";
+    src: url("../public/font/static/NotoSansJP-Regular.ttf") format("woff"), url("../public/font/static/NotoSansJP-Regular.ttf") format("opentype"), url("../public/font/static/NotoSansJP-Regular.ttf") format("truetype");
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 500px) {
+    body,
+    html {
+        font-size: 12px !important;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0px;
+}
+
+body,
+html {
+    font-family: "Noto-Sans-JP-Regular", sans-serif !important;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(34, 41, 47, 0);
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    position: absolute;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a:focus {
+    outline: none !important;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #57b846;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+}
+
+button.icon-list {
+    width: 2.0rem;
+    height: 1.0rem;
+    border: none !important;
+    background: none;
+}
+
+button.edit {
+    color: blue;
+    margin-bottom: 2rem;
+}
+
+.nav {
+    float: right !important;
+    margin-top: 3rem;
+}
+
+.product-lookup {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-lookup input,
+.form-group.total input,
+.form-group.check input:not(input[type="checkbox"]) {
+    width: 95%;
+    height: 2.3rem;
+}
+
+.form-floating {
+    height: 2.3rem !important;
+    width: 100%;
+}
+
+input {
+    height: 2.3rem !important;
+}
+
+.form-floating>label {
+    padding: 0.3rem 0.4rem 0px 4px !important;
+    opacity: 0.8 !important;
+}
+
+.form-floating>.form-control:focus~label {
+    opacity: 1.65;
+    transform: scale(.85) translateY(-.5rem) translateX(.15rem)!important;
+}
+
+.form-floating>.form-control:not(:placeholder-shown)~label {
+    opacity: 1 !important;
+}
+
+input:disabled {
+    background-color: #6c757db5 !important;
+}
+
+button#btn-add-file {
+    border: none;
+    width: 2.1rem;
+    background: none;
+}
+
+.list-file-name {
+    float: right;
+    border: 1px solid #00000066;
+    width: 100%;
+    margin-top: 4px;
+}
+
+hr {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.list-file-name>div.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list-file-name>div.item button {
+    margin-right: 0.3rem;
+    width: 1.5rem;
+    height: 22px;
+    display: flex;
+    border: 1px solid var(--bs-danger);
+    color: red;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-table {
+    margin-top: 7rem;
+}
+
+table#subtable {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table#subtable td,
+th {
+    /* border: 1px solid #dddddd;
+    text-align: left; */
+    padding: 0px;
+}
+
+table#subtable tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table#subtable {
+    border-collapse: collapse;
+}
+
+table#subtable td,
+table#subtable th {
+    border: 1px solid #000;
+    white-space: nowrap;
+    padding: 3px 3px;
+}
+
+table#subtable th:last-child,
+table#subtable td:last-child {
+    position: sticky;
+    right: 0;
+    color: #fff;
+}
+
+table#subtable th:last-child:before,
+table#subtable td:last-child:before {
+    content: "\00a0";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    background: var(--bs-gray);
+    color: #fff;
+}
+
+#data-table {
+    overflow-x: auto;
+}
+
+table#subtable tr>td:first-child {
+    font-weight: bold !important;
+    text-align: center;
+}
+
+button.add-subtable,
+button.subtract-subtable {
+    width: 1.6rem;
+    height: 1.8rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+button.add-subtable {
+    color: #0d6efd;
+}
+
+button.subtract-subtable {
+    color: red;
+}
+
+.grand-total {
+    width: 40%;
+    float: right;
+    color: red;
+}
+
+.form-group.check>div,
+.form-group.total>div {
+    width: 50%;
+}
+
+.form-group.check,
+.form-group.total {
+    display: flex;
+    align-items: flex-end;
+}
+
+input[type="checkbox"] {
+    width: 1.8rem;
+}
+
+#ls {
+    overflow-x: auto;
+    width: 100%;
+    /* max-height: 38rem; */
+    border: 2px solid #E4E4E4;
+    margin-top: 1rem;
+}
+
+#ls::-webkit-scrollbar {
+    width: 0.4rem;
+    height: 0.7rem;
+}
+
+#ls::-webkit-scrollbar-track {
+    background: white;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#ls::-webkit-scrollbar-thumb {
+    background: #1AB53C;
+    border: 0.5px solid #FAFAFB;
+}
+
+table#table-list tr>th:nth-child(2),
+table#table-list tr>td:nth-child(2) {
+    max-width: 11rem;
+    word-wrap: break-word;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+table#table-list tr th,
+table#table-list tr td {
+    border-right: none !important;
+    border-left: none !important;
+}
+
+#modal-notification .modal-content {
+    border: 2px solid #E4E4E4;
+}
+
+#modal-edit .modal-content {
+    border: 2px solid #E4E4E4;
+}
+
+#modal-add-sub-table .modal-content {
+    border: 4px solid var(--bs-danger)
+}
+
+#modal-edit #total {
+    text-align: right;
+    font-weight: bold;
+}
+
+.display-none {
+    display: none !important;
+}
+
+.btn-add>button.add-subtable {
+    border: 1px solid;
+}
+
+.btn-add {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+#data-container {
+    position: fixed;
+    background: #6c757d73;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+}
+
+#data-container>div {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+}
+
+.selectize-control.single .selectize-input {
+    max-height: 2.3rem;
+}
+
+.selectize-dropdown.single {
+    border: 2px solid var(--bs-primary);
+}
+
+#table-list tbody td:last-child {
+    position: relative;
+}
+
+#table-list tbody td:last-child>div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    right: 0;
+    left: 0;
+}
+
+div#search {
+    position: relative;
+}
+
+div#search input {
+    padding: 1.4rem 0 1.4rem 2.9rem;
+    border: 2px solid #E4E4E4;
+    font-weight: bold;
+}
+
+div#search span {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    bottom: 0;
+}
+
+.table>:not(:last-child)>:last-child>* {
+    border: none;
+}
+
+table>thead {
+    background-color: #FAFAFB;
+}
+
+table>thead>tr>th {
+    text-align: center;
+}
+
+tr {
+    border-color: #E4E4E4;
+}
+
+table>tbody>tr>th:nth-child(1) {
+    border: none !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+table>tbody>tr td:nth-last-child(2) {
+    vertical-align: middle !important;
+}
+
+table>tbody>tr td:nth-last-child(3) {
+    min-width: 4rem;
+    text-align: center;
+}
+
+table>tbody>tr td:nth-last-child(4) {
+    min-width: 7rem;
+    width: 100%;
+}
+
+table>tbody>tr>th,
+table>tbody>tr>td {
+    min-height: 3rem;
+}
+
+.modal {
+    background-color: #6c757d9c;
+}
+
+table a {
+    font-weight: bold !important;
+    text-decoration: none;
+}
+
+
+/* custom paginationjs */
+
+.paginationjs li.paginationjs-prev,
+.paginationjs li.paginationjs-page,
+.paginationjs li.paginationjs-next {
+    border-radius: 50px !important;
+    cursor: pointer;
+    margin-right: 0.3rem;
+}
+
+.paginationjs li.paginationjs-prev a,
+.paginationjs li.paginationjs-page a,
+.paginationjs li.paginationjs-next a {
+    border-radius: 50px !important;
+}
+
+.paginationjs li.paginationjs-prev,
+.paginationjs li.paginationjs-next {
+    border: 1px solid #1AB53C !important;
+    color: #1AB53C !important;
+}
+
+.paginationjs li.paginationjs-prev a,
+.paginationjs li.paginationjs-next a {
+    color: #1AB53C !important;
+}
+
+.paginationjs li.paginationjs-page {
+    border: 1px solid #1AB53C !important;
+}
+
+.paginationjs li.paginationjs-page.active,
+.paginationjs li.paginationjs-page.active a {
+    border: 1px solid #1AB53C !important;
+    background-color: #1AB53C !important;
+    color: #FFFFFF !important;
+}
+
+.paginationjs li.paginationjs-page:not(.paginationjs li.paginationjs-page.active),
+.paginationjs li.paginationjs-page a:not(.paginationjs li.paginationjs-page.active a) {
+    color: #1AB53C !important;
+}
+
+.paginationjs-ellipsis.disabled {
+    border: none !important;
+}
+
+.paginationjs-ellipsis.disabled a {
+    border: none !important;
+    color: #1AB53C !important;
+    font-weight: bold !important;
+    opacity: 1 !important;
+}
+
+.paginationjs {
+    margin-right: 1rem;
+}
+
+#pagination-container {
+    margin-top: 1rem !important;
+    margin-bottom: 2rem !important;
+    padding-bottom: 4rem;
+}
+
+
+/* end */
+
+#btn-create {
+    border: none;
+    background: none;
+}
+
+
+/* mobile */
+
+div#ls-mobile {
+    margin-top: 2rem;
+}
+
+
+/* #btn-list {
+    color: #FFFFFF !important;
+    background: #8BCB99 !important;
+    border-color: #1AB53C !important;
+} */
+
+#btn-detail,
+#btn-list {
+    border: 1px solid #999999;
+    border-radius: 50px;
+    padding: 1rem 1.3rem;
+    background-color: #FAFAFB;
+    color: #858585;
+}
+
+#btn-detail.active,
+#btn-list.active {
+    color: #FFFFFF !important;
+    background: #8BCB99 !important;
+    border-color: #1AB53C !important;
+}
+
+#btn-detail {
+    margin-right: 6px;
+}
+
+#btn-list {
+    margin-right: 10px;
+}
+
+.box-create {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.ls-actions button {
+    border: none;
+    background: none;
+}
+
+.title-ls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FAFAFB;
+    padding: 0.5rem 1rem;
+}
+
+.mobile-item {
+    border: 2px solid #E4E4E4;
+    margin-bottom: 1rem;
+}
+
+.index-ls {
+    font-size: 200%;
+}
+
+.content-ls {
+    padding: 0 1rem;
+}
+
+.item-a hr {
+    margin: 0.5rem 0 !important;
+}
+
+.item-a {
+    margin-bottom: 0.5rem;
+}
+
+span.label-item {
+    font-weight: bold;
+}
+
+span.content-item {
+    color: #858585;
+}
+
+.content-ls .item-a:first-child span {
+    font-weight: bold !important;
+    color: black;
+    font-size: 100%;
+}
+
+.paginationjs .paginationjs-pages li>a {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+div.btn-save {
+    display: flex !important;
+    justify-content: flex-end;
+}
+
+div#edit-5232 {
+    padding: 1rem;
+    border: 2px dashed #E4E4E4;
+    margin-top: 2rem;
+    position: relative;
+}
+
+.title-edit-5232 {
+    position: absolute;
+    top: -16px;
+    left: 0;
+    background: white;
+}
+
+.message-error {
+    color: red;
+}
+
+#loading-edit-5232>div {
+    color: #1AB53C;
+    text-align: centers;
+    /* right: 50%;
+    left: 50%;
+    top: 50%;
+    bottom: 50%; */
+}
+
+#loading-edit-5232 {
+    position: absolute;
+    z-index: 1;
+    background-color: #8585858f;
+    width: 96%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#message-success,
+.message-success {
+    font-weight: bold;
+    color: var(--bs-blue);
+}
+
+#edit-5232 .awesomplete {
+    width: 100% !important;
+}
+
+
+/* 関連レコード一覧 danh sách bản ghi được liên kết  */
+
+div#edit-list-related-records {
+    position: relative;
+}
+
+#loading-related-records {
+    position: absolute;
+    z-index: 1;
+    background-color: #8585858f;
+    width: 95%;
+    height: 88%;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+#edit-list-related-records button {
+    border: none;
+}
+
+.box-list-related-records .input-av {
+    margin-bottom: 0.5rem;
+}
+
+#edit-list-related-records .downstairs>label {
+    width: 6rem;
+}
+
+#edit-list-related-records .lb-av {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#message-related-records {
+    margin-right: 1rem;
+    font-weight: bold;
+}
+
+.box-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 2px solid red;
+}
+
+#info-user strong {
+    color: #0a58ca;
+}
+
+.toast-body {
+    color: #0d71df;
+}
+
+div#toast.success {
+    background: #d4edda;
+    color: #c3e6cb;
+}
+
+.toast-header {
+    justify-content: space-between;
+}
+
+a.link_detail {
+    color: #444444;
+    display: flex;
+    align-items: center;
+}
+
+
+/* #ls-mobile {
+    display: none;
+} */
+
+
+/* end mobile */
+
+@media (max-width: 500px) {
+    div#search input {
+        padding: 1.8rem 0 1.8rem 4.1rem;
+    }
+    div#search span {
+        position: absolute;
+        top: 4px;
+        left: 13px;
+        bottom: 0;
+    }
+    .nav {
+        float: none !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #pagination-container {
+        margin-top: 4rem !important;
+    }
+    /* #btn-detail {
+        color: #FFFFFF !important;
+        background: #8BCB99 !important;
+        border-color: #1AB53C !important;
+    } */
+    /* #btn-list {
+        color: #858585 !important;
+        background: #FAFAFB !important;
+        border-color: #999999 !important;
+    } */
+}
+
+
+/* Thiết lập các kiểu chung cho toàn bộ trang web */
+
+
+/* Thiết lập cho các thiết bị có chiều rộng màn hình nhỏ hơn hoặc bằng 375px */
+
+@media only screen and (max-width: 375px) {
+    /* Các quy tắc CSS cho màn hình di động nhỏ */
+    body {
+        font-size: 14px;
+    }
+    .container {
+        padding: 10px;
+    }
+    span.content-item {
+        font-size: 10px;
+        color: #858585;
+    }
+}
+
+
+/* Thiết lập cho các thiết bị có chiều rộng màn hình nhỏ hơn hoặc bằng 414px */
+
+@media only screen and (max-width: 480px) {
+    /* #ls {
+        display: none !important;
+    }
+    #ls-mobile {
+        display: block !important;
+    } */
+    #btn-send-comment {
+        margin-bottom: 0.5rem;
+    }
+}
+
+
+/* Thiết lập cho các thiết bị có chiều rộng màn hình nhỏ hơn hoặc bằng 768px */
+
+@media only screen and (max-width: 768px) {
+    /* .container {
+        width: 80%;
+    } */
+    .menu {
+        display: block;
+    }
+}
+
+
+/* Thiết lập cho các thiết bị có chiều rộng màn hình nhỏ hơn hoặc bằng 1024px */
+
+@media only screen and (max-width: 1024px) {
+    /* Các quy tắc CSS cho tablet lớn hoặc desktop nhỏ */
+    .menu {
+        display: block;
+        /* Hiển thị menu trên tablet và desktop nhỏ */
+    }
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+button.remove {
+    height: 100%;
+    width: 100%;
+}
+
+.top-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+button.icon {
+    margin: 0.9rem 0.8rem 0.9rem 0;
+}

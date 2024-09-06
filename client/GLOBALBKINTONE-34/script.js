@@ -9,7 +9,7 @@ const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 
 window.addEventListener('load', async() => {
-    actionSwitch('add');
+    actionSwitch('list');
 
 });
 
@@ -41,11 +41,11 @@ function actionSwitch(action, id = "") {
         //     $(".signature-pad-created").hide();
         //     backList();
         // }
-        // if (action == "list") {
-        //     loadScript(JS_LIST, action, id);
-        //     loadCss([CSS_LIST, CSS_PAGINATION]);
-        //     loadCss([CSS_LIST, CSS_PAGINATION]);
-        // }
+        if (action == "list") {
+            loadScript(JS_LIST, action, id);
+            loadCss([CSS_LIST, CSS_PAGINATION]);
+            loadCss([CSS_LIST, CSS_PAGINATION]);
+        }
     });
 }
 
@@ -112,4 +112,23 @@ function clearLookup_6004() {
     $("#company-name").val("");
     $("#telephone").val("");
     $("#address").val("");
+}
+// page list
+function switchDisplayData(key) {
+    switch (key) {
+        case "table":
+            $("#btn-detail").removeClass("active");
+            $("#btn-list").addClass("active");
+            $("#ls").removeClass("display-none");
+            $("#ls-mobile").addClass("display-none");
+            break;
+        case "card":
+            $("#btn-detail").addClass("active");
+            $("#btn-list").removeClass("active");
+            $("#ls").addClass("display-none");
+            $("#ls-mobile").removeClass("display-none");
+            break;
+        default:
+            alert('error');
+    }
 }
