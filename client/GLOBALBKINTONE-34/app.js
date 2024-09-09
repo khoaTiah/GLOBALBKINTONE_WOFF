@@ -570,6 +570,7 @@ const buildPageEdit = async() => {
     $("#btn-lookup_6004").click(function() {
         $("#modal-6004").modal('show');
     });
+    elementTracking();
     updateData();
     getProfile()
         .then((profile) => {
