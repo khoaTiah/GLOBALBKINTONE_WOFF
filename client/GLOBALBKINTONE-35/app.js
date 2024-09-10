@@ -58,6 +58,9 @@ const getMileageManagementByName = async(name) => {
     }
     $("#current-mileage").val(formatNumberToComma(records[0].走行距離.value).number);
     dataVehicle = records[0];
+    let mileage = $("#mileage").val();
+    if (!mileage) return;
+    console.log(222, mileage);
 }
 const buildCreatePage = () => {
     $("#btn-lookup-vehicle-name").click(function() {
@@ -80,14 +83,25 @@ const buildCreatePage = () => {
             $("#name-line-works").text(profile.displayName);
         });
     $("#mileage").on("change", function() {
-        if (!dataVehicle) return;
+        console.log($(this).val());
+        $(".mileage .message-error").text("");
+        $("#mileage").removeClass("input-error");
+        // if (!dataVehicle) return;
+        if (dataVehicle && (dataVehicle.走行距離.value > $(this).val())) {
+            $(".mileage .message-error").html("入力した走行距離は現在走行距離より小さいです。<br>ご確認ください。");
+            $("#mileage").addClass("input-error");
+        }
+        let formatNumber = formatNumberToComma($(this).val());
+        if (!formatNumber.status) {
+            $("#mileage").addClass("input-error");
+            return $(".mileage .message-error").html("走行距離は数字である必要があります。");
+        }
+        $("#mileage").val(formatNumber.number);
 
-        console.log("Handler for `change` called.");
-        console.log(dataVehicle);
     });
 };
 const clearAll = () => {
-    $("span.message-error").text("");
+    $("span.message-error").html("");
 }
 export function runCreate() {
     buildCreatePage();
