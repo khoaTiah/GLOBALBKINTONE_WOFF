@@ -56,6 +56,26 @@ button {
 }
 
 
+/* btn */
+
+.btn-select,
+.btn-submit {
+    background-color: #1AB53C !important;
+    color: #FFFFFF !important;
+    margin-right: 0.2rem;
+    border-radius: 5px !important;
+}
+
+.btn-clear {
+    background-color: #D9D9D9 !important;
+    color: #666666 !important;
+    border-radius: 5px !important;
+}
+
+
+/* end btn */
+
+
 /* loading */
 
 .loader {
@@ -129,6 +149,71 @@ div#toast.warning {
 
 
 /* end toast */
+
+button.icon {
+    width: 4rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    border-radius: 5px;
+    margin: 0.9rem 0.8rem;
+    border: 2px solid #dee2e6 !important;
+    background: none;
+}
+
+.top-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-box.vehicle-name {
+    position: relative;
+}
+
+.input-box>div.coating {
+    width: 100%;
+    border: 1px solid #E4E4E4;
+}
+
+.coating {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ced4daab;
+    z-index: 2;
+}
+
+label.lb-av {
+    background-color: #EFEFEF;
+    width: 100%;
+    border-bottom: 1px solid #E4E4E4;
+    padding: 0.3rem 0 0.3rem 0.7rem;
+}
+
+.downstairs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input-box>div {
+    width: 100%;
+    border: 1px solid #E4E4E4;
+}
+
+div.btn-save {
+    display: flex !important;
+    justify-content: flex-end;
+}
+
+button:hover {
+    scale: 1.05;
+    transform: scale(1.05);
+    /* transition: ease 0.3s; */
+}
 
 
 /* responsive   */
