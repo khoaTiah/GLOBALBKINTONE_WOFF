@@ -55,6 +55,10 @@ button {
     transition: all .3s !important;
 }
 
+input:read-only {
+    pointer-events: none;
+}
+
 
 /* btn */
 
@@ -215,12 +219,115 @@ button:hover {
     /* transition: ease 0.3s; */
 }
 
+.downstairs {
+    padding: 0.3rem;
+}
+
+.mileage .downstairs,
+.current-mileage .downstairs {
+    position: relative;
+}
+
+.mileage .downstairs span,
+.current-mileage .downstairs span {
+    position: absolute;
+}
+
+.mileage .downstairs span,
+.current-mileage .downstairs span {
+    position: absolute;
+    right: 11px;
+    font-weight: bold;
+}
+
+input#mileage {
+    padding-right: 2.2rem;
+    text-align: right;
+}
+
+#info-user strong {
+    color: #0a58ca;
+}
+
+input#vehicle-name {
+    width: 88%;
+}
+
+.message-error {
+    color: red;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+input#current-mileage {
+    text-align: right;
+    padding-right: 2rem;
+}
+
 
 /* responsive   */
+
+@media (max-width: 1370px) {
+    input#vehicle-name {
+        width: 86%;
+    }
+}
+
+@media (max-width: 1150px) {
+    input#vehicle-name {
+        width: 83%;
+    }
+}
+
+@media (max-width: 990px) {
+    input#vehicle-name {
+        width: 78%;
+    }
+}
+
+@media (max-width: 930px) {
+    input#vehicle-name {
+        width: 78%;
+    }
+}
+
+@media (max-width: 760px) {
+    input#vehicle-name {
+        width: 70%;
+    }
+}
 
 @media (max-width: 520px) {
     body,
     html {
         font-size: 12px;
+    }
+}
+
+@media (max-width: 363px) {
+    input#vehicle-name {
+        width: 67%;
+    }
+}
+
+@media (max-width: 326px) {
+    input#vehicle-name {
+        width: 65%;
+    }
+}
+
+@media (max-width: 310px) {
+    input#vehicle-name {
+        width: 61%;
+    }
+}
+
+@media (max-width: 284px) {
+    input#vehicle-name {
+        width: 58%;
     }
 }

@@ -15,17 +15,19 @@
                 <div class="coating" hidden></div>
                 <label for="vehicle-name" class="lb-av">車両名</label>
                 <div class="downstairs ">
-                    <input class="form-control" type="text" name="vehicle-name" id="vehicle-name" autocomplete="off">
+                    <input class="form-control" type="text" name="vehicle-name" id="vehicle-name" autocomplete="off" readonly>
                     <div class="actions">
-                        <button type="button" class="btn btn-select" id="btn-lookup-vehicle-name">取得</button>
+                        <button type="button" class="btn btn-select" id="btn-lookup-vehicle-name">QR</button>
                         <button class="btn btn-clear me-1" type="button" onclick="clearLookup_vehicleName()">クリア</button>
                     </div>
                 </div>
+                <span class="message-error"></span>
             </div>
             <div class="input-box mt-2 current-mileage">
                 <label for="current-mileage" class="lb-av">現在走行距離</label>
                 <div class="downstairs">
                     <input class="form-control" type="text" name="current-mileage" id="current-mileage" autocomplete="off" readonly>
+                    <span>km</span>
                 </div>
             </div>
         </section>
@@ -48,8 +50,9 @@
                 <label for="mileage" class="lb-av">走行距離</label>
                 <div class="downstairs">
                     <input class="form-control" type="text" name="mileage" id="mileage" autocomplete="off">
-                    <span>KM</span>
+                    <span>km</span>
                 </div>
+                <span class="message-error"></span>
             </div>
         </section>
         <section>

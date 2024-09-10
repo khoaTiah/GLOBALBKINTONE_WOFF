@@ -405,11 +405,12 @@ const getDataAppByQuery = async(id, query) => {
         });
 
         const totalCount = totalCountResponse.totalCount;
-
+        const query_Uncode = decodeURIComponent(query);
+        // return query_Uncode;
         while (offset < totalCount) {
             const response = await client.record.getRecords({
                 app: appId,
-                query: `${query} limit ${limit} offset ${offset}`
+                query: `${query_Uncode} limit ${limit} offset ${offset}`
             });
 
             allRecords = allRecords.concat(response.records);

@@ -119,3 +119,22 @@ const showMessage = (mess, type) => {
     $("#toast .toast-body span").text(mess);
     $('#toast').toast('show');
 }
+const clearLookup_vehicleName = () => {
+    $("#vehicle-name").val("");
+    $(".vehicle-name span.message-error").text("");
+    $(".vehicle-name input#vehicle-name").removeClass("input-error");
+    $("#current-mileage").val("")
+}
+const formatNumberToComma = (number) => {
+    let value = number.replace(/,/g, '');
+    if (!isNaN(value)) {
+        return {
+            status: true,
+            number: value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        }
+    }
+    return { status: false, number: 0 };
+}
+const formatNumberRemoveComma = (number) => {
+    return number.replace(/,/g, '');
+}

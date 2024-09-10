@@ -2,6 +2,7 @@ import { woffId, lambdaUrl } from './params.js';
 window.addEventListener('load', () => {
     woffInit();
 });
+var dataVehicle;
 const woffInit = () => {
 
     // Initialize WOFF
@@ -42,6 +43,56 @@ const getProfile = () => {
         });
     });
 };
+const getMileageManagementByName = async(name) => {
+    // https://gbalb-demo.cybozu.com/k/6017/
+    dataVehicle = "";
+    $(".vehicle-name span.message-error").text("");
+    $(".vehicle-name input#vehicle-name").removeClass("input-error");
+    $(".name-of-fire .coating").attr("hidden", false);
+    let res = await axios.get(lambdaUrl + "?id=6017&isQuery=true&query=" + encodeURIComponent(`車両名="${name}"`));
+    const records = res.data;
+    if (records.length <= 0) {
+        $(".vehicle-name span.message-error").text("両名が存在しません！");
+        $(".vehicle-name input#vehicle-name").addClass("input-error");
+        return;
+    }
+    $("#current-mileage").val(formatNumberToComma(records[0].走行距離.value).number);
+    dataVehicle = records[0];
+}
+const buildCreatePage = () => {
+    $("#btn-lookup-vehicle-name").click(function() {
+        $("#vehicle-name").val("")
+        woff.scanQR()
+            .then((result) => {
+                console.log(result);
+                $("#vehicle-name").val(result.value);
+                getMileageManagementByName(result.value);
+            })
+            .catch((err) => {
+                alert(err);
+            });
+    });
+    $("button.btn.btn-clear.me-1").click(function() {
+        dataVehicle = "";
+    });
+    getProfile()
+        .then((profile) => {
+            $("#name-line-works").text(profile.displayName);
+        });
+    $("#mileage").on("change", function() {
+        if (!dataVehicle) return;
 
-export function runCreate() {};
-export function runEdit(id) {}
+        console.log("Handler for `change` called.");
+        console.log(dataVehicle);
+    });
+};
+const clearAll = () => {
+    $("span.message-error").text("");
+}
+export function runCreate() {
+    buildCreatePage();
+    clearAll();
+};
+export function runEdit(id) {
+    clearAll();
+}
