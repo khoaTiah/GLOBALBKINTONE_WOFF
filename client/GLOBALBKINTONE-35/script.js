@@ -126,6 +126,7 @@ const clearLookup_vehicleName = () => {
     $("#current-mileage").val("")
 }
 const formatNumberToComma = (number) => {
+    console.log(number);
     let value = number.replace(/,/g, '');
     if (!isNaN(value)) {
         return {
@@ -136,5 +137,5 @@ const formatNumberToComma = (number) => {
     return { status: false, number: 0 };
 }
 const formatNumberRemoveComma = (number) => {
-    return number.replace(/,/g, '');
+    return Number(number.replace(/,/g, ''));
 }

@@ -35,8 +35,8 @@
             <div class="input-box mt-1 current-location">
                 <label for="current-location" class="lb-av">現在地</label>
                 <div class="downstairs">
-                    <select class="form-select" aria-label="Default select example">
-                        <option value="" selected>----</option>
+                    <select id="current-location" class="form-select" aria-label="Default select example">
+                        <option value="" selected>-------</option>
                         <option value="A地点">A地点</option>
                         <option value="B地点">B地点</option>
                         <option value="C地点">C地点</option>
@@ -57,7 +57,8 @@
         </section>
         <section>
             <div class="mt-3 btn-save">
-                <button class="btn  me-3 btn-submit" id="btn-update-5231">登録</button>
+                <span class="message-error"></span>
+                <button class="btn me-3 btn-submit" id="btn-update-or-add" type="button">登録</button>
             </div>
         </section>
     </form>
