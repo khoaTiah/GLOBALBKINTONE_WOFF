@@ -8,7 +8,7 @@ const getData = () => {
             DATA_APP = records;
             $('#pagination-container').pagination({
                 dataSource: records,
-                pageSize: 10,
+                pageSize: 10000000,
                 pageRange: 1,
                 showPrevious: true,
                 showNext: true,
