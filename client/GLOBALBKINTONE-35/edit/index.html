@@ -1,0 +1,119 @@
+<div class="" style="padding: 1rem 0;" id="page-home">
+    <input type="text" name="id-edit" id="id-edit" hidden>
+    <div class="top-list">
+        <button class="icon" onclick="actionSwitch('add')">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+        <p id="info-user" class="text-end">
+            <strong>line_works : </strong>
+            <span id="name-line-works"></span>
+        </p>
+    </div>
+    <div id="search" class="mb-2"><input id="input-search" type="text" class="form-control" placeholder="">
+        <span>
+        <svg width="33" height="39 " viewBox="0 0 38 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_29_69)">
+            <path d="M23.1948 21.819V24.2117H27.0232H30.8517L23.1948 18.8131V21.819Z" fill="#888888"/>
+            <path d="M16.5101 23.4491H21.146V22.8808H16.5101V20.5179H21.146V19.9496H10.0048V35.1885H29.2814V25.7521H16.5101V23.4341V23.4491ZM15.9567 34.6202H10.588V32.0779H15.9567V34.6202ZM15.9567 31.5246H10.588V29.2066H15.9567V31.5246ZM15.9567 28.6384H10.588V26.3204H15.9567V28.6384ZM15.9567 25.767H10.588V23.4491H15.9567V25.767ZM15.9567 22.8808H10.588V20.5179H15.9567V22.8808ZM28.7281 34.6202H16.5101V32.0779H28.7281V34.6202ZM28.7281 31.5246H16.5101V29.2066H28.7281V31.5246ZM28.7281 26.3353V28.6533H16.5101V26.3353H28.7281Z" fill="#888888"/>
+            <path d="M37.4617 14.1921C37.2822 14.0126 36.9831 14.0126 36.8036 14.1921C36.6242 14.3715 36.6242 14.6706 36.8036 14.8501C36.9681 15.0146 37.0728 15.2389 37.0728 15.4931C37.0728 15.7474 36.9681 15.9717 36.8036 16.1362C36.6391 16.3007 36.4148 16.4054 36.1606 16.4054C35.9064 16.4054 35.682 16.3007 35.5175 16.1362C35.353 15.9717 35.2484 15.7474 35.2484 15.4931C35.2484 15.2389 35.353 15.0146 35.5175 14.8501C35.697 14.6706 35.697 14.3715 35.5175 14.1921C35.3381 14.0126 35.039 14.0126 34.8595 14.1921C34.5305 14.5211 34.3212 14.9847 34.3212 15.4782C34.3212 15.9866 34.5305 16.4502 34.8595 16.7792C35.0689 16.9886 35.3231 17.1381 35.6073 17.2279C35.4577 19.2916 34.1267 20.8918 32.2424 21.5348V17.3625H30.5675C29.7001 12.6816 25.1389 9.10745 19.6356 9.10745C14.1323 9.10745 9.58602 12.6816 8.70369 17.3625H7.02875V21.49C5.15941 20.8469 3.81349 19.2318 3.66394 17.183C3.94808 17.0933 4.21726 16.9437 4.41167 16.7344C4.74068 16.4054 4.95005 15.9418 4.95005 15.4333C4.95005 14.9248 4.74068 14.4612 4.41167 14.1322C4.23222 13.9528 3.93312 13.9528 3.75367 14.1322C3.57421 14.3117 3.57421 14.6108 3.75367 14.7903C3.91817 14.9548 4.02285 15.1791 4.02285 15.4333C4.02285 15.6875 3.91817 15.9119 3.75367 16.0764C3.58916 16.2409 3.36484 16.3455 3.11061 16.3455C2.85638 16.3455 2.63206 16.2409 2.46756 16.0764C2.30306 15.9119 2.19837 15.6726 2.19837 15.4333C2.19837 15.1791 2.30306 14.9548 2.46756 14.7903C2.64702 14.6108 2.64702 14.3117 2.46756 14.1322C2.2881 13.9528 1.98901 13.9528 1.80955 14.1322C1.48055 14.4612 1.27118 14.9248 1.27118 15.4333C1.27118 15.9418 1.48055 16.4054 1.80955 16.7344C2.06378 16.9886 2.37783 17.1531 2.72179 17.2279C2.82647 18.7533 3.48448 20.0992 4.51636 21.0563C5.20428 21.6993 6.0567 22.1779 6.99885 22.4471V37.8355H9.10746H9.12242C8.4345 38.9422 7.73163 40.0488 7.04371 41.1405C10.5282 42.3369 14.3267 42.3369 17.8111 41.1405C17.1232 40.0339 16.4203 38.9272 15.7324 37.8355H15.7175H23.4939H23.5089C22.821 38.9422 22.1181 40.0488 21.4302 41.1405C24.9146 42.3369 28.7131 42.3369 32.1976 41.1405C31.5097 40.0339 30.8068 38.9272 30.1189 37.8355H30.1039H32.2574V22.4919C33.1996 22.2228 34.052 21.7442 34.7399 21.1012C35.7718 20.1291 36.4298 18.7981 36.5345 17.2727C36.8934 17.198 37.2074 17.0185 37.4467 16.7792C37.7757 16.4502 37.9851 15.9866 37.9851 15.4782C37.9851 14.9697 37.7757 14.5061 37.4467 14.1771L37.4617 14.1921ZM26.126 13.0854C26.769 13.0854 27.2924 13.6088 27.2924 14.2519C27.2924 14.8949 26.769 15.4184 26.126 15.4184C25.4829 15.4184 24.9595 14.8949 24.9595 14.2519C24.9595 13.6088 25.4829 13.0854 26.126 13.0854ZM16.1212 15.0744H23.1948V16.6746H16.1212V15.0744ZM13.1901 13.0854C13.8332 13.0854 14.3566 13.6088 14.3566 14.2519C14.3566 14.8949 13.8332 15.4184 13.1901 15.4184C12.5471 15.4184 12.0236 14.8949 12.0236 14.2519C12.0236 13.6088 12.5471 13.0854 13.1901 13.0854ZM30.8517 19.9945V36.3849H8.50927V18.7981H30.8517V19.9795V19.9945Z" fill="#888888"/>
+            <path d="M6.81933 11.9189C9.87526 11.9189 12.3526 9.4416 12.3526 6.38567C12.3526 3.32974 9.87526 0.852417 6.81933 0.852417C3.76339 0.852417 1.28607 3.32974 1.28607 6.38567C1.28607 9.4416 3.76339 11.9189 6.81933 11.9189Z" stroke="#888888" stroke-width="1.14" stroke-miterlimit="10"/>
+            <path d="M5.41758 11.4893L4.24091 11.0084L1.02164 18.8852L2.19831 19.3661L5.41758 11.4893Z" fill="#888888"/>
+            <path d="M4.95964 13.419L3.21539 12.7061L-0.00387254 20.5829L1.74037 21.2958L4.95964 13.419Z" fill="#888888"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_29_69">
+            <rect width="38" height="42.0677" fill="white"/>
+            </clipPath>
+            </defs>
+        </svg>
+        </span>
+    </div>
+    <div class="filter">
+        <label for="filter" class="me-2">フィルター </label>
+        <select id="filter" class="form-select" aria-label="Default select example">
+            <!-- <option selected value="null"></option> -->
+            <option value="$id" selected>レコード番号</option>
+            <option value="作成日時">作成日時</option>
+            <option value="ルックアップ">車両名</option>
+            <option value="現在地">現在地</option>
+            <option value="走行距離">走行距離</option>
+            <option value="現在走行距離">現在走行距離</option>
+            <option value="ユーザーID">ユーザーID</option>
+          </select>
+    </div>
+    <div class="box-create mb-2">
+        <div>
+            <span class="fw-bold">一覧1</span>
+        </div>
+        <div>
+            <button id="btn-detail" onclick="switchDisplayData('card')">詳細表示</button>
+            <button id="btn-list" class="active" onclick="switchDisplayData('table')">一覧表示</button>
+        </div>
+    </div>
+    <div id="ls">
+        <table class="table" id="table-list">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col" style="min-width: 7rem;">レコード番号</th>
+                    <th scope="col" style="min-width: 8rem;">作成日時</th>
+                    <th scope="col" style="min-width: 12rem;">車両名</th>
+                    <th scope="col" style="min-width: 5rem;">現在地</th>
+                    <th scope="col" style="min-width: 7rem;">走行距離</th>
+                    <th scope="col" style="min-width: 8rem;">現在走行距離</th>
+                    <th scope="col" style="min-width: 12rem;">ユーザーID</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <!-- <div style="position: absolute; width: 20px; right: 0; top: 40px; z-index: 10; bottom: 0; background: white;">
+
+            </div> -->
+        </table>
+    </div>
+    <div id="ls-mobile">
+    </div>
+    <div id="pagination-container" class="nav"></div>
+    <div class="mt-4"></div>
+</div>
+<div class="modal" tabindex="-1" id="modal-notification">
+    <input type="text" class="id-value-remove" hidden>
+    <input type="text" class="id-remove-app" hidden>
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">注意</h5>
+                <button type="button" class="btn-close close-modal-notification" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>IDが<span id="remove-id"></span>のレコードを削除することを確認しますか？</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="delete-record">はい</button>
+                <button type="button" class="btn btn-secondary close-modal-notification" data-bs-dismiss="modal-notification">いいえ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-signature_pad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

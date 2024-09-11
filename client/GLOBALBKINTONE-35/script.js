@@ -8,7 +8,7 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('add');
+    actionSwitch('list');
 });
 
 function actionSwitch(action, id = "") {
@@ -126,7 +126,6 @@ const clearLookup_vehicleName = () => {
     $("#current-mileage").val("")
 }
 const formatNumberToComma = (number) => {
-    console.log(number);
     let value = number.replace(/,/g, '');
     if (!isNaN(value)) {
         return {
@@ -139,3 +138,14 @@ const formatNumberToComma = (number) => {
 const formatNumberRemoveComma = (number) => {
     return Number(number.replace(/,/g, ''));
 }
+const convertTime = (timeString) => {
+    const date = new Date(timeString);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+};

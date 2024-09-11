@@ -60,14 +60,12 @@ const getMileageManagementByName = async(name) => {
     dataVehicle = records[0];
     let mileage = $("#mileage").val();
     if (!mileage) return;
-    console.log(222, mileage);
 }
 const buildCreatePage = () => {
     $("#btn-lookup-vehicle-name").click(function() {
         $("#vehicle-name").val("")
         woff.scanQR()
             .then((result) => {
-                console.log(result);
                 $("#vehicle-name").val(result.value);
                 getMileageManagementByName(result.value);
             })
@@ -91,7 +89,6 @@ const buildCreatePage = () => {
             return $(".mileage .message-error").html("走行距離は数字である必要があります。");
         }
         let number = formatNumberRemoveComma($(this).val());
-        console.log(number);
         // if (!dataVehicle) return;
         if (dataVehicle && (dataVehicle.走行距離.value > number)) {
             $(".mileage .message-error").html("入力した走行距離は現在走行距離より小さいです。<br>ご確認ください。");
@@ -108,19 +105,20 @@ const clearAll = () => {
 const createData = async() => {
     $("#btn-update-or-add").click(async function() {
         let mileage = $("#mileage").val();
+        let flag = false;
         if (!mileage) {
             $("#mileage").addClass("input-error");
             $(".mileage .message-error").html("走行距離は必須項目です。");
-            return;
+            flag = true;
         }
-        let err = $(".message-error").text();
-        console.log(err);
-        if (err.length > 0) return;
         if (!dataVehicle) {
             $(".vehicle-name input#vehicle-name").addClass("input-error");
             $(".vehicle-name span.message-error").text("両車両名は必須項目です。");
-            return
+            flag = true;
         };
+        if (flag) return;
+        let err = $(".message-error").text();
+        if (err.length > 0) return;
         let user_id = await getProfile()
             .then((profile) => {
                 return profile.userId;
