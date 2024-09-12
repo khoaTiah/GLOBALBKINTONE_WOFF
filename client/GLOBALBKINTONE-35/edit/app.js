@@ -1,5 +1,47 @@
 import { woffId, lambdaUrl } from '../params.js'
 var DATA_APP;
+
+const woffInit = () => {
+
+    // Initialize WOFF
+    woff.init({ woffId: woffId })
+        .then(() => {
+            if (!woff.isLoggedIn()) {
+                return woff.login();
+                // woffInit()
+            } else
+            // Success
+            // Get and show user profile
+                getProfile()
+                .then((profile) => {
+                    $("#name-line-works").text(profile.displayName);
+                })
+                .catch((err) => {
+                    window.alert(err);
+                });
+        })
+        .catch((err) => {
+            console.log(err);
+            // Error
+
+        });
+};
+const getProfile = () => {
+    return new Promise((resolve, reject) => {
+        // Get profile
+        woff.getProfile().then((profile) => {
+            // Success
+            console.log(profile);
+            $("#name-line-works").text(profile.displayName);
+            resolve(profile)
+
+        }).catch((err) => {
+            // Error
+            console.error(err)
+            reject(err)
+        });
+    });
+}
 const getData = () => {
     let appID = '6018';
     axios.get(lambdaUrl + `?id=${appID}&isQuery=true`)
@@ -26,22 +68,7 @@ const getData = () => {
             console.error(err);
         });
 };
-const getProfile = () => {
-    return new Promise((resolve, reject) => {
-        // Get profile
-        woff.getProfile().then((profile) => {
-            // Success
-            console.log(profile);
-            $("#name-line-works").text(profile.displayName);
-            resolve(profile)
 
-        }).catch((err) => {
-            // Error
-            console.error(err)
-            reject(err)
-        });
-    });
-}
 
 function simpleTemplating(data) {
     let html = "";
@@ -68,7 +95,7 @@ function simpleTemplating(data) {
                     </div>
                     </td>
                     <td style="text-align: center;">${convertTime(record.作成日時.value)}</td>
-                    <td>${record.ルックアップ.value}</td>
+                    <td>${record.車両名.value}</td>
                     <td>${record.現在地.value}</td>
                     <td style="text-align: center;">${(formatNumberToComma(record.走行距離.value).number)} km</td>
                     <td>${(formatNumberToComma(record.現在走行距離.value).number)} km</td>
@@ -131,7 +158,7 @@ const templateMobile = (data) => {
                 </span>
                 <hr>
                 <span class="content-item">                              
-                    ${record.ルックアップ.value}
+                    ${record.車両名.value}
                 </span>
             </div>
             <div class="item-a mb-4">
@@ -264,8 +291,8 @@ const remove = () => {
 
 }
 export function run() {
+    woffInit();
     getData();
-    getProfile();
     switchDisplayData('table');
     remove();
     $(".close-modal-notification").click(function() {

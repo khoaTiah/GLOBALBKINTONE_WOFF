@@ -124,7 +124,7 @@ const createData = async() => {
                 return profile.userId;
             });
         let bodyMileageManagement = {
-            "ルックアップ": {
+            "車両名": {
                 "type": "SINGLE_LINE_TEXT",
                 "value": $("#vehicle-name").val(),
             },
