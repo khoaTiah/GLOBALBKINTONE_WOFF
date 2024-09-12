@@ -49,7 +49,7 @@ const getMileageManagementByName = async(name) => {
     $(".vehicle-name span.message-error").text("");
     $(".vehicle-name input#vehicle-name").removeClass("input-error");
     $(".name-of-fire .coating").attr("hidden", false);
-    let res = await axios.get(lambdaUrl + "?id=6017&isQuery=true&query=" + encodeURIComponent(`車両名="${name}"`));
+    let res = await axios.get(lambdaUrl + "?id=6017&isQuery=true&query=" + encodeURIComponent(`車両="${name}"`));
     const records = res.data;
     if (records.length <= 0) {
         $(".vehicle-name span.message-error").text("車両名が存在しません！");
