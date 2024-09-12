@@ -44,6 +44,7 @@ const getProfile = () => {
 }
 const getData = () => {
     let appID = '6018';
+    $("#load-main").attr("hidden", false);
     axios.get(lambdaUrl + `?id=${appID}&isQuery=true`)
         .then((res) => {
             const records = res.data;
@@ -63,6 +64,8 @@ const getData = () => {
                 },
                 formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
             });
+            $("#load-main").attr("hidden", true);
+
         })
         .catch((err) => {
             console.error(err);
@@ -95,34 +98,34 @@ function simpleTemplating(data) {
                     </div>
                     </td>
                     <td style="text-align: center;">${convertTime(record.作成日時.value)}</td>
-                    <td>${record.車両名.value}</td>
-                    <td>${record.現在地.value}</td>
+                    <td>${record.車両名.value || ""}</td>
+                    <td>${record.現在地.value || ""}</td>
                     <td style="text-align: center;">${(formatNumberToComma(record.走行距離.value).number)} km</td>
                     <td>${(formatNumberToComma(record.現在走行距離.value).number)} km</td>
-                    <td>${(record.ユーザーID.value)}</td>
+                    <td>${(record.ユーザーID.value || "")}</td>
                     <td style="border:none;"></td>
                 </tr>`;
     });
     return html;
 }
 const templateMobile = (data) => {
-    let html = "";
-    data.forEach(function(record, index) {
-        let btnEdit = `
+        let html = "";
+        data.forEach(function(record, index) {
+            let btnEdit = `
         <button class="me-2" onclick="showModelEdit('${record.$id.value}')">
             <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1.98971 19.4615L0.0604248 27L7.59891 25.0707L26.2844 6.38529L20.6394 0.740356L1.98971 19.4615ZM5.49099 20.712L4.20481 19.4258L20.4965 3.16982L21.7827 4.45601L5.49099 20.712Z" fill="#8BCB99"/>
             </svg>
         </button>`;
 
-        let btnRemove = `
+            let btnRemove = `
         <button class="" onclick="showModalDelete('${record.$id.value}')">
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="17" cy="17" r="16.2635" transform="rotate(45 17 17)" fill="#1AB53C"/>
                 <path d="M22 12L13 21M22 21L13 12" stroke="white"/>
             </svg>                                                                
         </button>`;
-        html += `
+            html += `
         <div class="mobile-item">
         <div class="title-ls">
             <span class="index-ls fw-bold">${index + 1}</span>
@@ -158,7 +161,7 @@ const templateMobile = (data) => {
                 </span>
                 <hr>
                 <span class="content-item">                              
-                    ${record.車両名.value}
+                    ${record.車両名.value || ""}
                 </span>
             </div>
             <div class="item-a mb-4">
@@ -167,7 +170,7 @@ const templateMobile = (data) => {
                 </span>
                 <hr>
                 <span class="content-item">                              
-                   ${record.現在地.value}
+                   ${record.現在地.value || ""}
                 </span>
             </div>
             <div class="item-a">
@@ -194,71 +197,71 @@ const templateMobile = (data) => {
                 </span>
                 <hr>
                 <span class="content-item">                              
-                    ${(record.ユーザーID.value)}
+                    ${(record.ユーザーID.value) || ""}
                 </span>
             </div>
         </div>
     </div>
         `;
-    });
-    return html;
-}
-var debounceTimer;
-$('#input-search').on('input', function() {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(function() {
-        let code = $("#filter").val();
-        if (code == "null") return;
-        const keyword = $('#input-search').val().toLowerCase();
-        let filteredData = DATA_APP.filter(item => item[code].value.includes(keyword));
-        $('#pagination-container').pagination({
-            dataSource: filteredData,
-            pageSize: 10,
-            pageRange: 1,
-            showPrevious: true,
-            showNext: true,
-            callback: function(data, pagination) {
-                var html = simpleTemplating(data);
-                $("#table-list>tbody").html(html);
-                var htmlMobile = templateMobile(data);
-                $("#ls-mobile").html(htmlMobile);
-
-            },
-            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
         });
-    }, 500); // Trì hoãn 1,5 giây
-});
-$('#filter').on('change', function(e) {
-    var optionSelected = $("option:selected", this);
-    var valueSelected = this.value;
-    var textSelected = optionSelected.text();
-    $("#input-search").attr("placeholder", textSelected);
+        return html;
+    }
+    // var debounceTimer;
+    // $('#input-search').on('input', function() {
+    //     clearTimeout(debounceTimer);
+    //     debounceTimer = setTimeout(function() {
+    //         let code = $("#filter").val();
+    //         if (code == "null") return;
+    //         const keyword = $('#input-search').val().toLowerCase();
+    //         let filteredData = DATA_APP.filter(item => item[code].value.includes(keyword));
+    //         $('#pagination-container').pagination({
+    //             dataSource: filteredData,
+    //             pageSize: 10,
+    //             pageRange: 1,
+    //             showPrevious: true,
+    //             showNext: true,
+    //             callback: function(data, pagination) {
+    //                 var html = simpleTemplating(data);
+    //                 $("#table-list>tbody").html(html);
+    //                 var htmlMobile = templateMobile(data);
+    //                 $("#ls-mobile").html(htmlMobile);
 
-    debounceTimer = setTimeout(function() {
-        const keyword = $('#input-search').val().toLowerCase();
-        let filteredData;
-        if (valueSelected == "null") {
-            filteredData = DATA_APP;
-        } else
-            filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
-        $('#pagination-container').pagination({
-            dataSource: filteredData,
-            pageSize: 10,
-            pageRange: 1,
-            showPrevious: true,
-            showNext: true,
-            callback: function(data, pagination) {
-                var html = simpleTemplating(data);
-                $("#table-list>tbody").html(html);
-                var htmlMobile = templateMobile(data);
-                $("#ls-mobile").html(htmlMobile);
+//             },
+//             formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+//         });
+//     }, 500); // Trì hoãn 1,5 giây
+// });
+// $('#filter').on('change', function(e) {
+//     var optionSelected = $("option:selected", this);
+//     var valueSelected = this.value;
+//     var textSelected = optionSelected.text();
+//     $("#input-search").attr("placeholder", textSelected);
 
-            },
-            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
-        });
-    }, 500);
+//     debounceTimer = setTimeout(function() {
+//         const keyword = $('#input-search').val().toLowerCase();
+//         let filteredData;
+//         if (valueSelected == "null") {
+//             filteredData = DATA_APP;
+//         } else
+//             filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
+//         $('#pagination-container').pagination({
+//             dataSource: filteredData,
+//             pageSize: 10,
+//             pageRange: 1,
+//             showPrevious: true,
+//             showNext: true,
+//             callback: function(data, pagination) {
+//                 var html = simpleTemplating(data);
+//                 $("#table-list>tbody").html(html);
+//                 var htmlMobile = templateMobile(data);
+//                 $("#ls-mobile").html(htmlMobile);
 
-});
+//             },
+//             formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+//         });
+//     }, 500);
+
+// });
 const remove = () => {
     document.getElementById('delete-record').addEventListener('click', async function() {
         $("#load-main").attr("hidden", false);
@@ -288,9 +291,68 @@ const remove = () => {
                 console.error(err);
             });
     });
-
+    filter();
 }
+const filter = () => {
+    var debounceTimer;
+    $('#input-search').on('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+            let code = $("#filter").val();
+            if (code == "null") return;
+            const keyword = $('#input-search').val().toLowerCase();
+            let filteredData = DATA_APP.filter(item => item[code].value.includes(keyword));
+            $('#pagination-container').pagination({
+                dataSource: filteredData,
+                pageSize: 10,
+                pageRange: 1,
+                showPrevious: true,
+                showNext: true,
+                callback: function(data, pagination) {
+                    var html = simpleTemplating(data);
+                    $("#table-list>tbody").html(html);
+                    var htmlMobile = templateMobile(data);
+                    $("#ls-mobile").html(htmlMobile);
+
+                },
+                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+            });
+        }, 500); // Trì hoãn 1,5 giây
+    });
+    $('#filter').on('change', function(e) {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        var textSelected = optionSelected.text();
+        $("#input-search").attr("placeholder", textSelected);
+
+        debounceTimer = setTimeout(function() {
+            const keyword = $('#input-search').val().toLowerCase();
+            let filteredData;
+            if (valueSelected == "null") {
+                filteredData = DATA_APP;
+            } else
+                filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
+            $('#pagination-container').pagination({
+                dataSource: filteredData,
+                pageSize: 10,
+                pageRange: 1,
+                showPrevious: true,
+                showNext: true,
+                callback: function(data, pagination) {
+                    var html = simpleTemplating(data);
+                    $("#table-list>tbody").html(html);
+                    var htmlMobile = templateMobile(data);
+                    $("#ls-mobile").html(htmlMobile);
+
+                },
+                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+            });
+        }, 500);
+
+    });
+};
 export function run() {
+    filter();
     woffInit();
     getData();
     switchDisplayData('table');

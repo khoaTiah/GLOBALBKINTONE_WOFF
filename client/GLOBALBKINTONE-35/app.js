@@ -52,7 +52,7 @@ const getMileageManagementByName = async(name) => {
     let res = await axios.get(lambdaUrl + "?id=6017&isQuery=true&query=" + encodeURIComponent(`車両名="${name}"`));
     const records = res.data;
     if (records.length <= 0) {
-        $(".vehicle-name span.message-error").text("両名が存在しません！");
+        $(".vehicle-name span.message-error").text("車両名が存在しません！");
         $(".vehicle-name input#vehicle-name").addClass("input-error");
         return;
     }
@@ -104,21 +104,29 @@ const clearAll = () => {
 }
 const createData = async() => {
     $("#btn-update-or-add").click(async function() {
+        $("#load-main").attr("hidden", false);
         let mileage = $("#mileage").val();
+        let vehicleName = $("#vehicle-name").val();
         let flag = false;
         if (!mileage) {
             $("#mileage").addClass("input-error");
             $(".mileage .message-error").html("走行距離は必須項目です。");
             flag = true;
         }
-        if (!dataVehicle) {
+        if (!vehicleName) {
             $(".vehicle-name input#vehicle-name").addClass("input-error");
-            $(".vehicle-name span.message-error").text("両車両名は必須項目です。");
+            $(".vehicle-name span.message-error").text("車両名は必須項目です。");
             flag = true;
         };
-        if (flag) return;
+        if (flag) {
+            $("#load-main").attr("hidden", true);
+            return;
+        }
         let err = $(".message-error").text();
-        if (err.length > 0) return;
+        if (err.length > 0) {
+            $("#load-main").attr("hidden", true);
+            return;
+        }
         let user_id = await getProfile()
             .then((profile) => {
                 return profile.userId;
@@ -151,30 +159,49 @@ const createData = async() => {
             body: bodyVehicleMaster,
         };
         await axios.post(lambdaUrl + "?id=6018", bodyMileageManagement)
-            .then((res) => {
+            .then(async(res) => {
                 if (res.status == 200) {
-                    // $("#load-main").attr("hidden", true);
-                    // let msg = "新しいデータの作成が完了しました！";
-                    // if (woff.isInClient()) {
-                    //     woff.sendMessage({ 'content': msg });
-                    // }
-                    // showMessage(msg, 'success');
-                    // setTimeout(function() {
-                    //     location.reload();
-                    // }, 3000);
+                    const resultUpdate = await updateVehicle(6017, resPut);
+                    $("#load-main").attr("hidden", true);
+                    if (!resultUpdate) {
+                        showMessage("データ作成中にエラーが発生しました", 'error');
+                    } else {
+                        let msg = "新しいデータの作成が完了しました！";
+                        if (woff.isInClient()) {
+                            woff.sendMessage({ 'content': msg });
+                        }
+                        showMessage(msg, 'success');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
+                    }
                 }
             })
             .catch((err) => {
                 $("#load-main").attr("hidden", true);
                 var data = err.response.data.message
                 $('html, body').animate({
-                    scrollTop: $('.action-submit span').offset().top
+                    scrollTop: $('.btn-save span').offset().top
                 }, 1000);
-                // showMessage("データ作成中にエラーが発生しました", 'error');
-                $(".action-submit span").text(data);
+                showMessage("データ作成中にエラーが発生しました", 'error');
+                $(".btn-save span").text(data);
             });
     });
 };
+const updateVehicle = async(id, res) => {
+    try {
+        const response = await axios.patch(lambdaUrl + `?id=${id}`, res);
+        if (response.status == 200) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+};
+
 export function runCreate() {
     buildCreatePage();
     clearAll();
