@@ -254,7 +254,7 @@ button:hover {
 }
 
 input#mileage {
-    padding-right: 2.2rem;
+    padding-right: 2.5rem;
     text-align: right;
 }
 
@@ -278,7 +278,7 @@ input#vehicle-name {
 
 input#current-mileage {
     text-align: right;
-    padding-right: 2rem;
+    padding-right: 2.5rem;
 }
 
 #login-woff {
