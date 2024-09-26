@@ -43,9 +43,9 @@ const getProfile = () => {
     });
 }
 const getData = () => {
-    let appID = '6018';
+    let appID = '21';
     $("#load-main").attr("hidden", false);
-    axios.get(lambdaUrl + `?id=${appID}&isQuery=true`)
+    axios.get(lambdaUrl + `?id=${appID}&userCode=k-sinsei`)
         .then((res) => {
             const records = res.data;
             DATA_APP = records;
@@ -97,12 +97,11 @@ function simpleTemplating(data) {
                        ${record.$id.value}
                     </div>
                     </td>
-                    <td style="text-align: center;">${convertTime(record.作成日時.value)}</td>
-                    <td>${record.車両名.value || ""}</td>
-                    <td>${record.現在地.value || ""}</td>
-                    <td style="text-align: center;">${(formatNumberToComma(record.走行距離.value).number)} km</td>
-                    <td>${(formatNumberToComma(record.現在走行距離.value).number)} km</td>
-                    <td>${(record.ユーザーID.value || "")}</td>
+                    <td style="text-align: center;">${record.設備管理QRコード.value}</td>
+                    <td>${record.点検_運転_者氏名_0.value || ""}</td>
+                    <td>${record.保管設置場所_変更.value || ""}</td>
+                    <td style="text-align: center;">${(formatNumberToComma(record.前回総走行距離.value).number)} km</td>
+                    <td>${(formatNumberToComma(record.総走行距離.value).number)} km</td>
                     <td style="border:none;"></td>
                 </tr>`;
     });
@@ -148,58 +147,50 @@ const templateMobile = (data) => {
             </div>
             <div class="item-a">
                 <span class="label-item">
-                    作成日時
+                    設備管理QRコード
                 </span>
                 <hr>
                 <span class="content-item">                              
-                    ${convertTime(record.作成日時.value)}
+                    ${record.設備管理QRコード.value}
                 </span>
             </div>
             <div class="item-a">
                 <span class="label-item">
-                    車両名
+                    点検(運転)者氏名
                 </span>
                 <hr>
                 <span class="content-item">                              
-                    ${record.車両名.value || ""}
+                    ${record.点検_運転_者氏名_0.value || ""}
                 </span>
             </div>
             <div class="item-a mb-4">
                 <span class="label-item">
-                    現在地
+                    保管・設置場所_変更
                 </span>
                 <hr>
                 <span class="content-item">                              
-                   ${record.現在地.value || ""}
+                   ${record.保管設置場所_変更.value || ""}
                 </span>
             </div>
             <div class="item-a">
                 <span class="label-item">
-                    走行距離
+                    前回総走行距離
                 </span>
                 <hr>
                 <span class="content-item">                              
-                    ${formatNumberToComma(record.走行距離.value).number} km
+                    ${formatNumberToComma(record.前回総走行距離.value).number} km
                 </span>
             </div>
             <div class="item-a">
                 <span class="label-item">
-                    現在走行距離
+                    総走行距離
                 </span>
                 <hr>
                 <span class="content-item">                              
-                    ${(formatNumberToComma(record.現在走行距離.value).number)} km
+                    ${(formatNumberToComma(record.総走行距離.value).number)} km
                 </span>
             </div>
-                <div class="item-a">
-                <span class="label-item">
-                    ユーザーID
-                </span>
-                <hr>
-                <span class="content-item">                              
-                    ${(record.ユーザーID.value) || ""}
-                </span>
-            </div>
+
         </div>
     </div>
         `;

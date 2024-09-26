@@ -85,9 +85,20 @@ const buildCreatePage = async() => {
         dataQR = "";
     });
     // get profile
-    // const profile = await getProfile();
-    // $("#name-line-works").text(profile.displayName);
-    // $("#person-name").val(profile.displayName);
+    document.getElementById('file-input').addEventListener('change', function(event) {
+        const file = event.target.files[0]; // Lấy file từ input
+
+        if (file) {
+            const reader = new FileReader(); // Tạo FileReader để đọc file
+
+            reader.onload = function(e) {
+                // Khi đọc file xong, gán kết quả vào src của thẻ img
+                document.getElementById('demo').src = e.target.result;
+            };
+
+            reader.readAsDataURL(file); // Đọc file dưới dạng DataURL (base64)
+        }
+    });
 
     $("#total-mileage").on("change", function() {
         $(".total-mileage .message-error").text("");

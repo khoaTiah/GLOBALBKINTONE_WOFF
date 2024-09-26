@@ -33,17 +33,16 @@
         <select id="filter" class="form-select" aria-label="Default select example">
             <!-- <option selected value="null"></option> -->
             <option value="$id" selected>レコード番号</option>
-            <option value="作成日時">作成日時</option>
-            <option value="車両名">車両名</option>
-            <option value="現在地">現在地</option>
-            <option value="走行距離">走行距離</option>
-            <option value="現在走行距離">現在走行距離</option>
-            <option value="ユーザーID">ユーザーID</option>
+            <option value="設備管理QRコード">設備管理QRコード</option>
+            <option value="点検_運転_者氏名_0">点検(運転)者氏名</option>
+            <option value="保管設置場所_変更">保管・設置場所_変更</option>
+            <option value="前回総走行距離">前回総走行距離</option>
+            <option value="総走行距離">総走行距離</option>
           </select>
     </div>
     <div class="box-create mb-2">
         <div>
-            <span class="fw-bold">一覧1</span>
+            <span class="fw-bold"></span>
         </div>
         <div>
             <button id="btn-detail" onclick="switchDisplayData('card')">詳細表示</button>
@@ -57,12 +56,11 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col" style="min-width: 7rem;">レコード番号</th>
-                    <th scope="col" style="min-width: 8rem;">作成日時</th>
-                    <th scope="col" style="min-width: 12rem;">車両名</th>
-                    <th scope="col" style="min-width: 5rem;">現在地</th>
-                    <th scope="col" style="min-width: 7rem;">走行距離</th>
-                    <th scope="col" style="min-width: 8rem;">現在走行距離</th>
-                    <th scope="col" style="min-width: 12rem;">ユーザーID</th>
+                    <th scope="col" style="min-width: 10rem;">設備管理QRコード</th>
+                    <th scope="col" style="min-width: 12rem;">点検(運転)者氏名</th>
+                    <th scope="col" style="min-width: 13rem;">保管・設置場所_変更</th>
+                    <th scope="col" style="min-width: 8rem;">前回総走行距離</th>
+                    <th scope="col" style="min-width: 8rem;">総走行距離</th>
                     <th scope="col"></th>
                 </tr>
             </thead>

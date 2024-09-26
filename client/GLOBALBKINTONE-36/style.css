@@ -321,6 +321,48 @@ input#current-mileage {
 }
 
 
+/* file */
+
+
+/* .file-info {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+} */
+
+.file-info {
+    width: 100%;
+}
+
+.file-item {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.left-file {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.file-image {
+    width: 9rem;
+    height: 9rem;
+    object-fit: cover;
+}
+
+button.delete-file {
+    font-size: 18px;
+    background: no-repeat;
+    border: none;
+}
+
+
+/* end file */
+
+
 /* responsive   */
 
 @media (max-width: 1370px) {
