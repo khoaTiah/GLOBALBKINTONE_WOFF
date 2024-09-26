@@ -1,14 +1,7 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import axios from 'axios';
+import { SERVICE_USER } from './account.js';
 
-const SERVICE_USER = {
-    'gbalb-demo': {
-        'KINTONE_BASE_URL': 'https://gbalb-demo.cybozu.com/',
-        'username': "sato",
-        'password': 'GbalB1725Pass',
-        'base64DecodePass': 'c2F0bzpHYmFsQjE3MjVQYXNz'
-    },
-};
 const TYPE_REQUEST = [
     'comment',
     'user',
@@ -40,13 +33,13 @@ const RESPONSE_200 = (data) => {
     };
 }
 const getDataAppByQuery = async(appID, userCode, query) => {
-    const appId = id;
+    const appId = appID;
     const baseUrl = SERVICE_USER[userCode].KINTONE_BASE_URL;
     const client = new KintoneRestAPIClient({
         baseUrl: baseUrl,
         auth: {
             username: SERVICE_USER[userCode].username,
-            password: SERVICE_USER[password].username,
+            password: SERVICE_USER[userCode].password,
         },
     });
     const limit = 50;
@@ -80,7 +73,7 @@ const getRecordByID = async(appId, recordId, userCode) => {
         baseUrl: baseUrl,
         auth: {
             username: SERVICE_USER[userCode].username,
-            password: SERVICE_USER[password].username,
+            password: SERVICE_USER[userCode].password,
         },
     });
     try {
@@ -114,9 +107,35 @@ const postApp = async(event, appID, userCode) => {
             return RESPONSE(error);
         }
     } catch (error) {
-        return RESPONSE_500();
+        return RESPONSE_500;
     }
 };
+const updateApp = async(event, appID, userCode) => {
+    try {
+        const base64DecodePass = SERVICE_USER[userCode].base64DecodePass;
+        const appId = appID;
+        const baseUrl = SERVICE_USER[userCode].KINTONE_BASE_URL;
+        const url = baseUrl + "k/v1/record.json?app=" + appId;
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Cybozu-Authorization': base64DecodePass
+        };
+        const data = JSON.parse(event.body);
+        const body = {
+            "app": appId,
+            "id": data.id,
+            "record": data.body
+        };
+        try {
+            const response = await axios.put(url, body, { headers });
+            return RESPONSE_200(response.data);
+        } catch (error) {
+            return RESPONSE(error);
+        }
+    } catch (error) {
+        return RESPONSE_500;
+    }
+}
 const removeApp = async(appID, recordId, userCode) => {
     try {
         const base64DecodePass = SERVICE_USER[userCode].base64DecodePass;
@@ -138,7 +157,7 @@ const removeApp = async(appID, recordId, userCode) => {
             return RESPONSE(error);
         }
     } catch (error) {
-        return RESPONSE_500();
+        return RESPONSE_500;
     }
 }
 const uploadFIle = async(event, userCode) => {
@@ -150,7 +169,7 @@ const uploadFIle = async(event, userCode) => {
         baseUrl: baseUrl,
         auth: {
             username: SERVICE_USER[userCode].username,
-            password: SERVICE_USER[password].username,
+            password: SERVICE_USER[userCode].password,
         },
     });
     const response = await axios.get(pathS3, {
@@ -165,7 +184,7 @@ const uploadFIle = async(event, userCode) => {
         });
         return RESPONSE_200(fileKey);
     } catch (error) {
-        return RESPONSE_500();
+        return RESPONSE_500;
     }
 };
 const getUsers = async(userCode) => {
@@ -190,7 +209,7 @@ const getComments = async(appID, recordID, userCode) => {
         baseUrl: baseUrl,
         auth: {
             username: SERVICE_USER[userCode].username,
-            password: SERVICE_USER[password].username,
+            password: SERVICE_USER[userCode].password,
         },
     });
     var offset = 0;
@@ -212,7 +231,7 @@ const getComments = async(appID, recordID, userCode) => {
         } while (isNewer)
         return RESPONSE_200({ comments: comments });
     } catch (error) {
-        return RESPONSE_500();
+        return RESPONSE_500;
     }
 }
 const addComment = async(appId, userCode, event) => {
@@ -233,7 +252,7 @@ const addComment = async(appId, userCode, event) => {
         const response = await axios.post(url, body, { headers });
         return RESPONSE_200(response);
     } catch (error) {
-        RESPONSE(error);
+        return RESPONSE(error);
     }
 };
 const deleteComment = async(appId, userCode, recordId, commentId) => {
@@ -259,35 +278,115 @@ const deleteComment = async(appId, userCode, recordId, commentId) => {
 
 // 
 
-const HTTP_SUCCESS_CODE = 200;
-const SCHEDULE_PREVIEW_ATTACHMENT_EXPIRED = 3600; // Thời gian hết hạn cache
+// const HTTP_SUCCESS_CODE = 200;
+// const SCHEDULE_PREVIEW_ATTACHMENT_EXPIRED = 3600;
 
-// Hàm xử lý khi gọi API lấy dữ liệu và trả về hình ảnh
-function fetchImageAndRespond() {
-    axios.get('https://example.com/api/image', { responseType: 'arraybuffer' }) // Lấy hình ảnh từ API
-        .then(response => {
-            if (response.status === HTTP_SUCCESS_CODE) {
-                const headers = new Headers();
-                headers.append('Content-Type', 'image/png');
-                headers.append('Cache-Control', `public, max-age=${SCHEDULE_PREVIEW_ATTACHMENT_EXPIRED}`);
+// function fetchImageAndRespond(userCode, fileKey) {
+//     var baseUrl = SERVICE_USER[userCode].KINTONE_BASE_URL;
+//     baseUrl = baseUrl + 'k/v1/file.json?fileKey=' + fileKey;
+//     axios.get(baseUrl, { responseType: 'arraybuffer' })
+//         .then(response => {
+//             if (response.status === HTTP_SUCCESS_CODE) {
+//                 const headers = new Headers();
+//                 headers.append('Content-Type', 'image/png');
+//                 headers.append('Cache-Control', `public, max-age=${SCHEDULE_PREVIEW_ATTACHMENT_EXPIRED}`);
+//                 const blob = new Blob([response.data], { type: 'image/png' });
+//                 // const url = URL.createObjectURL(blob); 
+//                 // const img = document.createElement('img');
+//                 // img.src = url;
+//                 // document.body.appendChild(img); 
+//                 return blob;
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error fetching image:', error);
+//         });
+// }
 
-                const blob = new Blob([response.data], { type: 'image/png' }); // Tạo blob từ dữ liệu nhận được
-                const url = URL.createObjectURL(blob); // Tạo URL từ blob để sử dụng trong front-end
-
-                // Tạo thẻ image để hiển thị hình ảnh
-                const img = document.createElement('img');
-                img.src = url;
-                document.body.appendChild(img); // Thêm hình ảnh vào trang web
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching image:', error);
+const downloadFile = async(userCode, key) => {
+    const baseUrl = SERVICE_USER[userCode].KINTONE_BASE_URL;
+    const client = new KintoneRestAPIClient({
+        baseUrl: baseUrl,
+        auth: {
+            username: SERVICE_USER[userCode].username,
+            password: SERVICE_USER[userCode].password,
+        },
+    });
+    try {
+        const file = await client.file.downloadFile({
+            fileKey: key,
         });
+        return file;
+        return RESPONSE_200(file);
+    } catch (error) {
+        return RESPONSE_500;
+    }
 }
+const router = async(
+    method,
+    userCode,
+    recordID = null,
+    appID,
+    query = null,
+    type = null,
+    event,
+    key = null
+) => {
+    if (type && type != 'file') {
+        return RESPONSE_403;
+    }
+    switch (method) {
+        case 'GET':
+            if (appID && recordID)
+                return await getRecordByID(appID, recordID, userCode);
+            else if (appID) {
+                let queryString = query || "";
+                return await getDataAppByQuery(appID, userCode, queryString);
+            } else if (type == 'file') {
+                if (!key) return RESPONSE_404;
+                return await downloadFile(userCode, key);
+            } else {
+                return RESPONSE_404;
+            }
+        case 'POST':
+            return await postApp(event, appID, userCode)
+        case 'PUT':
+            return await uploadFIle(event, userCode);
+        case 'DELETE':
+            return await removeApp(appID, recordID, userCode)
+        case 'PATCH':
+            return await updateApp(event, appID, userCode);
+        default:
+            return RESPONSE_500;
+    }
+};
 export async function handler(event) {
     var userCode;
     var recordID;
+    var appID;
     var type;
     var query;
-
+    var fileKey;
+    if (!event.rawQueryString) {
+        return RESPONSE_403;
+    }
+    if (event.rawQueryString) {
+        var params = event.rawQueryString;
+        params = params.split('&');
+        const queryParams = {};
+        params.forEach(param => {
+            const [key, value] = param.split('=');
+            queryParams[key] = value;
+        });
+        userCode = queryParams.userCode;
+        recordID = queryParams.recordId;
+        appID = queryParams.id;
+        type = queryParams.type;
+        query = queryParams.query;
+        fileKey = queryParams.fileKey;
+    }
+    const httpMethod = event.requestContext.http.method;
+    if (!userCode) userCode = 'gbalb-demo';
+    const response = await router(httpMethod, userCode, recordID, appID, query, type, event, fileKey);
+    return response;
 }
