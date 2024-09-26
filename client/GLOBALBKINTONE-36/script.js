@@ -9,7 +9,7 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('list');
+    actionSwitch('add');
 });
 
 function actionSwitch(action, id = "") {
@@ -121,11 +121,12 @@ const showMessage = (mess, type) => {
     $("#toast .toast-body span").text(mess);
     $('#toast').toast('show');
 }
-const clearLookup_vehicleName = () => {
-    $("#vehicle-name").val("");
-    $(".vehicle-name span.message-error").text("");
-    $(".vehicle-name input#vehicle-name").removeClass("input-error");
-    $("#current-mileage").val("")
+const clearLookupQR = () => {
+    $("#qr-code").val("");
+    $(".qr-code span.message-error").text("");
+    $(".qr-code input#qr-code").removeClass("input-error");
+    $("#storage-installation").val('');
+    $("#last-time").val('');
 }
 const formatNumberToComma = (number) => {
     let value = number.replace(/,/g, '');

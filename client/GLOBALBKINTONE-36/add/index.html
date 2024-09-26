@@ -11,45 +11,82 @@
     </div>
     <form>
         <section class="mt-2">
-            <div class="input-box mt-1 vehicle-name">
+            <div class="input-box mt-1 last-time">
+                <label for="person-name" class="lb-av">点検(運転)者氏名</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="person-name" id="person-name" autocomplete="off" readonly>
+                </div>
+                <span class="message-error"></span>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 qr-code">
                 <div class="coating" hidden></div>
-                <label for="vehicle-name" class="lb-av">車両名</label>
+                <label for="qr-code" class="lb-av">設備管理QRコード</label>
                 <div class="downstairs ">
-                    <input class="form-control" type="text" name="vehicle-name" id="vehicle-name" autocomplete="off" readonly>
+                    <input class="form-control" type="text" name="qr-code" id="qr-code" autocomplete="off" readonly>
                     <div class="actions">
-                        <button type="button" class="btn btn-select" id="btn-lookup-vehicle-name">QR</button>
-                        <button class="btn btn-clear me-1" type="button" onclick="clearLookup_vehicleName()">クリア</button>
+                        <button type="button" class="btn btn-select" id="btn-lookup-qr-code">QR</button>
+                        <button class="btn btn-clear me-1" type="button" onclick="clearLookupQR()">クリア</button>
                     </div>
                 </div>
                 <span class="message-error"></span>
             </div>
-            <div class="input-box mt-2 current-mileage">
-                <label for="current-mileage" class="lb-av">現在走行距離</label>
+            <div class="input-box mt-2 storage-installation">
+                <label for="storage-installation" class="lb-av">保管・設置場所</label>
                 <div class="downstairs">
-                    <input class="form-control" type="text" name="current-mileage" id="current-mileage" autocomplete="off" readonly>
-                    <span>km</span>
+                    <input class="form-control" type="text" name="storage-installation" id="storage-installation" autocomplete="off" readonly>
                 </div>
             </div>
         </section>
         <section class="mt-2">
-            <div class="input-box mt-1 current-location">
-                <label for="current-location" class="lb-av">現在地</label>
+            <div class="input-box mt-1 location-change">
+                <label for="location-change" class="lb-av">保管・設置場所_変更</label>
                 <div class="downstairs">
-                    <select id="current-location" class="form-select" aria-label="Default select example">
+                    <select id="location-change" class="form-select" aria-label="Default select example">
                         <option value="" selected>-------</option>
-                        <option value="A地点">A地点</option>
-                        <option value="B地点">B地点</option>
-                        <option value="C地点">C地点</option>
-                        <option value="D地点">D地点</option>
+                        <option value="本社①ELV裏">本社①ELV裏</option>
+                        <option value="本社②ELV表">本社②ELV表</option>
+                        <option value="本社③貿易建屋">本社③貿易建屋</option>
+                        <option value="本社④シュレッダー選別棟">本社④シュレッダー選別棟</option>
+                        <option value="本社⑤倉庫">本社⑤倉庫</option>
+                        <option value="本社⑥ナゲット棟">本社⑥ナゲット棟</option>
+                        <option value="本社⑦触媒作業場">本社⑦触媒作業場</option>
+                        <option value="本社第２駐車場">本社第２駐車場</option>
+                        <option value="本社第３駐車場">本社第３駐車場</option>
+                        <option value="箱崎支店">箱崎支店</option>
+                        <option value="早見支店">早見支店</option>
+                        <option value="北谷">北谷</option>
+                        <option value="その他">その他</option>
                       </select>
                 </div>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 last-time">
+                <label for="last-time" class="lb-av">前回走行距離</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="last-time" id="last-time" autocomplete="off" readonly>
+                    <span>km</span>
+                </div>
+                <span class="message-error"></span>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 total-mileage">
+                <label for="total-mileage" class="lb-av">総走行距離</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="total-mileage" id="total-mileage" autocomplete="off">
+                    <span>km</span>
+                </div>
+                <span class="message-error"></span>
             </div>
         </section>
         <section class="mt-2">
             <div class="input-box mt-1 mileage">
                 <label for="mileage" class="lb-av">走行距離</label>
                 <div class="downstairs">
-                    <input class="form-control" type="text" name="mileage" id="mileage" autocomplete="off">
+                    <input class="form-control" type="text" name="mileage" id="mileage" autocomplete="off" readonly>
                     <span>km</span>
                 </div>
                 <span class="message-error"></span>

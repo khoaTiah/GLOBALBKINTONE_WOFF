@@ -185,7 +185,7 @@ button.icon {
     justify-content: space-between;
 }
 
-.input-box.vehicle-name {
+.input-box.qr-code {
     position: relative;
 }
 
@@ -236,23 +236,30 @@ button:hover {
     padding: 0.3rem;
 }
 
-.mileage .downstairs,
-.current-mileage .downstairs {
+.last-time .downstairs,
+.total-mileage .downstairs,
+.mileage .downstairs {
     position: relative;
 }
 
-.mileage .downstairs span,
-.current-mileage .downstairs span {
-    position: absolute;
-}
-
-.mileage .downstairs span,
-.current-mileage .downstairs span {
+.last-time .downstairs span,
+.total-mileage .downstairs span,
+.mileage .downstairs span {
     position: absolute;
     right: 11px;
     font-weight: bold;
 }
 
+
+/* .mileage .downstairs span,
+.current-mileage .downstairs span {
+    position: absolute;
+    right: 11px;
+    font-weight: bold;
+} */
+
+input#last-time,
+input#total-mileage,
 input#mileage {
     padding-right: 2.5rem;
     text-align: right;
@@ -262,7 +269,7 @@ input#mileage {
     color: #0a58ca;
 }
 
-input#vehicle-name {
+input#qr-code {
     width: 88%;
 }
 
@@ -317,31 +324,31 @@ input#current-mileage {
 /* responsive   */
 
 @media (max-width: 1370px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 86%;
     }
 }
 
 @media (max-width: 1150px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 83%;
     }
 }
 
 @media (max-width: 990px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 78%;
     }
 }
 
 @media (max-width: 930px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 78%;
     }
 }
 
 @media (max-width: 760px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 70%;
     }
 }
@@ -354,25 +361,25 @@ input#current-mileage {
 }
 
 @media (max-width: 363px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 67%;
     }
 }
 
 @media (max-width: 326px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 65%;
     }
 }
 
 @media (max-width: 310px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 61%;
     }
 }
 
 @media (max-width: 284px) {
-    input#vehicle-name {
+    input#qr-code {
         width: 58%;
     }
 }
