@@ -9,7 +9,7 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('list');
+    actionSwitch('add');
 });
 
 function actionSwitch(action, id = "") {
@@ -152,3 +152,11 @@ const convertTime = (timeString) => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+const removeFile = (idHTML) => {
+    $(`#${idHTML}`).remove();
+}
+const getFileArray = () => {
+    const images = document.querySelectorAll('.left-file img');
+    const imageIds = Array.from(images).map(img => ({ fileKey: img.id }));
+    return imageIds;
+}

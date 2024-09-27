@@ -339,24 +339,59 @@ input#current-mileage {
     justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
-.left-file {
+.file-item>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+span.file-name {
+    display: inline-block;
+    max-width: 140px;
+    min-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 1rem;
+}
+
+.un-active {
+    background-color: #e9ecef !important;
+    cursor: none;
+    user-select: none;
+}
+
+
+/* .left-file {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-}
+} */
 
 .file-image {
     width: 9rem;
-    height: 9rem;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
+    max-height: 9rem;
 }
 
 button.delete-file {
-    font-size: 18px;
+    font-size: 24px;
     background: no-repeat;
     border: none;
+}
+
+.file label.lb-av {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.downstairs.file-container {
+    min-height: 5rem;
 }
 
 
@@ -400,11 +435,36 @@ button.delete-file {
     html {
         font-size: 12px;
     }
+    /* span.file-name {
+        max-width: 125px;
+        min-width: 125px;
+    } */
+}
+
+@media (max-width: 420px) {
+    /* span.file-name {
+        max-width: 90px;
+        min-width: 90px;
+    } */
 }
 
 @media (max-width: 363px) {
     input#qr-code {
         width: 67%;
+    }
+}
+
+@media (max-width: 340px) {
+    span.file-name {
+        max-width: 110px;
+        min-width: 110px;
+    }
+    .row>* {
+        padding-right: 0px;
+    }
+    span.file-name {
+        max-width: 100px;
+        min-width: 100px;
     }
 }
 
@@ -423,5 +483,12 @@ button.delete-file {
 @media (max-width: 284px) {
     input#qr-code {
         width: 58%;
+    }
+}
+
+@media (max-width: 275px) {
+    span.file-name {
+        max-width: 91px;
+        min-width: 91px;
     }
 }

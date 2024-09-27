@@ -70,6 +70,57 @@ const getQR = async(string) => {
     $(".qr-code .coating").attr("hidden", true);
 }
 const buildCreatePage = async() => {
+    $("#btn-upload-file").click(function() {
+        document.getElementById('file-input').click();
+    });
+    $('#file-input').change(async function(event) {
+        console.log(event);
+        const file = event.target.files[0];
+        $('.file-info span.message-error').text('');
+        // Kiểm tra định dạng tệp
+        if (!file.type.startsWith('image/')) {
+            $('.file-info span.message-error').text('画像を入力してください。');
+            return;
+        }
+
+        $("#btn-upload-file").addClass("un-active");
+
+        try {
+            const urlS3 = await addFile();
+            const formData = {
+                "path": urlS3.path,
+                "fileName": urlS3.fileName
+            };
+
+            const response = await axios.put(lambdaUrl + '?userCode=k-sinsei', formData, {
+                headers: {}
+            });
+            deletePhoto(formData.fileName);
+            // Sử dụng FileReader để hiển thị ảnh
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const html = `
+                <div class="file-item row mt-2" id="img-${response.data}">
+                    <div>
+                        <img src="${e.target.result}" alt="" id="${response.data}" class="file-image">
+                        <div>
+                            <span class="file-name">${file.name}</span>
+                            <button type='button' class="delete-file ms-2" onclick="removeFile('img-${response.data}')"><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+                `;
+                $(".left-file").append(html);
+            };
+
+            reader.readAsDataURL(file);
+            $("#btn-upload-file").removeClass("un-active");
+
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
     $("#btn-lookup-qr-code").click(function() {
         $("#qr-code").val("")
         woff.scanQR()
@@ -85,20 +136,20 @@ const buildCreatePage = async() => {
         dataQR = "";
     });
     // get profile
-    document.getElementById('file-input').addEventListener('change', function(event) {
-        const file = event.target.files[0]; // Lấy file từ input
+    // document.getElementById('file-input').addEventListener('change', function(event) {
+    //     const file = event.target.files[0]; // Lấy file từ input
 
-        if (file) {
-            const reader = new FileReader(); // Tạo FileReader để đọc file
+    //     if (file) {
+    //         const reader = new FileReader(); // Tạo FileReader để đọc file
 
-            reader.onload = function(e) {
-                // Khi đọc file xong, gán kết quả vào src của thẻ img
-                document.getElementById('demo').src = e.target.result;
-            };
+    //         reader.onload = function(e) {
+    //             // Khi đọc file xong, gán kết quả vào src của thẻ img
+    //             document.getElementById('demo').src = e.target.result;
+    //         };
 
-            reader.readAsDataURL(file); // Đọc file dưới dạng DataURL (base64)
-        }
-    });
+    //         reader.readAsDataURL(file); // Đọc file dưới dạng DataURL (base64)
+    //     }
+    // });
 
     $("#total-mileage").on("change", function() {
         $(".total-mileage .message-error").text("");
@@ -165,8 +216,14 @@ const createData = async() => {
                 "value": formatNumberRemoveComma($("#total-mileage").val()),
             },
         };
+        let arrFile = getFileArray();
+        if (arrFile.length > 0) {
+            vehicle['不具合箇所画像添付'] = {
+                "value": arrFile,
+            }
+        }
         let bodyManagement = {
-            "設備管理QRコード": {
+            "総走行距離": {
                 value: formatNumberRemoveComma($("#total-mileage").val())
             }
         };
@@ -174,10 +231,10 @@ const createData = async() => {
             id: dataQR.$id.value,
             body: bodyManagement,
         };
-        await axios.post(lambdaUrl + "?id=6018", bodyMileageManagement)
+        await axios.post(lambdaUrl + "?id=21&userCode=k-sinsei", vehicle)
             .then(async(res) => {
                 if (res.status == 200) {
-                    const resultUpdate = await updateVehicle(6017, resPut);
+                    const resultUpdate = await updateVehicle(19, resPut);
                     $("#load-main").attr("hidden", true);
                     if (!resultUpdate) {
                         showMessage("データ作成中にエラーが発生しました", 'error');
@@ -187,9 +244,9 @@ const createData = async() => {
                             woff.sendMessage({ 'content': msg });
                         }
                         showMessage(msg, 'success');
-                        setTimeout(function() {
-                            location.reload();
-                        }, 3000);
+                        // setTimeout(function() {
+                        //     location.reload();
+                        // }, 3000);
                     }
                 }
             })
@@ -206,7 +263,7 @@ const createData = async() => {
 };
 const updateVehicle = async(id, res) => {
     try {
-        const response = await axios.patch(lambdaUrl + `?id=${id}`, res);
+        const response = await axios.patch(lambdaUrl + `?id=${id}&&userCode=k-sinsei`, res);
         if (response.status == 200) {
             return true;
         } else {
@@ -217,7 +274,60 @@ const updateVehicle = async(id, res) => {
         return false;
     }
 };
+// S3
 
+
+AWS.config.update({
+    region: bucketRegion,
+    credentials: new AWS.Credentials(accessKeyID, secretAccessKey)
+});
+
+var s3 = new AWS.S3();
+async function addFile() {
+    var folderName = "developer/public";
+    var files = document.getElementById("file-input").files;
+    if (!files.length) {
+        return alert("Please choose a file to upload first.");
+    }
+    var file = files[0];
+    var fileName = Date.now() + "_" + file.name;
+    var albumPhotosKey = folderName + "/";
+    var photoKey = albumPhotosKey + fileName;
+    var upload = new AWS.S3.ManagedUpload({
+        params: {
+            Bucket: s3Name,
+            Key: photoKey,
+            Body: file,
+        },
+    });
+    var promise = upload.promise();
+
+    try {
+        var data = await promise;
+
+        return {
+            "path": `https://${s3Name}.s3.amazonaws.com/${folderName}/${fileName}`,
+            "fileName": fileName
+        }
+    } catch (err) {
+        alert("There was an error uploading your photo: ", err.message);
+    }
+}
+
+function deletePhoto(fileName) {
+    var params = {
+        Bucket: s3Name,
+        Key: "developer/public/" + fileName
+    };
+
+    s3.deleteObject(params, function(err, data) {
+        if (err) {
+            console.error("There was an error deleting the photo: ", err.message);
+        } else {
+            console.log("Photo deleted successfully");
+        }
+    });
+}
 export function runCreate() {
     woffInit('create');
     buildCreatePage();
