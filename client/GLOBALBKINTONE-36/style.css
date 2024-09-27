@@ -401,6 +401,11 @@ button.delete-file {
 
 /* end file */
 
+.pre-operation {
+    background-color: #0d6efdbf !important;
+    color: white;
+}
+
 
 /* responsive   */
 

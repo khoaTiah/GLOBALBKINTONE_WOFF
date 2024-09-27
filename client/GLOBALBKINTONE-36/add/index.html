@@ -92,6 +92,28 @@
                 <span class="message-error"></span>
             </div>
         </section>
+        <section class="mt-4">
+            <div class="input-box mt-1 ">
+                <label class="lb-av"><h5>点検項目</h5> </label>
+                <label class="lb-av pre-operation"><h5>車両始業点検</h5> </label>
+            </div>
+        </section>
+
+        <section class="mt-3">
+            <div class="input-box mt-1 boarding">
+                <label for="boarding" class="lb-av">外装チェック乗車前</label>
+                <div class="downstairs">
+                    <select id="boarding" class="form-select" aria-label="Default select example">
+                        <option value="" selected>-------</option>
+                        <option value="良">良</option>
+                        <option value="調整">調整</option>
+                        <option value="完了">完了</option>
+                        <option value="要修理・交換">要修理・交換</option>
+                        <option value="補充">補充</option>
+                      </select>
+                </div>
+            </div>
+        </section>
         <section class="mt-2">
             <input type="file" id="file-input" class="file-input" accept="image/*" hidden>
             <div class="input-box mt-1 file">
@@ -107,9 +129,8 @@
                     </div>
                 </div>
             </div>
-
-
         </section>
+
         <section>
             <div class="mt-3 btn-save">
                 <span class="message-error"></span>
