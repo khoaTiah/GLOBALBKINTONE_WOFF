@@ -182,11 +182,19 @@ const clearAll = () => {
 const createData = async() => {
     $("#btn-update-or-add").click(async function() {
         $("#load-main").attr("hidden", false);
+        $("#qr-code").removeClass("input-error");
+        $("#total-mileage").removeClass("input-error");
         let qrCode = $("#qr-code").val();
+        let totalMileage = $("#total-mileage").val();
         let flag = false;
         if (!qrCode) {
             $("#qr-code").addClass("input-error");
             $(".qr-code .message-error").html("設備管理QRコードは必須です。");
+            flag = true;
+        }
+        if (!totalMileage) {
+            $("#total-mileage").addClass("input-error");
+            $(".total-mileage .message-error").html("総走行距離は必須です。");
             flag = true;
         }
         if (flag) {
@@ -244,9 +252,9 @@ const createData = async() => {
                             woff.sendMessage({ 'content': msg });
                         }
                         showMessage(msg, 'success');
-                        // setTimeout(function() {
-                        //     location.reload();
-                        // }, 3000);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
                     }
                 }
             })
