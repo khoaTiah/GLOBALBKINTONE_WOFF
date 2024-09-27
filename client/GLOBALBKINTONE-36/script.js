@@ -2,6 +2,7 @@ const PATH_MENU = './menu/index.html';
 const PATH_ADD = './add/index.html';
 const PATH_EDIT = './edit/index.html';
 const PATH_LOGIN = './login/index.html';
+const PATH_ERROR = './error/index.html';
 const JS_HELPER = './app.js';
 const JS_LIST = './edit/app.js'
 const CSS_MAIN = './style.css';
@@ -19,6 +20,7 @@ function actionSwitch(action, id = "") {
         menu: PATH_MENU,
         list: PATH_EDIT,
         login: PATH_LOGIN,
+        error: PATH_ERROR,
     };
 
     const path = paths[action] || PATH_MENU;

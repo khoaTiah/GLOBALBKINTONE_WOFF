@@ -1,6 +1,7 @@
 import { woffId, lambdaUrl } from './params.js';
 window.addEventListener('load', () => {
     woffInit();
+    checkError();
 });
 var dataQR;
 const woffInit = (type = null) => {
@@ -335,6 +336,14 @@ function deletePhoto(fileName) {
             console.log("Photo deleted successfully");
         }
     });
+}
+const checkError = () => {
+    const currentUrl = window.location.href;
+    const urlParams = new URL(currentUrl);
+    const searchParams = new URLSearchParams(urlParams.search);
+    const errorDescription = searchParams.get('error_description');
+    alert(errorDescription);
+    return !errorDescription;
 }
 export function runCreate() {
     woffInit('create');
