@@ -7,6 +7,10 @@ const woffInit = () => {
     woff.init({ woffId: woffId })
         .then(() => {
             if (!woff.isLoggedIn()) {
+                if (checkError()) {
+                    $("#load-main").attr("hidden", true);
+                    return actionSwitch('error');
+                }
                 return woff.login();
                 // woffInit()
             } else

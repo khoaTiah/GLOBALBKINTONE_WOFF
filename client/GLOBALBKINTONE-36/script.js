@@ -154,6 +154,13 @@ const convertTime = (timeString) => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+const checkError = () => {
+    const currentUrl = window.location.href;
+    const urlParams = new URL(currentUrl);
+    const searchParams = new URLSearchParams(urlParams.search);
+    const errorDescription = searchParams.get('error_description');
+    return errorDescription;
+}
 const removeFile = (idHTML) => {
     $(`#${idHTML}`).remove();
 }

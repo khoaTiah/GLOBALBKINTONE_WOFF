@@ -1,7 +1,6 @@
 import { woffId, lambdaUrl } from './params.js';
 window.addEventListener('load', () => {
     woffInit();
-    checkError();
 });
 var dataQR;
 const woffInit = (type = null) => {
@@ -10,6 +9,10 @@ const woffInit = (type = null) => {
     woff.init({ woffId: woffId })
         .then(() => {
             if (!woff.isLoggedIn()) {
+                if (checkError()) {
+                    $("#load-main").attr("hidden", true);
+                    return actionSwitch('error');
+                }
                 return woff.login();
                 // woffInit()
             } else
@@ -337,14 +340,7 @@ function deletePhoto(fileName) {
         }
     });
 }
-const checkError = () => {
-    const currentUrl = window.location.href;
-    const urlParams = new URL(currentUrl);
-    const searchParams = new URLSearchParams(urlParams.search);
-    const errorDescription = searchParams.get('error_description');
-    alert(errorDescription);
-    return !errorDescription;
-}
+
 export function runCreate() {
     woffInit('create');
     buildCreatePage();
