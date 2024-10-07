@@ -1,6 +1,9 @@
 import { woffId, lambdaUrl } from './params.js';
 window.addEventListener('load', () => {
-    woffInit();
+    woff.ready.then(() => {
+            woffInit();
+        })
+        // woffInit();
 });
 var dataQR;
 const woffInit = (type = null) => {
@@ -224,6 +227,9 @@ const createData = async() => {
             "保管設置場所_変更": {
                 "value": $("#location-change").val(),
             },
+            "外装チェック乗車前": {
+                "value": $("#boarding").val(),
+            },
             "総走行距離": {
                 "value": formatNumberRemoveComma($("#total-mileage").val()),
             },
@@ -239,6 +245,11 @@ const createData = async() => {
                 value: formatNumberRemoveComma($("#total-mileage").val())
             }
         };
+        if ($("#location-change").val()) {
+            bodyManagement['保管設置場所'] = {
+                "value": $("#location-change").val(),
+            };
+        }
         let resPut = {
             id: dataQR.$id.value,
             body: bodyManagement,
@@ -253,7 +264,29 @@ const createData = async() => {
                     } else {
                         let msg = "新しいデータの作成が完了しました！";
                         if (woff.isInClient()) {
-                            woff.sendMessage({ 'content': msg });
+                            if ($("#boarding").val() == "要修理・交換") {
+                                let msg = "「要修理・交換」が選択されました。";
+                                woff.sendMessage({
+                                        content: msg
+                                    })
+                                    .then(() => {
+                                        woff.closeWindow();
+                                    })
+                                    .catch((err) => {
+                                        console.log('error', err);
+                                    });
+
+                            } else {
+                                woff.sendMessage({
+                                        content: msg
+                                    })
+                                    .then(() => {
+                                        woff.closeWindow();
+                                    })
+                                    .catch((err) => {
+                                        console.log('error', err);
+                                    });
+                            }
                         }
                         showMessage(msg, 'success');
                         setTimeout(function() {
