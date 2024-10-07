@@ -1,0 +1,141 @@
+<div>
+    <input id="id-edit" type="text" hidden>
+    <div class="top-page">
+        <button class="icon" onclick="actionSwitch('list')">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
+        <p id="info-user" class="text-end">
+            <strong>line_works : </strong>
+            <span id="name-line-works"></span>
+        </p>
+    </div>
+    <form>
+        <section class="mt-2">
+            <div class="input-box mt-1 last-time">
+                <label for="person-name" class="lb-av">点検(運転)者氏名</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="person-name" id="person-name" autocomplete="off" readonly>
+                </div>
+                <span class="message-error"></span>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 qr-code">
+                <div class="coating" hidden></div>
+                <label for="qr-code" class="lb-av">設備管理QRコード</label>
+                <div class="downstairs ">
+                    <input class="form-control" type="text" name="qr-code" id="qr-code" autocomplete="off" readonly>
+                    <div class="actions">
+                        <button type="button" class="btn btn-select" id="btn-lookup-qr-code">QR</button>
+                        <button class="btn btn-clear me-1" type="button" onclick="clearLookupQR()">クリア</button>
+                    </div>
+                </div>
+                <span class="message-error"></span>
+            </div>
+            <div class="input-box mt-2 storage-installation">
+                <label for="storage-installation" class="lb-av">保管・設置場所</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="storage-installation" id="storage-installation" autocomplete="off" readonly>
+                </div>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 location-change">
+                <label for="location-change" class="lb-av">保管・設置場所_変更</label>
+                <div class="downstairs">
+                    <select id="location-change" class="form-select" aria-label="Default select example">
+                        <option value="" selected>-------</option>
+                        <option value="本社①ELV裏">本社①ELV裏</option>
+                        <option value="本社②ELV表">本社②ELV表</option>
+                        <option value="本社③貿易建屋">本社③貿易建屋</option>
+                        <option value="本社④シュレッダー選別棟">本社④シュレッダー選別棟</option>
+                        <option value="本社⑤倉庫">本社⑤倉庫</option>
+                        <option value="本社⑥ナゲット棟">本社⑥ナゲット棟</option>
+                        <option value="本社⑦触媒作業場">本社⑦触媒作業場</option>
+                        <option value="本社第２駐車場">本社第２駐車場</option>
+                        <option value="本社第３駐車場">本社第３駐車場</option>
+                        <option value="箱崎支店">箱崎支店</option>
+                        <option value="早見支店">早見支店</option>
+                        <option value="北谷">北谷</option>
+                        <option value="その他">その他</option>
+                      </select>
+                </div>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 last-time">
+                <label for="last-time" class="lb-av">前回走行距離</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="last-time" id="last-time" autocomplete="off" readonly>
+                    <span>km</span>
+                </div>
+                <span class="message-error"></span>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 total-mileage">
+                <label for="total-mileage" class="lb-av">総走行距離</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="total-mileage" id="total-mileage" autocomplete="off">
+                    <span>km</span>
+                </div>
+                <span class="message-error"></span>
+            </div>
+        </section>
+        <section class="mt-2">
+            <div class="input-box mt-1 mileage">
+                <label for="mileage" class="lb-av">走行距離</label>
+                <div class="downstairs">
+                    <input class="form-control" type="text" name="mileage" id="mileage" autocomplete="off" readonly>
+                    <span>km</span>
+                </div>
+                <span class="message-error"></span>
+            </div>
+        </section>
+        <section class="mt-4">
+            <div class="input-box mt-1 ">
+                <label class="lb-av"><h5>点検項目</h5> </label>
+                <label class="lb-av pre-operation"><h5>車両始業点検</h5> </label>
+            </div>
+        </section>
+
+        <section class="mt-3">
+            <div class="input-box mt-1 boarding">
+                <label for="boarding" class="lb-av">外装チェック乗車前</label>
+                <div class="downstairs">
+                    <select id="boarding" class="form-select" aria-label="Default select example">
+                        <option value="" selected>-------</option>
+                        <option value="良">良</option>
+                        <option value="調整">調整</option>
+                        <option value="完了">完了</option>
+                        <option value="要修理・交換">要修理・交換</option>
+                        <option value="補充">補充</option>
+                      </select>
+                </div>
+            </div>
+        </section>
+        <section class="mt-2">
+            <input type="file" id="file-input" class="file-input" accept="image/*" hidden>
+            <div class="input-box mt-1 file">
+                <label for="mileage" class="lb-av"><span>不具合箇所画像添 (最大1GB)</span> <button type="button" class="btn me-3 mb-2 mt-2 btn-submit" id="btn-upload-file">参照</button></label>
+                <div class="downstairs file-container">
+                    <div class="file-info">
+                        <div class="row">
+                            <div class="left-file">
+                            </div>
+                        </div>
+                        <span class="message-error"></span>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="mt-3 btn-save">
+                <span class="message-error"></span>
+                <button class="btn me-3 btn-submit" id="btn-update-or-add" type="button">登録</button>
+            </div>
+        </section>
+    </form>
+</div>
