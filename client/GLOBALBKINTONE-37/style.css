@@ -273,7 +273,7 @@ input#mileage {
     color: #0a58ca;
 }
 
-input#qr-code {
+textarea#qr-code {
     width: 88%;
 }
 
@@ -410,31 +410,31 @@ button.delete-file {
 /* responsive   */
 
 @media (max-width: 1370px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 86%;
     }
 }
 
 @media (max-width: 1150px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 83%;
     }
 }
 
 @media (max-width: 990px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 78%;
     }
 }
 
 @media (max-width: 930px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 78%;
     }
 }
 
 @media (max-width: 760px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 70%;
     }
 }
@@ -458,7 +458,7 @@ button.delete-file {
 }
 
 @media (max-width: 363px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 67%;
     }
 }
@@ -478,19 +478,19 @@ button.delete-file {
 }
 
 @media (max-width: 326px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 65%;
     }
 }
 
 @media (max-width: 310px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 61%;
     }
 }
 
 @media (max-width: 284px) {
-    input#qr-code {
+    textarea#qr-code {
         width: 58%;
     }
 }

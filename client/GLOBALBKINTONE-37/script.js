@@ -125,10 +125,6 @@ const showMessage = (mess, type) => {
 }
 const clearLookupQR = () => {
     $("#qr-code").val("");
-    $(".qr-code span.message-error").text("");
-    $(".qr-code input#qr-code").removeClass("input-error");
-    $("#storage-installation").val('');
-    $("#last-time").val('');
 }
 const formatNumberToComma = (number) => {
     let value = number.replace(/,/g, '');

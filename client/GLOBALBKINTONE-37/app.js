@@ -132,8 +132,8 @@ const buildCreatePage = async() => {
         $("#qr-code").val("")
         woff.scanQR()
             .then((result) => {
+                alert(result.value);
                 $("#qr-code").val(result.value);
-                getQR(result.value);
             })
             .catch((err) => {
                 alert(err);
@@ -320,7 +320,7 @@ const updateVehicle = async(id, res) => {
     }
 };
 // S3
-
+// 
 
 AWS.config.update({
     region: bucketRegion,
