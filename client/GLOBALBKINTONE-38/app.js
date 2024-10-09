@@ -385,4 +385,6 @@ export function runEdit(id) {
     $("button.btn.btn-clear.me-1").click(function() {
         dataQR = "";
     });
+    let textarea = document.getElementById('qr-code');
+    autoResize(textarea);
 }
