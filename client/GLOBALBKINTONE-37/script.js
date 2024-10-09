@@ -10,7 +10,7 @@ const CSS_LIST = './edit/style.css';
 const CSS_PAGINATION = './edit/style_pagination_js.css';
 
 window.addEventListener('load', async() => {
-    actionSwitch('add');
+    actionSwitch('list');
 });
 
 function actionSwitch(action, id = "") {
@@ -164,4 +164,9 @@ const getFileArray = () => {
     const images = document.querySelectorAll('.left-file img');
     const imageIds = Array.from(images).map(img => ({ fileKey: img.id }));
     return imageIds;
+}
+
+function autoResize(textarea) {
+    textarea.style.height = 'auto'; // Đặt lại chiều cao để tính toán chính xác
+    textarea.style.height = (textarea.scrollHeight) + 'px'; // Đặt chiều cao theo nội dung
 }

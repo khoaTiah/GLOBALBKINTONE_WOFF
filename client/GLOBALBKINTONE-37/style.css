@@ -406,6 +406,43 @@ button.delete-file {
     color: white;
 }
 
+#menu button {
+    border: none;
+    padding: 1rem;
+    width: 20rem;
+}
+
+#menu button.scissor {
+    background-color: #1a76d2;
+    color: white;
+}
+
+#menu button.return {
+    background-color: #f57c01;
+    color: white;
+}
+
+section#menu {
+    height: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Loại bỏ mũi tên trong input trên Firefox */
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 
 /* responsive   */
 

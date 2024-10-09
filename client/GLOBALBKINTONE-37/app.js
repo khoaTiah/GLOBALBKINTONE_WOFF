@@ -132,12 +132,11 @@ const buildCreatePage = async() => {
         $("#qr-code").val("")
         woff.scanQR()
             .then((result) => {
-                alert(result.value);
                 $("#qr-code").val(result.value);
+                const textarea = document.getElementById('qr-code');
+                autoResize(textarea);
             })
-            .catch((err) => {
-                alert(err);
-            });
+            .catch((err) => {});
     });
     $("button.btn.btn-clear.me-1").click(function() {
         dataQR = "";
@@ -192,107 +191,44 @@ const createData = async() => {
         $("#qr-code").removeClass("input-error");
         $("#total-mileage").removeClass("input-error");
         let qrCode = $("#qr-code").val();
-        let totalMileage = $("#total-mileage").val();
-        let flag = false;
-        if (!qrCode) {
-            $("#qr-code").addClass("input-error");
-            $(".qr-code .message-error").html("設備管理QRコードは必須です。");
-            flag = true;
-        }
-        if (!totalMileage) {
-            $("#total-mileage").addClass("input-error");
-            $(".total-mileage .message-error").html("総走行距離は必須です。");
-            flag = true;
-        }
-        if (flag) {
-            $("#load-main").attr("hidden", true);
-            return;
-        }
-        let err = $(".message-error").text();
-        if (err.length > 0) {
-            $("#load-main").attr("hidden", true);
-            return;
-        }
         let user_name = await getProfile()
             .then((profile) => {
                 return profile.displayName;
             });
-        let vehicle = {
-            "点検_運転_者氏名_0": {
-                "value": user_name,
-            },
-            "設備管理QRコード": {
+        let shipment = {
+            "商品QR": {
                 "value": $("#qr-code").val(),
             },
-            "保管設置場所_変更": {
+            "実施場所": {
                 "value": $("#location-change").val(),
             },
-            "外装チェック乗車前": {
-                "value": $("#boarding").val(),
-            },
-            "総走行距離": {
-                "value": formatNumberRemoveComma($("#total-mileage").val()),
+            "アワメーター": {
+                "value": $("#hour-meter").val(),
             },
         };
-        let arrFile = getFileArray();
-        if (arrFile.length > 0) {
-            vehicle['不具合箇所画像添付'] = {
-                "value": arrFile,
-            }
-        }
-        let bodyManagement = {
-            "総走行距離": {
-                value: formatNumberRemoveComma($("#total-mileage").val())
-            }
-        };
-        if ($("#location-change").val()) {
-            bodyManagement['保管設置場所'] = {
-                "value": $("#location-change").val(),
-            };
-        }
-        let resPut = {
-            id: dataQR.$id.value,
-            body: bodyManagement,
-        };
-        await axios.post(lambdaUrl + "?id=21&userCode=k-sinsei", vehicle)
+        await axios.post(lambdaUrl + "?id=6028", shipment)
             .then(async(res) => {
                 if (res.status == 200) {
-                    const resultUpdate = await updateVehicle(19, resPut);
                     $("#load-main").attr("hidden", true);
-                    if (!resultUpdate) {
-                        showMessage("データ作成中にエラーが発生しました", 'error');
-                    } else {
-                        let msg = "新しいデータの作成が完了しました！";
-                        if (woff.isInClient()) {
-                            if ($("#boarding").val() == "要修理・交換") {
-                                let msg = "「要修理・交換」が選択されました。";
-                                woff.sendMessage({
-                                        content: msg
-                                    })
-                                    .then(() => {
-                                        woff.closeWindow();
-                                    })
-                                    .catch((err) => {
-                                        console.log('error', err);
-                                    });
+                    let msg = "新しいデータが登録されました";
+                    if (woff.isInClient()) {
+                        let msg = "新しいデータが登録されました";
+                        woff.sendMessage({
+                                content: msg
+                            })
+                            .then(() => {
+                                woff.closeWindow();
+                            })
+                            .catch((err) => {
+                                console.log('error', err);
+                            });
 
-                            } else {
-                                woff.sendMessage({
-                                        content: msg
-                                    })
-                                    .then(() => {
-                                        woff.closeWindow();
-                                    })
-                                    .catch((err) => {
-                                        console.log('error', err);
-                                    });
-                            }
-                        }
-                        showMessage(msg, 'success');
-                        setTimeout(function() {
-                            location.reload();
-                        }, 3000);
                     }
+                    showMessage(msg, 'success');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+
                 }
             })
             .catch((err) => {
@@ -306,19 +242,7 @@ const createData = async() => {
             });
     });
 };
-const updateVehicle = async(id, res) => {
-    try {
-        const response = await axios.patch(lambdaUrl + `?id=${id}&&userCode=k-sinsei`, res);
-        if (response.status == 200) {
-            return true;
-        } else {
-            return false;
-        }
-    } catch (err) {
-        console.error(err);
-        return false;
-    }
-};
+
 // S3
 // 
 
@@ -373,7 +297,70 @@ function deletePhoto(fileName) {
         }
     });
 }
-
+const getRecordByID = async(id) => {
+    let appId = 6028;
+    axios.get(lambdaUrl + `?id=${appId}&recordId=${id}`)
+        .then((res) => {
+            const records = res.data.record;
+            console.log(records);
+            $("#qr-code").val(records.商品QR.value);
+            $("#location-change").val(records.実施場所.value);
+            $("#hour-meter").val(records.アワメーター.value);
+        })
+        .catch((err) => {
+            $("#load-main").attr("hidden", true);
+            var data = err.response.data.message
+            $('html, body').animate({
+                scrollTop: $('.action-submit span').offset().top
+            }, 1000);
+            showMessage("showMessage", 'error');
+            $(".action-submit span").text(data);
+        });
+}
+const updateData = async() => {
+    $("#btn-update-or-add").click(async function() {
+        $(".action-submit span").text("");
+        $("#load-main").attr("hidden", false);
+        let body = {
+            "商品QR": {
+                "value": $("#qr-code").val(),
+            },
+            "実施場所": {
+                "value": $("#location-change").val(),
+            },
+            "アワメーター": {
+                "value": $("#hour-meter").val(),
+            },
+        };
+        let res = {
+            id: $("#id-edit").val(),
+            body: body,
+        };
+        await axios.patch(lambdaUrl + "?id=6028", res)
+            .then((res) => {
+                if (res.status == 200) {
+                    $("#load-main").attr("hidden", true);
+                    let msg = "情報の更新に成功しました！";
+                    if (woff.isInClient()) {
+                        woff.sendMessage({ 'content': msg });
+                    }
+                    showMessage(msg, 'success');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+                }
+            })
+            .catch((err) => {
+                $("#load-main").attr("hidden", true);
+                var data = err.response.data.message
+                $('html, body').animate({
+                    scrollTop: $('.action-submit span').offset().top
+                }, 1000);
+                showMessage("データ作成中にエラーが発生しました", 'error');
+                $(".action-submit span").text(data);
+            });
+    });
+}
 export function runCreate() {
     woffInit('create');
     buildCreatePage();
@@ -381,5 +368,21 @@ export function runCreate() {
     createData();
 };
 export function runEdit(id) {
+    $("#id-edit").val(id);
     clearAll();
+    getRecordByID(id);
+    updateData();
+    $("#btn-lookup-qr-code").click(function() {
+        $("#qr-code").val("")
+        woff.scanQR()
+            .then((result) => {
+                $("#qr-code").val(result.value);
+                const textarea = document.getElementById('qr-code');
+                autoResize(textarea);
+            })
+            .catch((err) => {});
+    });
+    $("button.btn.btn-clear.me-1").click(function() {
+        dataQR = "";
+    });
 }
