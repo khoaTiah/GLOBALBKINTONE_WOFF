@@ -202,7 +202,12 @@ $('#input-search').on('input', function() {
         let code = $("#filter").val();
         if (code == "null") return;
         const keyword = $('#input-search').val().toLowerCase();
-        let filteredData = DATA_APP.filter(item => item[code].value.includes(keyword));
+        let filteredData = DATA_APP.filter(item => {
+            if (item[code] && item[code].value) {
+                return item[code].value.includes(keyword);
+            }
+            return false;
+        });
         $('#pagination-container').pagination({
             dataSource: filteredData,
             pageSize: 10,
@@ -232,7 +237,12 @@ $('#filter').on('change', function(e) {
         if (valueSelected == "null") {
             filteredData = DATA_APP;
         } else
-            filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
+            filteredData = DATA_APP.filter(item => {
+                if (item[valueSelected] && item[valueSelected].value) {
+                    return item[valueSelected].value.includes(keyword);
+                }
+                return false;
+            });
         $('#pagination-container').pagination({
             dataSource: filteredData,
             pageSize: 10,
@@ -290,7 +300,13 @@ const filter = () => {
             let code = $("#filter").val();
             if (code == "null") return;
             const keyword = $('#input-search').val().toLowerCase();
-            let filteredData = DATA_APP.filter(item => item[code].value.includes(keyword));
+            let filteredData = DATA_APP.filter(item => {
+                if (item[code] && item[code].value) {
+                    return item[code].value.includes(keyword);
+                }
+                return false;
+            });
+
             $('#pagination-container').pagination({
                 dataSource: filteredData,
                 pageSize: 10,
@@ -320,7 +336,13 @@ const filter = () => {
             if (valueSelected == "null") {
                 filteredData = DATA_APP;
             } else
-                filteredData = DATA_APP.filter(item => item[valueSelected].value.includes(keyword));
+                filteredData = DATA_APP.filter(item => {
+                    if (item[valueSelected] && item[valueSelected].value) {
+                        return item[valueSelected].value.includes(keyword);
+                    }
+                    return false;
+                });
+
             $('#pagination-container').pagination({
                 dataSource: filteredData,
                 pageSize: 10,

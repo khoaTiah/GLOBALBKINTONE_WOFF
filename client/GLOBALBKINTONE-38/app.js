@@ -132,7 +132,8 @@ const buildCreatePage = async() => {
         $("#qr-code").val("")
         woff.scanQR()
             .then((result) => {
-                $("#qr-code").val(result.value);
+                let value = result.value.replace(/[,、]/g, '\n')
+                $("#qr-code").val(value);
                 const textarea = document.getElementById('qr-code');
                 autoResize(textarea);
             })
@@ -306,6 +307,8 @@ const getRecordByID = async(id) => {
             $("#qr-code").val(records.商品QR.value);
             $("#location-change").val(records.実施場所.value);
             $("#hour-meter").val(records.アワメーター.value);
+            let textarea = document.getElementById('qr-code');
+            autoResize(textarea);
         })
         .catch((err) => {
             $("#load-main").attr("hidden", true);
@@ -376,7 +379,8 @@ export function runEdit(id) {
         $("#qr-code").val("")
         woff.scanQR()
             .then((result) => {
-                $("#qr-code").val(result.value);
+                let value = result.value.replace(/[,、]/g, '\n')
+                $("#qr-code").val(value);
                 const textarea = document.getElementById('qr-code');
                 autoResize(textarea);
             })
@@ -385,6 +389,4 @@ export function runEdit(id) {
     $("button.btn.btn-clear.me-1").click(function() {
         dataQR = "";
     });
-    let textarea = document.getElementById('qr-code');
-    autoResize(textarea);
 }
